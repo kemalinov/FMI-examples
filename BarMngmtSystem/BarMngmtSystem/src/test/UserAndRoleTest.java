@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import db.entities.RoleEntity;
-import db.entities.UserEntity;
 import db.utils.DBConnectionProvider;
 
 public class UserAndRoleTest {

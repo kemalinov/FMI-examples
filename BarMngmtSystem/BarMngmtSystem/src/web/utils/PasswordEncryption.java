@@ -2,6 +2,7 @@ package web.utils;
 
 import org.jasypt.digest.PooledStringDigester;
 
+
 public class PasswordEncryption {
     
     private static PooledStringDigester digester;
