@@ -58,10 +58,8 @@ public class OrdersTest {
 //	 em.getTransaction().commit();
 	 
 	 ConsumerEntity c = new ConsumerEntity();
-	 c.setBill(new BigDecimal("3"));	// calculate it from drinks
 	 c.setPlace("masa_2");
 	 c.setTime_(new Date());
-	 c.saddDrink(drinks.get(0), 5);
 	 c.setUser_id(3);	// get the current user
 	 em.persist(c);
 	 

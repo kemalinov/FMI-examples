@@ -7,6 +7,9 @@
      
           <class>db.entities.UserEntity</class>
           <class>db.entities.RoleEntity</class>
+          <class>db.entities.DrinkEntity</class>
+          <class>db.entities.OrderEntity</class>
+          <class>db.entities.ConsumerEntity</class>
      
           <properties>
                <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver" />

@@ -59,7 +59,8 @@ SELECT userid_user_id FROM app.user_role_map WHERE roleid_role_id = 1
 
 
 
-select * from app.drinks;
+select * from app.ordered_drinks;
+
 select * from app.orders;
 
 ALTER TABLE app.orders add COLUMN drinks user-defined
@@ -68,6 +69,18 @@ ALTER TABLE app.orders add COLUMN drinks user-defined
 update app.drinks set price=1.90 where drink_id=2;
 
 
+select * from app.consumers;
+
+SELECT sum(bill) FROM app.orders WHERE consumer_id=6
+ 
+-- returns the count of buied drinks per kind for a client  
+SELECT sum(od.drinks) 
+FROM app.ordered_drinks od
+join app.orders o
+on od.orderentity_order_id=o.order_id and o.consumer_id=6 and od.drinks=1 
 
 
+
+
+WHERE consumer_id=6 and drinks_key=1 -- needs a join
 

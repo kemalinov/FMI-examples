@@ -16,7 +16,8 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "app.consumers")
 @NamedNativeQueries({
-	@NamedNativeQuery(name = "ConsumerEntity.findConsumerById", query = "SELECT * FROM app.consumers WHERE consumer_id = ?", resultClass = ConsumerEntity.class)
+	@NamedNativeQuery(name = "ConsumerEntity.findConsumerById", query = "SELECT * FROM app.consumers WHERE consumer_id = ?", resultClass = ConsumerEntity.class),
+	@NamedNativeQuery(name = "ConsumerEntity.findUserIDByConsumerId", query = "SELECT user_id FROM app.consumers WHERE consumer_id = ?", resultClass = Integer.class)
 })
 public class ConsumerEntity implements Serializable{
     
@@ -28,10 +29,10 @@ public class ConsumerEntity implements Serializable{
     
     @Temporal(TemporalType.TIMESTAMP)
     private Date time_;
-
     private String place;
-    private Integer user_id; // FK
+    private Integer user_id; // FK to app.users
 
+    
     public Integer getConsumer_id() {
         return consumer_id;
     }
