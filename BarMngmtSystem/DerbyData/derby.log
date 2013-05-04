@@ -1,0 +1,15 @@
+Fri May 03 14:18:20 EEST 2013 : Apache Derby Network Server - 10.8.2.2 - (1181258) started and ready to accept connections on port 1527
+----------------------------------------------------------------
+Fri May 03 14:18:44 EEST 2013:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.8.2.2 - (1181258): instance a816c00e-013e-6a1d-3852-00000000002e 
+on database directory E:\kalin\DEV\workspaces\SU_ee_workspace\DerbyData\BarDB  with class loader sun.misc.Launcher$AppClassLoader@ad3ba4 
+Loaded from file:/E:/kalin/DEV/IDEs/Eclipse%20Juno_JEE/plugins/org.apache.derby.core_10.8.2/derby.jar
+java.vendor=Sun Microsystems Inc.
+java.runtime.version=1.6.0_43-b01
+user.dir=E:\kalin\DEV\workspaces\SU_ee_workspace\DerbyData
+derby.system.home=.
+Database Class Loader started - derby.database.classpath=''
+----------------------------------------------------------------
+Sat May 04 01:26:30 EEST 2013:
+Shutting down instance a816c00e-013e-6a1d-3852-00000000002e on database directory E:\kalin\DEV\workspaces\SU_ee_workspace\DerbyData\BarDB with class loader sun.misc.Launcher$AppClassLoader@ad3ba4 
+Sat May 04 01:26:30 EEST 2013 Thread[DRDAConnThread_5,5,main] (DATABASE = BarDB), (DRDAID = {242}), Database 'BarDB' shutdown.
