@@ -1,18 +1,12 @@
 package db.entities;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.MapKeyColumn;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.Table;
@@ -35,22 +29,9 @@ public class ConsumerEntity implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Date time_;
 
-    @ElementCollection
-    @CollectionTable(name="app.orders")	// maps drinks with the consumer_id
-    @MapKeyColumn(name="drinks_key")
-    private Map<DrinkEntity, Integer> drinks;	// "drinks" is the count - "Integer"
-
-    private BigDecimal bill;
-    private Integer user_id; // FK
     private String place;
+    private Integer user_id; // FK
 
-    // DEPRECATED!!!
-//    @JoinTable(name="app.orders")
-//    private OrderEntity order;
-    public ConsumerEntity() {
-	drinks = new HashMap<DrinkEntity, Integer>();
-    }
-    
     public Integer getConsumer_id() {
         return consumer_id;
     }
@@ -75,14 +56,6 @@ public class ConsumerEntity implements Serializable{
         this.time_ = time_;
     }
 
-    public BigDecimal getBill() {
-        return bill;
-    }
-
-    public void setBill(BigDecimal bill) {
-        this.bill = bill;
-    }
-
     public Integer getUser_id() {
         return user_id;
     }
@@ -90,30 +63,5 @@ public class ConsumerEntity implements Serializable{
     public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
-    
-    public Map<DrinkEntity, Integer> getDrinks() {
-	return drinks;
-    }
-
-    public void setDrinks(Map<DrinkEntity, Integer> drinks) {
-	this.drinks = drinks;
-    }
-
-    public void addDrink(DrinkEntity de, Integer count){
-	if (!drinks.containsKey(de)) {
-	    drinks.put(de, count);
-	} else {
-	    Integer orderedCount = drinks.get(de);
-	    drinks.put(de, orderedCount + count);
-	}	
-    }
-
-//    public OrderEntity getOrder() {
-//	return order;
-//    }
-//
-//    public void setOrder(OrderEntity order) {
-//	this.order = order;
-//    }
     
 }
