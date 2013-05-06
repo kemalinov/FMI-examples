@@ -1,9 +1,10 @@
 package db.utils;
 
+import commons.dtos.RoleDTO;
+import commons.dtos.UserDTO;
+
 import db.entities.RoleEntity;
 import db.entities.UserEntity;
-import dtos.RoleDTO;
-import dtos.UserDTO;
 
 public class DBUtils {
 

@@ -14,14 +14,14 @@ import web.pojos.User;
 import web.utils.PasswordEncryption;
 import web.utils.Utils;
 
-import commons.PersistUserRequest;
-import commons.RoleListResponse;
-import commons.UserListResponse;
-import commons.UserResponseEntity;
 import commons.constants.RolesType;
+import commons.dtos.RoleDTO;
+import commons.dtos.UserDTO;
+import commons.roles.RoleListResponse;
+import commons.users.PersistUserRequest;
+import commons.users.UserListResponse;
+import commons.users.UserResponseEntity;
 
-import dtos.RoleDTO;
-import dtos.UserDTO;
 import facade.Facade;
 
 public class UserManagement {

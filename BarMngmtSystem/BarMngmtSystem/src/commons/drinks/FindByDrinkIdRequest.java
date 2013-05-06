@@ -1,11 +1,11 @@
-package commons;
+package commons.drinks;
 
-public class FindRoleByIdRequest {
+public class FindByDrinkIdRequest {
     
     private Integer id;
     
-    public FindRoleByIdRequest(Integer id) {
-	this.setId(id);
+    public FindByDrinkIdRequest(Integer drinkId) {
+	this.setId(drinkId);
     }
 
     public Integer getId() {
@@ -15,7 +15,5 @@ public class FindRoleByIdRequest {
     public void setId(Integer id) {
 	this.id = id;
     }
-    
-    
 
 }

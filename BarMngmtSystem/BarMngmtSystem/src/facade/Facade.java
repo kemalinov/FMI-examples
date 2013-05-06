@@ -2,16 +2,14 @@ package facade;
 
 import javax.annotation.security.RolesAllowed;
 
-import commons.FindRoleByIdRequest;
-import commons.FindRoleByUserIdRequest;
-import commons.FindUserByIdRequest;
-import commons.FindUsersByRoleIdRequest;
-import commons.PersistUserRequest;
-import commons.RoleListResponse;
-import commons.RoleResponseEntity;
-import commons.UserListResponse;
-import commons.UserResponseEntity;
 import commons.constants.RolesType;
+import commons.roles.FindByRoleIdRequest;
+import commons.roles.RoleListResponse;
+import commons.roles.RoleResponseEntity;
+import commons.users.FindByUserIdRequest;
+import commons.users.PersistUserRequest;
+import commons.users.UserListResponse;
+import commons.users.UserResponseEntity;
 
 import db.actions.RoleActions;
 import db.actions.UserActions;
@@ -25,7 +23,7 @@ public class Facade {
     
     
     // Role actions
-    public static RoleResponseEntity findRoleById(FindRoleByIdRequest findRoleByIdRequest) {
+    public static RoleResponseEntity findRoleById(FindByRoleIdRequest findRoleByIdRequest) {
 	return roles.findRoleById(findRoleByIdRequest);	
     }
 
@@ -33,8 +31,8 @@ public class Facade {
 	return roles.findAllRoles();
     }
     
-    public static RoleResponseEntity findRoleByUserId(FindRoleByUserIdRequest findRoleByUserIdRequest) {
-	return roles.findRoleByUserId(findRoleByUserIdRequest);	
+    public static RoleResponseEntity findRoleByUserId(FindByUserIdRequest findByUserIdRequest) {
+	return roles.findRoleByUserId(findByUserIdRequest);	
     }
     
     // User actions
@@ -42,7 +40,7 @@ public class Facade {
 	return users.persistRole(persistUserRequest);
     }
     
-    public static UserResponseEntity findUserById(FindUserByIdRequest findUserByIdRequest) {
+    public static UserResponseEntity findUserById(FindByUserIdRequest findUserByIdRequest) {
 	return users.findUserById(findUserByIdRequest);	
     }
     
@@ -50,8 +48,8 @@ public class Facade {
 	return users.findAllUsers();
     }
     
-    public static UserListResponse findUsersByRoleId(FindUsersByRoleIdRequest findUsersByRoleIdRequest) {
-	return users.findUsersByRoleId(findUsersByRoleIdRequest);
+    public static UserListResponse findUsersByRoleId(FindByRoleIdRequest findByRoleIdRequest) {
+	return users.findUsersByRoleId(findByRoleIdRequest);
     }
 
 }

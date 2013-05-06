@@ -1,6 +1,6 @@
-package commons;
+package commons.roles;
 
-import dtos.RoleDTO;
+import commons.dtos.RoleDTO;
 
 public class RoleResponseEntity {
 

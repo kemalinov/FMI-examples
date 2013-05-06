@@ -8,15 +8,15 @@ import javax.persistence.Query;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
-import commons.FindRoleByIdRequest;
-import commons.FindRoleByUserIdRequest;
-import commons.RoleListResponse;
-import commons.RoleResponseEntity;
+import commons.dtos.RoleDTO;
+import commons.roles.FindByRoleIdRequest;
+import commons.roles.RoleListResponse;
+import commons.roles.RoleResponseEntity;
+import commons.users.FindByUserIdRequest;
 
 import db.entities.RoleEntity;
 import db.utils.DBConnectionProvider;
 import db.utils.DBUtils;
-import dtos.RoleDTO;
 
 public class RoleActions {
     
@@ -31,7 +31,7 @@ public class RoleActions {
 //	em.close();
 //    }
     
-    public RoleResponseEntity findRoleById(FindRoleByIdRequest findRoleByIdRequest) {
+    public RoleResponseEntity findRoleById(FindByRoleIdRequest findRoleByIdRequest) {
 	EntityManager em = DBConnectionProvider.createEntityManager();
 	
 	Query q = em.createNamedQuery("RoleEntity.findRoleById");
@@ -56,7 +56,7 @@ public class RoleActions {
     }
     
     // TODO: is it necessary this method? 
-    public RoleResponseEntity findRoleByUserId(FindRoleByUserIdRequest findRoleByUserIdRequest) {
+    public RoleResponseEntity findRoleByUserId(FindByUserIdRequest findByUserIdRequest) {
 	throw new NotImplementedException();
 	
 //	EntityManager em = DBConnectionProvider.createEntityManager();

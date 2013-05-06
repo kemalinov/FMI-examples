@@ -1,10 +1,10 @@
-package commons;
+package commons.users;
 
-public class FindUserByIdRequest {
+public class FindByUserIdRequest {
     
     private Integer id;
     
-    public FindUserByIdRequest(Integer id) {
+    public FindByUserIdRequest(Integer id) {
 	this.setId(id);
     }
 

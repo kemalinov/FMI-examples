@@ -6,17 +6,17 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import commons.FindUserByIdRequest;
-import commons.FindUsersByRoleIdRequest;
-import commons.PersistUserRequest;
-import commons.UserListResponse;
-import commons.UserResponseEntity;
+import commons.dtos.UserDTO;
+import commons.roles.FindByRoleIdRequest;
+import commons.users.FindByUserIdRequest;
+import commons.users.PersistUserRequest;
+import commons.users.UserListResponse;
+import commons.users.UserResponseEntity;
 
 import db.entities.RoleEntity;
 import db.entities.UserEntity;
 import db.utils.DBConnectionProvider;
 import db.utils.DBUtils;
-import dtos.UserDTO;
 
 public class UserActions {
     
@@ -48,7 +48,7 @@ public class UserActions {
 	return new UserResponseEntity(DBUtils.UserEntityToUserDto(ue));
     }
     
-    public UserResponseEntity findUserById(FindUserByIdRequest findUserByIdRequest) {
+    public UserResponseEntity findUserById(FindByUserIdRequest findUserByIdRequest) {
 	EntityManager em = DBConnectionProvider.createEntityManager();
 	
 	Query q = em.createNamedQuery("UserEntity.findUserById");
@@ -74,11 +74,11 @@ public class UserActions {
 	return new UserListResponse(usersDtoList);
     }
     
-    public UserListResponse findUsersByRoleId(FindUsersByRoleIdRequest findUsersByRoleIdRequest) {
+    public UserListResponse findUsersByRoleId(FindByRoleIdRequest findByRoleIdRequest) {
 	EntityManager em = DBConnectionProvider.createEntityManager();
 	
 	Query q = em.createNamedQuery("UserEntity.findUsersByRoleId");
-	q.setParameter(1, findUsersByRoleIdRequest.getId());
+	q.setParameter(1, findByRoleIdRequest.getId());
 	List<UserEntity> users = q.getResultList();
 	
 	List<UserDTO> usersDtoList = new ArrayList<UserDTO>(users.size());

@@ -1,6 +1,6 @@
-package commons;
+package commons.users;
 
-import dtos.UserDTO;
+import commons.dtos.UserDTO;
 
 public class UserResponseEntity {
 

@@ -1,8 +1,9 @@
-package commons;
+package commons.roles;
 
 import java.util.List;
 
-import dtos.RoleDTO;
+import commons.dtos.RoleDTO;
+
 
 public class RoleListResponse {
     

@@ -1,9 +1,10 @@
 package web.utils;
 
+import commons.dtos.RoleDTO;
+import commons.dtos.UserDTO;
+
 import web.pojos.Role;
 import web.pojos.User;
-import dtos.RoleDTO;
-import dtos.UserDTO;
 
 public class Utils {
     

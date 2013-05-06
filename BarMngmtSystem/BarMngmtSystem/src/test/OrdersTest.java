@@ -60,7 +60,7 @@ public class OrdersTest {
 	 ConsumerEntity c = new ConsumerEntity();
 	 c.setPlace("masa_2");
 	 c.setTime_(new Date());
-	 c.setUser_id(3);	// get the current user
+	 c.setUserId(3);	// get the current user
 	 em.persist(c);
 	 
 	 // consumers

@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "App.drinks")
 @NamedNativeQueries({
-	@NamedNativeQuery(name = "DrinkEntity.findDrinks", query = "SELECT * FROM app.drinks", resultClass = DrinkEntity.class),
+	@NamedNativeQuery(name = "DrinkEntity.findAll", query = "SELECT * FROM app.drinks", resultClass = DrinkEntity.class),
 	@NamedNativeQuery(name = "DrinkEntity.findDrinkById", query = "SELECT * FROM app.drinks WHERE drink_id = ?", resultClass = DrinkEntity.class),
 	@NamedNativeQuery(name = "DrinkEntity.findPriceOfDrinkById", query = "SELECT price FROM app.drinks WHERE drink_id = ?", resultClass = BigDecimal.class),
 	@NamedNativeQuery(name = "DrinkEntity.findIngredientsOfDrinkById", query = "SELECT ingredients FROM app.drinks WHERE drink_id = ?", resultClass = String.class) })

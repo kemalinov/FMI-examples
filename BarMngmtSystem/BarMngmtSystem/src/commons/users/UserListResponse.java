@@ -1,8 +1,9 @@
-package commons;
+package commons.users;
 
 import java.util.List;
 
-import dtos.UserDTO;
+import commons.dtos.UserDTO;
+
 
 public class UserListResponse {
 

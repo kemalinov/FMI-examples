@@ -61,7 +61,7 @@ public class DrinksTest {
 	 c.setPlace("masa_6");
 	 c.setTime_(new Date());
 //	 c.addDrink(drinks.get(0), 5);
-	 c.setUser_id(2);	// get the current user
+	 c.setUserId(2);	// get the current user
 	 em.persist(c);
 	 
 	 em.getTransaction().commit();

@@ -1,10 +1,10 @@
-package commons;
+package commons.consumers;
 
-public class FindRoleByUserIdRequest {
+public class FindByConsumerIdRequest {
     
     private Integer id;
     
-    public FindRoleByUserIdRequest(Integer id) {
+    public FindByConsumerIdRequest(Integer id) {
 	this.setId(id);
     }
 
@@ -15,7 +15,5 @@ public class FindRoleByUserIdRequest {
     public void setId(Integer id) {
 	this.id = id;
     }
-    
-    
 
 }
