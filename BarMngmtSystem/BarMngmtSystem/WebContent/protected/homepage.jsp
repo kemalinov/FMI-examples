@@ -56,13 +56,12 @@ body {
 				</p>
 			</form>
 			
-			<% 
-				
-			UserManagement userM = (UserManagement) getServletContext().getAttribute("users");
-			if (userM.isManagerUser((String)session.getAttribute("username"))) {
-			    DrinkManagement drinkM = (DrinkManagement) getServletContext().getAttribute("drinks");
-				drinkM.test();
-				%>
+			<%
+			    UserManagement userM = (UserManagement) getServletContext().getAttribute("users");
+				if (userM.isManagerUser((String)session.getAttribute("username"))) {
+				    DrinkManagement drinkM = (DrinkManagement) getServletContext().getAttribute("drinks");
+					// drinkM.testPersistingDrink();
+							%>
 				<button id="monitor_btn" name="Monitor">Manager's btn</button>
 				<%
 			}
@@ -73,8 +72,6 @@ body {
 			for normal users do not show that button. and for normal users get the AuditLog and print the history for that user
 			
 			-->
-	
-			
 		</section>
 
 	</div>

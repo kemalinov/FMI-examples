@@ -41,7 +41,7 @@ public class UsersBean {
 	try {
 	    if(ue.getId() == null) {
 		em.persist(ue);
-		em.flush();
+		em.flush();	// to return the persisted object 
 	    } else {
 		ue = em.merge(ue);
 	    }    

@@ -54,7 +54,7 @@ public class DrinkManagement {
 	drinks.add(d);
     }
     
-    public void test() {
+    public void testPersistingDrink() {
 	System.out.println("Test of persisting a drink...");
 	
 	PersistDrinkRequest req = new PersistDrinkRequest(new DrinkDTO(null, "vodka", "beluga,50", new BigDecimal("5.50")));
