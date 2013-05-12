@@ -27,11 +27,11 @@ public class ConsumerEntity {
     private Integer consumer_id;
     
     @Temporal(TemporalType.TIMESTAMP)
-    private Date date;
+    private Date time_;
     private String place;
     
     @OneToOne
-    private UserEntity user_id; // FK to app.users
+    private UserEntity user; // column name "user_user_id", FK to app.users
 
     
     public Integer getId() {
@@ -51,19 +51,19 @@ public class ConsumerEntity {
     }
 
     public Date getDate() {
-        return date;
+        return time_;
     }
 
     public void setDate(Date date) {
-        this.date = date;
+        this.time_ = date;
     }
 
     public UserEntity getUserId() {
-        return user_id;
+        return user;
     }
 
     public void setUserId(UserEntity user_id) {
-        this.user_id = user_id;
+        this.user = user_id;
     }
     
 }

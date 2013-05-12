@@ -11,6 +11,12 @@ public class Consumer {
     
     private User user; // FK to app.users
 
+    public Consumer(Integer id, Date date, String place, User user) {
+	this.consumer_id  = id;
+	this.date = date;
+	this.place = place;
+	this.user = user;
+    }
     
     public Integer getId() {
         return consumer_id;

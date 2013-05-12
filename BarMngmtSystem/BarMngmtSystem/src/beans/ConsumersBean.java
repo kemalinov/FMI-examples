@@ -30,7 +30,7 @@ public class ConsumersBean {
 
     public ConsumerResponseEntity persistConsumer(PersistConsumerRequest persistConsumerRequest) {
 	ConsumerEntity ce = new ConsumerEntity();
-	ce.setDate(persistConsumerRequest.getConsumer().getTime_());
+	ce.setDate(persistConsumerRequest.getConsumer().getDate());
 	ce.setPlace(persistConsumerRequest.getConsumer().getPlace());
 	
 	Query q = em.createNamedQuery("UserEntity.findUserById");
@@ -51,7 +51,7 @@ public class ConsumersBean {
 	return new ConsumerResponseEntity(DBUtils.ConsumerEntityToConsumerDTO(ce));
     }
     
-    public ConsumerListResponse getAllConsumers() {
+    public ConsumerListResponse findAll() {
 	Query q = em.createNamedQuery("ConsumerEntity.findAll");
 	List<ConsumerEntity> entities = q.getResultList();
 	
@@ -63,7 +63,7 @@ public class ConsumersBean {
 	return new  ConsumerListResponse(entitiesDtoList);
     }
     
-    public ConsumerResponseEntity getConsumerById(FindByConsumerIdRequest findByConsumerIdRequest) {
+    public ConsumerResponseEntity findConsumerById(FindByConsumerIdRequest findByConsumerIdRequest) {
 	Query q = em.createNamedQuery("ConsumerEntity.findConsumerById");
 	q.setParameter(1, findByConsumerIdRequest.getId());
 	ConsumerEntity ce =  (ConsumerEntity) q.getSingleResult();
@@ -71,7 +71,7 @@ public class ConsumersBean {
 	return new ConsumerResponseEntity(DBUtils.ConsumerEntityToConsumerDTO(ce));
     }
     
-    public UserResponseEntity getUserByConsumerId(FindByConsumerIdRequest findByConsumerIdRequest) {
+    public UserResponseEntity findUserByConsumerId(FindByConsumerIdRequest findByConsumerIdRequest) {
 	Query q = em.createNamedQuery("ConsumerEntity.findUserIdByConsumerId");
 	q.setParameter(1, findByConsumerIdRequest.getId());
 	UserEntity ue =  (UserEntity) q.getSingleResult();

@@ -113,16 +113,16 @@ public class Facade {
 	return consumers.persistConsumer(persistConsumerRequest);
     }
     
-    public ConsumerListResponse getAllConsumers() {
-	return consumers.getAllConsumers();
+    public ConsumerListResponse findAllConsumers() {
+	return consumers.findAll();
     }
     
-    public ConsumerResponseEntity getConsumerById(FindByConsumerIdRequest findByConsumerIdRequest) {
-	return consumers.getConsumerById(findByConsumerIdRequest);
+    public ConsumerResponseEntity findConsumerById(FindByConsumerIdRequest findByConsumerIdRequest) {
+	return consumers.findConsumerById(findByConsumerIdRequest);
     }
     
-    public UserResponseEntity getUserByConsumerId(FindByConsumerIdRequest findByConsumerIdRequest) {
-	return consumers.getUserByConsumerId(findByConsumerIdRequest);
+    public UserResponseEntity findUserByConsumerId(FindByConsumerIdRequest findByConsumerIdRequest) {
+	return consumers.findUserByConsumerId(findByConsumerIdRequest);
     }
     
     // Orders services

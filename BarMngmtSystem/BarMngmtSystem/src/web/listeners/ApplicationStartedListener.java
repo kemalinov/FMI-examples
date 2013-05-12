@@ -38,11 +38,11 @@ public final class ApplicationStartedListener implements ServletContextListener 
 
 	if (services != null) {
 	    UserManagement users = new UserManagement(services, context);
-	    context.setAttribute("users", users); // accessible from JSPs,
+	    context.setAttribute("usersM", users); // accessible from JSPs,
 						  // servlets,..
 
 	    DrinkManagement drinks = new DrinkManagement(services, context);
-	    context.setAttribute("drinks", drinks);
+	    context.setAttribute("drinksM", drinks);
 
 	    System.out.println("application started...");
 	}
@@ -50,7 +50,7 @@ public final class ApplicationStartedListener implements ServletContextListener 
 
     public void contextDestroyed(ServletContextEvent event) {
 	// context.removeAttribute("auditLog");
-	context.removeAttribute("users");
+	context.removeAttribute("userM");
 	System.out.println("application stopping...");
     }
 }

@@ -18,7 +18,7 @@ public class OrderDTO {
     private BigDecimal bill;
 
     // constructor
-    public OrderDTO(Integer id, ConsumerDTO consumerId, Map<DrinkEntity, Integer> drinks, OrderStatus orderStatus, BigDecimal bill) {
+    public OrderDTO(Integer id, ConsumerDTO consumerId, Map<DrinkDTO, Integer> drinks, OrderStatus orderStatus, BigDecimal bill) {
 	this.order_id = id;
 	this.consumer_id = consumerId;
 	this.status = orderStatus;
@@ -28,11 +28,11 @@ public class OrderDTO {
 	copyMapItems(drinks);
     }
     
-    private void copyMapItems(Map<DrinkEntity, Integer> drinks) {
-	for(Entry<DrinkEntity, Integer> e : drinks.entrySet()) {
-	    DrinkEntity de = e.getKey();
-	    DrinkDTO dto = new DrinkDTO(de.getId(), de.getName(), de.getIngredients(), de.getPrice());
-	    this.drinks.put(dto, new Integer(e.getValue()));
+    private void copyMapItems(Map<DrinkDTO, Integer> drinks) {
+	for(Entry<DrinkDTO, Integer> e : drinks.entrySet()) {
+	    DrinkDTO de = e.getKey();
+//	    DrinkDTO dto = new DrinkDTO(de.getId(), de.getName(), de.getIngredients(), de.getPrice());
+	    this.drinks.put(de, new Integer(e.getValue()));
 	}
     }
 

@@ -3,6 +3,7 @@ package web.pojos;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import commons.constants.OrderStatus;
 import commons.dtos.DrinkDTO;
@@ -19,6 +20,17 @@ public class Order {
 
     private BigDecimal bill;
 
+    public Order(Integer id, Consumer consumer, Map<DrinkDTO, Integer> drinks, OrderStatus status, BigDecimal bill) {
+	this.order_id = id;
+	this.consumer_id = consumer;
+	
+	drinks = new HashMap<DrinkDTO, Integer>(drinks.size());
+	this.drinks.putAll(drinks);
+	
+	this.status = status;
+	this.bill = bill;
+    }
+    
     // constructor
     public Order() {
 	drinks = new HashMap<DrinkDTO, Integer>();
@@ -64,13 +76,26 @@ public class Order {
 	this.drinks = drinks;
     }
 
-    public void addDrink(DrinkDTO d, Integer count) {
-	if (!drinks.containsKey(d)) {
-	    drinks.put(d, count);
-	} else {
-	    Integer orderedCount = drinks.get(d);
-	    drinks.put(d, orderedCount + count);
-	}
+    public void setCalculatedBill() {
+	setBill(calculateBill());
     }
+
+    private BigDecimal calculateBill(){
+	BigDecimal b = new BigDecimal(0);
+	for(Entry<DrinkDTO, Integer> drinks : this.drinks.entrySet()) {
+	    // add the bill of every ordered drink (drink*count) to the whole bill
+	    b = b.add(drinks.getKey().getPrice().multiply(new BigDecimal(drinks.getValue())));  
+	}
+	return b;
+    }
+    
+//    public void addDrink(DrinkDTO d, Integer count) {
+//	if (!drinks.containsKey(d)) {
+//	    drinks.put(d, count);
+//	} else {
+//	    Integer orderedCount = drinks.get(d);
+//	    drinks.put(d, orderedCount + count);
+//	}
+//    }
 
 }

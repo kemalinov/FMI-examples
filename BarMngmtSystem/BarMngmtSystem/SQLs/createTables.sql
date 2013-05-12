@@ -38,18 +38,18 @@ CREATE TABLE app.consumers (
 	consumer_id  INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
 	place VARCHAR(20) NOT NULL,
 	time_ TIMESTAMP NOT NULL,
-	user_id INTEGER NOT NULL,
-CONSTRAINT consumers_user_id_fk FOREIGN KEY (user_id)
+	user_user_id INTEGER NOT NULL,
+CONSTRAINT consumers_user_id_fk FOREIGN KEY (user_user_id)
 	REFERENCES app.users (user_id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );	
 
 --- orders	
 CREATE TABLE app.orders (
 	order_id INTEGER NOT NULL PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),
-	consumer_ID INTEGER NOT NULL,
+	consumer_consumer_id INTEGER NOT NULL,
 	status VARCHAR(35) NOT NULL,
 	bill DECIMAL(5,2) NOT NULL,
-CONSTRAINT orders_consumer_id_fk FOREIGN KEY (consumer_ID)
+CONSTRAINT orders_consumer_id_fk FOREIGN KEY (consumer_consumer_id)
 	REFERENCES app.consumers (consumer_ID) ON DELETE NO ACTION ON UPDATE NO ACTION
 );	
 

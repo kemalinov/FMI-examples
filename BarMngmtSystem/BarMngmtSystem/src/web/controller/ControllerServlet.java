@@ -37,7 +37,7 @@ public class ControllerServlet extends HttpServlet {
 	String selectedScreen = null;
 
 	UserManagement users = (UserManagement) getServletContext()
-		.getAttribute("users");
+		.getAttribute("usersM");
 
 	if (action.equalsIgnoreCase("login")) {
 	    String username = request.getParameter("username");

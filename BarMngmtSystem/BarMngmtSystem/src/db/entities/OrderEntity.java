@@ -3,6 +3,7 @@ package db.entities;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
@@ -42,7 +43,7 @@ public class OrderEntity {
     private Integer order_id;
 
     @OneToOne
-    private ConsumerEntity consumer_id;
+    private ConsumerEntity consumer;
     //private Integer consumer_id;	// TODO: try with entity
 
     @ElementCollection
@@ -69,11 +70,11 @@ public class OrderEntity {
     }
 
     public ConsumerEntity getConsumerId() {
-	return consumer_id;
+	return consumer;
     }
 
     public void setConsumerId(ConsumerEntity consumer_id) {
-	this.consumer_id = consumer_id;
+	this.consumer = consumer_id;
     }
 
     public OrderStatus getStatus() {
@@ -88,10 +89,13 @@ public class OrderEntity {
 	return bill;
     }
 
+    /**
+     * it is calculated depending on the drinks 
+     */
     public void setBill(BigDecimal bill) {
 	this.bill = bill;
     }
-
+    
     public Map<DrinkEntity, Integer> getDrinks() {
 	return drinks;
     }

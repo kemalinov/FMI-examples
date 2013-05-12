@@ -32,7 +32,7 @@ public class ConsumerDTO {
 	this.place = place;
     }
 
-    public Date getTime_() {
+    public Date getDate() {
 	return time_;
     }
 

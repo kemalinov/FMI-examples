@@ -64,26 +64,34 @@ select * from app.ordered_drinks;
 
 select * from app.orders;
 
-ALTER TABLE app.orders add COLUMN drinks user-defined
+delete from app.ordered_drinks where orderentity_order_id=1
 
 
 update app.drinks set price=1.90 where drink_id=1;
 
 
+delete from app.orders where order_id=1
+
+
+ALTER TABLE app.orders add COLUMN drinks user-defined
+
+
 select * from app.consumers;
+RENAME COLUMN app.consumers.user_id TO user_user_id
+
+delete from app.consumers where consumer_id=2
 
 
 select * from app.drinks;
 alter table app.drinks add column price DECIMAL(5,2)
 alter table app.drinks alter column price NOT NULL
 
-update app.drinks set price=1.90 where drink_id=1;
-
 
 select * from app.orders;
 alter table app.orders add column bill DECIMAL(5,2)
 alter table app.orders alter column bill NOT NULL
 
+RENAME COLUMN app.orders.consumer_id TO consumer_consumer_id
 
 SELECT sum(bill) FROM app.orders WHERE consumer_id=6
  

@@ -58,8 +58,17 @@ public class UserManagement {
 	    for (UserDTO dto : userListResponse.getUsers()) {
 		User u = Utils.UserDtoToUser(dto);
 		addNewUser(u);
-	    }	
+	    }
 	}
+    }
+    
+    public User getUserByName(String username) {
+	for(User u : users) {
+	    if (u.getName().equalsIgnoreCase(username)) {
+		return u;
+	    }
+	}
+	return null;
     }
     
     private void initRoles() {
@@ -74,7 +83,6 @@ public class UserManagement {
 	    for (RoleDTO r : roleListResponse.getRoles()) {
 		roles.add(Utils.RoleDtoToRole(r));
 	    }
-	    context.setAttribute("roles", roles);
 	}	
     }
     
@@ -175,7 +183,6 @@ public class UserManagement {
     // }
 
     public boolean isManagerUser(String username) {
-	System.out.println(RolesType.MANAGER.equals(userRoleMap.get(username)));
 	return RolesType.MANAGER.equals(userRoleMap.get(username));
     }
 

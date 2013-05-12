@@ -57,11 +57,13 @@ body {
 			</form>
 			
 			<%
-			    UserManagement userM = (UserManagement) getServletContext().getAttribute("users");
+			    UserManagement userM = (UserManagement) getServletContext().getAttribute("usersM");
 				if (userM.isManagerUser((String)session.getAttribute("username"))) {
-				    DrinkManagement drinkM = (DrinkManagement) getServletContext().getAttribute("drinks");
-					// drinkM.testPersistingDrink();
-							%>
+				    DrinkManagement drinkM = (DrinkManagement) getServletContext().getAttribute("drinksM");
+					//drinkM.testPersistingDrink();
+					//drinkM.testPersistingConsumer((String)session.getAttribute("username"));
+					drinkM.testPersistingOrder();		
+				%>
 				<button id="monitor_btn" name="Monitor">Manager's btn</button>
 				<%
 			}

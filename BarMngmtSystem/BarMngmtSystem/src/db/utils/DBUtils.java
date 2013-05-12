@@ -1,5 +1,9 @@
 package db.utils;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import commons.dtos.ConsumerDTO;
 import commons.dtos.DrinkDTO;
 import commons.dtos.OrderDTO;
@@ -46,7 +50,11 @@ public class DBUtils {
 	RoleDTO rd = new RoleDTO(oe.getConsumerId().getUserId().getRole().getId(), oe.getConsumerId().getUserId().getRole().getRoleName());
 	UserDTO ud = new UserDTO(oe.getConsumerId().getUserId().getId(), oe.getConsumerId().getUserId().getName(), oe.getConsumerId().getUserId().getPassword(), rd);
 	ConsumerDTO cd = new ConsumerDTO(oe.getConsumerId().getId(), oe.getConsumerId().getDate(), oe.getConsumerId().getPlace(), ud);
-	return new OrderDTO(oe.getId(), cd, oe.getDrinks(), oe.getStatus(), oe.getBill());
+	Map<DrinkDTO, Integer> drinksMap = new HashMap<DrinkDTO, Integer>(oe.getDrinks().size());
+	for(Entry<DrinkEntity, Integer> e : oe.getDrinks().entrySet()) {
+	    drinksMap.put(DBUtils.DrinkEntityToDrinkDto(e.getKey()), e.getValue());
+	}
+	return new OrderDTO(oe.getId(), cd, drinksMap, oe.getStatus(), oe.getBill());
     }
 
 }
