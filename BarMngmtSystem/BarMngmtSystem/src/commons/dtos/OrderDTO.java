@@ -6,17 +6,19 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import commons.constants.OrderStatus;
+import db.entities.DrinkEntity;
 
 public class OrderDTO {
 
     private Integer order_id;
-    private Integer consumer_id;
+    private ConsumerDTO consumer_id;
+//    private Integer consumer_id;	// to entity
     private Map<DrinkDTO, Integer> drinks; // "drinks" is the count - "Integer"
     private OrderStatus status;
     private BigDecimal bill;
 
     // constructor
-    public OrderDTO(Integer id, Integer consumerId, Map<DrinkDTO, Integer> drinks, OrderStatus orderStatus, BigDecimal bill) {
+    public OrderDTO(Integer id, ConsumerDTO consumerId, Map<DrinkEntity, Integer> drinks, OrderStatus orderStatus, BigDecimal bill) {
 	this.order_id = id;
 	this.consumer_id = consumerId;
 	this.status = orderStatus;
@@ -26,11 +28,11 @@ public class OrderDTO {
 	copyMapItems(drinks);
     }
     
-    private void copyMapItems(Map<DrinkDTO, Integer> drinks) {
-	for(Entry<DrinkDTO, Integer> e : drinks.entrySet()) {
-	    DrinkDTO dto = e.getKey();
-	    DrinkDTO d = new DrinkDTO(dto.getId(), dto.getName(), dto.getIngredients(), dto.getPrice());
-	    this.drinks.put(d, new Integer(e.getValue()));
+    private void copyMapItems(Map<DrinkEntity, Integer> drinks) {
+	for(Entry<DrinkEntity, Integer> e : drinks.entrySet()) {
+	    DrinkEntity de = e.getKey();
+	    DrinkDTO dto = new DrinkDTO(de.getId(), de.getName(), de.getIngredients(), de.getPrice());
+	    this.drinks.put(dto, new Integer(e.getValue()));
 	}
     }
 
@@ -42,11 +44,11 @@ public class OrderDTO {
 	this.order_id = order_id;
     }
 
-    public Integer getConsumerId() {
+    public ConsumerDTO getConsumerId() {
 	return consumer_id;
     }
 
-    public void setConsumerId(Integer consumer_id) {
+    public void setConsumerId(ConsumerDTO consumer_id) {
 	this.consumer_id = consumer_id;
     }
 

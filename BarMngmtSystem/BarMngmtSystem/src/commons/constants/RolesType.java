@@ -2,8 +2,8 @@ package commons.constants;
 
 public interface RolesType {
 
-    String WAITER = "waiter";
-    String BARMAN = "barman";
-    String MANAGER = "manager";
+    String WAITER = "WAITER";
+    String BARMAN = "BARMAN";
+    String MANAGER = "MANAGER";
     
 }

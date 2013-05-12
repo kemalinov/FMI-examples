@@ -1,6 +1,5 @@
 package db.entities;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import commons.constants.OrderStatus;
@@ -23,10 +23,11 @@ import commons.constants.OrderStatus;
 @Entity
 @Table(name = "app.Orders")
 @NamedNativeQueries({
+    	@NamedNativeQuery(name = "OrderEntity.findAll", query = "SELECT * FROM app.orders", resultClass = OrderEntity.class),
 	@NamedNativeQuery(name = "OrderEntity.findOrderById", query = "SELECT * FROM app.orders WHERE order_id = ?", resultClass = OrderEntity.class),
 	@NamedNativeQuery(name = "OrderEntity.findOrdersByConsumerId", query = "SELECT * FROM app.orders WHERE consumer_id = ?", resultClass = OrderEntity.class),
-	@NamedNativeQuery(name = "OrderEntity.getBillForConsumerById", query = "SELECT sum(bill) FROM app.orders WHERE consumer_id = ?", resultClass = BigDecimal.class),
-	@NamedNativeQuery(name = "OrderEntity.getStatusForOrderById", query = "SELECT status FROM app.orders WHERE order_id = ?", resultClass = OrderStatus.class),
+	@NamedNativeQuery(name = "OrderEntity.getBillForConsumerId", query = "SELECT sum(bill) FROM app.orders WHERE consumer_id = ?", resultClass = BigDecimal.class),
+	@NamedNativeQuery(name = "OrderEntity.getStatusForOrderId", query = "SELECT status FROM app.orders WHERE order_id = ?", resultClass = OrderStatus.class),
 	@NamedNativeQuery(name = "OrderEntity.getCountOfOrderedDrinkForCustomerByDrinkIdAndConsumerId", query = "SELECT sum(od.drinks)" +
 			"FROM app.ordered_drinks od " +
 			"JOIN app.orders o " +
@@ -34,15 +35,15 @@ import commons.constants.OrderStatus;
 			"AND o.consumer_id = ? " +
 			"AND od.drinks = ? ", resultClass = Integer.class)
 })
-public class OrderEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class OrderEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer order_id;
 
-    private Integer consumer_id;
+    @OneToOne
+    private ConsumerEntity consumer_id;
+    //private Integer consumer_id;	// TODO: try with entity
 
     @ElementCollection
     @CollectionTable(name = "app.ordered_drinks")
@@ -67,11 +68,11 @@ public class OrderEntity implements Serializable {
 	this.order_id = order_id;
     }
 
-    public Integer getConsumerId() {
+    public ConsumerEntity getConsumerId() {
 	return consumer_id;
     }
 
-    public void setConsumerId(Integer consumer_id) {
+    public void setConsumerId(ConsumerEntity consumer_id) {
 	this.consumer_id = consumer_id;
     }
 

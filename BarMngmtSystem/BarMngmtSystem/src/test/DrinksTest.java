@@ -8,7 +8,6 @@ import javax.persistence.Query;
 
 import db.entities.ConsumerEntity;
 import db.entities.DrinkEntity;
-import db.utils.DBConnectionProvider;
 
 public class DrinksTest {
 
@@ -59,9 +58,9 @@ public class DrinksTest {
 	 
 	 ConsumerEntity c = ords.get(0);//new ConsumerEntity();
 	 c.setPlace("masa_6");
-	 c.setTime_(new Date());
+	 c.setDate(new Date());
 //	 c.addDrink(drinks.get(0), 5);
-	 c.setUserId(2);	// get the current user
+//	 c.setUserId(2);	// get the current user
 	 em.persist(c);
 	 
 	 em.getTransaction().commit();

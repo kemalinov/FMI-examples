@@ -1,7 +1,5 @@
 package db.entities;
 
-import java.io.Serializable;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -26,9 +24,7 @@ import javax.persistence.Table;
 		+ "FROM APP.USER_ROLE_MAP "
 		+ "WHERE roleid_role_id = ? "
 		+ ") " + "ORDER by user_id ASC", resultClass = UserEntity.class) })
-public class UserEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
 import db.entities.RoleEntity;
-import db.utils.DBConnectionProvider;
 
 public class UserAndRoleTest {
     
@@ -43,7 +42,7 @@ public class UserAndRoleTest {
 	// Create new user
 //	 em.getTransaction().begin();
 //	 UserEntity user = new UserEntity();
-//	 user.setName("Ivo");
+//	 user.setName("ivo");
 //	 user.setPassword("1");
 //	 em.persist(user);
 //	 em.getTransaction().commit();

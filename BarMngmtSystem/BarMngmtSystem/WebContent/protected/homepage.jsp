@@ -1,3 +1,4 @@
+<%@page import="web.users.DrinkManagement"%>
 <%@page import="web.users.UserManagement"%>
 <%@page import="java.util.LinkedList"%>
 <%@page import="web.users.UserManagement"%>
@@ -57,9 +58,10 @@ body {
 			
 			<% 
 				
-			UserManagement userm = (UserManagement) getServletContext().getAttribute("users");
-			if (userm.isManagerUser((String)session.getAttribute("username"))) {
-				
+			UserManagement userM = (UserManagement) getServletContext().getAttribute("users");
+			if (userM.isManagerUser((String)session.getAttribute("username"))) {
+			    DrinkManagement drinkM = (DrinkManagement) getServletContext().getAttribute("drinks");
+				drinkM.test();
 				%>
 				<button id="monitor_btn" name="Monitor">Manager's btn</button>
 				<%

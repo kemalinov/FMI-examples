@@ -1,7 +1,5 @@
 package db.entities;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,9 +17,7 @@ import javax.persistence.Table;
 // "SELECT roleid_role_id FROM app.user_role_map WHERE userid_user_id = ?",
 // resultClass = RoleEntity.class) // like the nested one in UserEntity!
 })
-public class RoleEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class RoleEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

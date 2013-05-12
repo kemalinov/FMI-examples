@@ -34,9 +34,14 @@ public class UserManagement {
     private List<Role> roles;
 
     private ServletContext context;
+
+    private Facade services;
     
-    public UserManagement(ServletContext context) {
+
+    // constructor
+    public UserManagement(Facade services, ServletContext context) {
 	this.context = context;
+	this.services = services;
 	initUsers();
 	initRoles();
     }
@@ -44,11 +49,11 @@ public class UserManagement {
     private void initUsers() {
 	UserListResponse userListResponse = null;
 	try {
-	    userListResponse = Facade.findAllUsers();
+	    userListResponse = services.findAllUsers();
 	} catch (Exception e) {
 	    log.log(Level.SEVERE, "Exception while calling findAllUsers()", e);
 	}
-	if (userListResponse.getUsers() != null) {
+	if (userListResponse != null && userListResponse.getUsers() != null) {
 	    users = new ArrayList<User>(userListResponse.getUsers().size());
 	    for (UserDTO dto : userListResponse.getUsers()) {
 		User u = Utils.UserDtoToUser(dto);
@@ -60,11 +65,11 @@ public class UserManagement {
     private void initRoles() {
 	RoleListResponse roleListResponse = null;
 	try {
-	    roleListResponse = Facade.findAllRoles();
+	    roleListResponse = services.findAllRoles();
 	} catch (Exception e) {
 	    log.log(Level.SEVERE, "Exception while calling findAllRoles()", e);
 	}
-	if (roleListResponse.getRoles() != null) {
+	if (roleListResponse != null && roleListResponse.getRoles() != null) {
 	    roles = new ArrayList<Role>(roleListResponse.getRoles().size());
 	    for (RoleDTO r : roleListResponse.getRoles()) {
 		roles.add(Utils.RoleDtoToRole(r));
@@ -111,13 +116,15 @@ public class UserManagement {
     // }
 
     public boolean checkUser(String username, String password) {
-	for (User u : users) {
-	    if (u.getName().equalsIgnoreCase(username) && PasswordEncryption.checkPassords(password, u.getPassword())) {
-		System.out.println("User found: " + u.getName());
-		System.out.println("Role: " + u.getRole().getRole());
-		return true;
-	    }
-	}	
+	if (users != null) {
+        	for (User u : users) {
+        	    if (u.getName().equalsIgnoreCase(username) && PasswordEncryption.checkPassords(password, u.getPassword())) {
+        		System.out.println("User found: " + u.getName());
+        		System.out.println("Role: " + u.getRole().getRole());
+        		return true;
+        	    }
+        	}
+	}
 	return false;
     }
     
@@ -129,7 +136,7 @@ public class UserManagement {
 		for(Role r : roles) {
 		    if(r.getRole().equals(role)) {
 			System.out.println("current role: " + r.getId() +", "+ r.getRole());
-			persistedEntity = Facade.persistRole(new PersistUserRequest(new UserDTO(null, username.toLowerCase(), encryptedPass,
+			persistedEntity = services.persistUser(new PersistUserRequest(new UserDTO(null, username.toLowerCase(), encryptedPass,
 				new RoleDTO(r.getId(), r.getRole()))));
 			break;
 		    } 
@@ -168,7 +175,8 @@ public class UserManagement {
     // }
 
     public boolean isManagerUser(String username) {
-	return RolesType.MANAGER.compareTo(userRoleMap.get(username)) == 0;
+	System.out.println(RolesType.MANAGER.equals(userRoleMap.get(username)));
+	return RolesType.MANAGER.equals(userRoleMap.get(username));
     }
 
 }

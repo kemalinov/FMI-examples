@@ -1,6 +1,5 @@
 package db.entities;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
@@ -18,9 +17,7 @@ import javax.persistence.Table;
 	@NamedNativeQuery(name = "DrinkEntity.findDrinkById", query = "SELECT * FROM app.drinks WHERE drink_id = ?", resultClass = DrinkEntity.class),
 	@NamedNativeQuery(name = "DrinkEntity.findPriceOfDrinkById", query = "SELECT price FROM app.drinks WHERE drink_id = ?", resultClass = BigDecimal.class),
 	@NamedNativeQuery(name = "DrinkEntity.findIngredientsOfDrinkById", query = "SELECT ingredients FROM app.drinks WHERE drink_id = ?", resultClass = String.class) })
-public class DrinkEntity implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class DrinkEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

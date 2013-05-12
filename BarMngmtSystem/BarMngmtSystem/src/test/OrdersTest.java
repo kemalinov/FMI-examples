@@ -12,7 +12,6 @@ import commons.constants.OrderStatus;
 import db.entities.ConsumerEntity;
 import db.entities.DrinkEntity;
 import db.entities.OrderEntity;
-import db.utils.DBConnectionProvider;
 
 public class OrdersTest {
 
@@ -21,21 +20,21 @@ public class OrdersTest {
 	EntityManager em = DBConnectionProvider.createEntityManager();
 
 	// reads all users
-	 Query q = em.createNamedQuery("DrinkEntity.findDrinkById");
-	 q.setParameter(1, 1);
-	 List<DrinkEntity> drinks = q.getResultList();
+//	 Query q = em.createNamedQuery("DrinkEntity.findDrinkById");
+//	 q.setParameter(1, 1);
+//	 List<DrinkEntity> drinks = q.getResultList();
 //	 for (DrinkEntity d : drinks) {
 //	     System.out.println(d.getName());
 //	 }
 //	 System.out.println("Size: " + drinks.size());
 
-	// Create new drink
-//	 em.getTransaction().begin();
-//	 DrinkEntity d = new DrinkEntity();
-//	 d.setName("vodka");
-//	 d.setIngredients("beluga,50;"); // <sustavka,gr>;<...>
-//	 d.setPrice(new BigDecimal("5.00"));
-//	 em.persist(d);
+//	 Create new drink
+	 em.getTransaction().begin();
+	 DrinkEntity d = new DrinkEntity();
+	 d.setName("vodka");
+	 d.setIngredients("beluga,50;"); // <sustavka,gr>;<...>
+	 d.setPrice(new BigDecimal("5.00"));
+	 em.persist(d);
 	 
 //	 q = em.createNamedQuery("OrderEntity.findOrderById");
 //	 q.setParameter(1, 1);
@@ -49,25 +48,25 @@ public class OrdersTest {
 //	 }
 //	 
 //	 em.getTransaction().begin();
-	 OrderEntity o = new OrderEntity();
-	 o.setConsumerId(6);
-	 o.setBill(new BigDecimal("2.99"));
-	 o.setStatus(OrderStatus.PENDING);
-	 o.addDrink(drinks.get(0), 5);
+//	 OrderEntity o = new OrderEntity();
+//	 o.setConsumerId(6);
+//	 o.setBill(new BigDecimal("2.99"));
+//	 o.setStatus(OrderStatus.PENDING);
+//	 o.addDrink(drinks.get(0), 5);
 //	 em.persist(o);
 //	 em.getTransaction().commit();
 	 
-	 ConsumerEntity c = new ConsumerEntity();
-	 c.setPlace("masa_2");
-	 c.setTime_(new Date());
-	 c.setUserId(3);	// get the current user
-	 em.persist(c);
+//	 ConsumerEntity c = new ConsumerEntity();
+//	 c.setPlace("masa_2");
+//	 c.setTime_(new Date());
+//	 c.setUserId(3);	// get the current user
+//	 em.persist(c);
 	 
 	 // consumers
-	 q = em.createNamedQuery("ConsumerEntity.findConsumerById");
-	 q.setParameter(1, 1);
-	 List<ConsumerEntity> ords = q.getResultList();
-	 em.getTransaction().begin();
+//	 q = em.createNamedQuery("ConsumerEntity.findConsumerById");
+//	 q.setParameter(1, 1);
+//	 List<ConsumerEntity> ords = q.getResultList();
+//	 em.getTransaction().begin();
 //	 
 	 
 //	 

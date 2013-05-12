@@ -1,6 +1,5 @@
 package db.entities;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -9,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQueries;
 import javax.persistence.NamedNativeQuery;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,27 +18,27 @@ import javax.persistence.TemporalType;
 @NamedNativeQueries({
     	@NamedNativeQuery(name = "ConsumerEntity.findAll", query = "SELECT * FROM app.consumers", resultClass = ConsumerEntity.class),
 	@NamedNativeQuery(name = "ConsumerEntity.findConsumerById", query = "SELECT * FROM app.consumers WHERE consumer_id = ?", resultClass = ConsumerEntity.class),
-	@NamedNativeQuery(name = "ConsumerEntity.findUserIDByConsumerId", query = "SELECT user_id FROM app.consumers WHERE consumer_id = ?", resultClass = Integer.class)
+	@NamedNativeQuery(name = "ConsumerEntity.findUserIdByConsumerId", query = "SELECT user_id FROM app.consumers WHERE consumer_id = ?", resultClass = UserEntity.class)
 })
-public class ConsumerEntity implements Serializable{
+public class ConsumerEntity {
     
-    private static final long serialVersionUID = 1L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer consumer_id;
     
     @Temporal(TemporalType.TIMESTAMP)
-    private Date time_;
+    private Date date;
     private String place;
-    private Integer user_id; // FK to app.users
+    
+    @OneToOne
+    private UserEntity user_id; // FK to app.users
 
     
-    public Integer getConsumer_id() {
+    public Integer getId() {
         return consumer_id;
     }
 
-    public void setConsumer_id(Integer consumer_id) {
+    public void setId(Integer consumer_id) {
         this.consumer_id = consumer_id;
     }
 
@@ -50,19 +50,19 @@ public class ConsumerEntity implements Serializable{
         this.place = place;
     }
 
-    public Date getTime_() {
-        return time_;
+    public Date getDate() {
+        return date;
     }
 
-    public void setTime_(Date time_) {
-        this.time_ = time_;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
-    public Integer getUserId() {
+    public UserEntity getUserId() {
         return user_id;
     }
 
-    public void setUserId(Integer user_id) {
+    public void setUserId(UserEntity user_id) {
         this.user_id = user_id;
     }
     

@@ -1,7 +1,10 @@
 INSERT INTO app.users (name, password) VALUES ('gosho', 'ddd');
 INSERT INTO app.user_role_map (userid_user_id, roleid_role_id) VALUES (3,2);
 
+INSERT INTO app.roles (name) VALUES ('WAITER');
+INSERT INTO app.roles (name) VALUES ('BARMAN');
 INSERT INTO app.roles (name) VALUES ('MANAGER');
+
 
 update app.users set name='kalin' where user_id=2;
 update app.roles set role_id=1 where name='WAITER';
@@ -29,8 +32,6 @@ ALTER TABLE app.user_role_map ADD UNIQUE (user_id)
 ALTER TABLE app.users DROP COLUMN role_id
 ALTER TABLE app.users DROP COLUMN active
 ALTER TABLE app.users ADD COLUMN role_id INTEGER
-
-alter table app.drinks add column price DECIMAL(5,2) NOT NULL
 
 ALTER TABLE app.user_role_map ADD CONSTRAINT role_id_fk FOREIGN KEY (roleid_role_id)
 	REFERENCES app.roles (role_id) ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -66,10 +67,23 @@ select * from app.orders;
 ALTER TABLE app.orders add COLUMN drinks user-defined
 
 
-update app.drinks set price=1.90 where drink_id=2;
+update app.drinks set price=1.90 where drink_id=1;
 
 
 select * from app.consumers;
+
+
+select * from app.drinks;
+alter table app.drinks add column price DECIMAL(5,2)
+alter table app.drinks alter column price NOT NULL
+
+update app.drinks set price=1.90 where drink_id=1;
+
+
+select * from app.orders;
+alter table app.orders add column bill DECIMAL(5,2)
+alter table app.orders alter column bill NOT NULL
+
 
 SELECT sum(bill) FROM app.orders WHERE consumer_id=6
  
