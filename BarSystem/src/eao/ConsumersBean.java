@@ -1,0 +1,87 @@
+package eao;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+
+import web.pojos.Consumer;
+import db.utils.DBUtils;
+import ejb.User;
+import entities.ConsumerEntity;
+import entities.UserEntity;
+
+@Stateless
+public class ConsumersBean {
+
+    @PersistenceContext(unitName = "BarSysPersistenceUnit")
+    private EntityManager em;
+
+    public ConsumersBean() {
+    }
+
+    public Consumer persistConsumer(Consumer persistConsumerRequest) {
+	ConsumerEntity ce = new ConsumerEntity();
+	ce.setDate(persistConsumerRequest.getDate());
+	ce.setPlace(persistConsumerRequest.getPlace());
+	
+	Query q = em.createNamedQuery("UserEntity.findUserById");
+	q.setParameter(1, persistConsumerRequest.getUserId().getId());
+	UserEntity ue = (UserEntity) q.getSingleResult();
+	ce.setUserId(ue);
+	try {
+	    if(ce.getId() == null) {
+		em.persist(ce);
+		em.flush();
+	    } else {
+		ce = em.merge(ce);
+	    }    
+	} catch (Exception e) {
+	    // TODO: handle exception
+	} 
+	
+	return DBUtils.ConsumerEntityToConsumer(ce);
+    }
+    
+    public List<Consumer> findAll() {
+	Query q = em.createNamedQuery("ConsumerEntity.findAll");
+	List<ConsumerEntity> entities = q.getResultList();
+	
+	List<Consumer> consumersList = new ArrayList<Consumer>(entities.size());
+	for(ConsumerEntity ce : entities) {
+	    consumersList.add(DBUtils.ConsumerEntityToConsumer(ce));
+	}
+	System.out.println("size: " + consumersList.size());
+	return new  ArrayList<Consumer>(consumersList);
+    }
+    
+    public Consumer findConsumerById(int findByConsumerIdRequest) {
+	Query q = em.createNamedQuery("ConsumerEntity.findConsumerById");
+	q.setParameter(1, findByConsumerIdRequest);
+	ConsumerEntity ce =  (ConsumerEntity) q.getSingleResult();
+
+	return DBUtils.ConsumerEntityToConsumer(ce);
+    }
+    
+    public User findUserByConsumerId(int findByConsumerIdRequest) {
+	Query q = em.createNamedQuery("ConsumerEntity.findUserIdByConsumerId");
+	q.setParameter(1, findByConsumerIdRequest);
+	UserEntity ue =  (UserEntity) q.getSingleResult();
+
+	return DBUtils.UserEntityToUser(ue);
+    }
+
+    public List<Consumer> findActiveConsumersByUserId(int findByUserIdRequest) {
+	Query q = em.createNamedQuery("ConsumerEntity.findActiveConsumersByUserId");
+	List<ConsumerEntity> ceList = q.getResultList();
+	
+	List<Consumer> consumersList = new ArrayList<Consumer>(ceList.size());
+	for(ConsumerEntity ce : ceList) {
+	    consumersList.add(DBUtils.ConsumerEntityToConsumer(ce));
+	}
+	return consumersList;
+    }
+}
