@@ -23,10 +23,17 @@
 	content="css3, login, form, custom, input, submit, button, html5, placeholder" />
 <meta name="author" content="Codrops" />
 
-<link rel="stylesheet" type="text/css" href="/BarMngmtSystem/css/style.css" />
-<link rel="stylesheet" type="text/css" href="/BarMngmtSystem/css/visibility/visibleIf.css" />
-<script type="text/javascript" src="/BarMngmtSystem/js/visibility/visibleIf.js"></script>
-<script type="text/javascript" src="/BarMngmtSystem/js/visibility/EventHelpers.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="/BarMngmtSystem/css/style.css" />
+<link rel="stylesheet" type="text/css"
+	href="/BarMngmtSystem/css/visibility/visibleIf.css" />
+<link rel="stylesheet" type="text/css"
+	href="/BarMngmtSystem/css/modalDialog/modalD.css" />
+
+<script type="text/javascript"
+	src="/BarMngmtSystem/js/visibility/visibleIf.js"></script>
+<script type="text/javascript"
+	src="/BarMngmtSystem/js/visibility/EventHelpers.js"></script>
 
 <link rel="icon" href="/BarMngmtSystem/images/favicon.ico">
 <!--<script src="/fmi/js/modernizr.custom.63321.js"></script>
@@ -46,110 +53,100 @@ body {
 	color: #fff;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
 }
-
-.modalDialog {
-	position: fixed;
-	font-family: Arial, Helvetica, sans-serif;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background: rgba(0,0,0,0.8);
-	z-index: 99999;
-	opacity:0;
-	-webkit-transition: opacity 20ms ease-in;
-	-moz-transition: opacity 20ms ease-in;
-	transition: opacity 20ms ease-in;
-	pointer-events: none;
-}
-.modalDialog:target {
-	opacity:1;
-	pointer-events: auto;
-}
-
-.modalDialog > div {
-	width: 400px;
-	position: relative;
-	margin: 10% auto;
-	padding: 5px 20px 13px 20px;
-	border-radius: 10px;
-	background: #fff;
-	background: -moz-linear-gradient(#fff, #999);
-	background: -webkit-linear-gradient(#fff, #999);
-	background: -o-linear-gradient(#fff, #999);
-}
 </style>
 <script type="text/javascript">
- function run() {
-     return selectedDrink.value;
- }
- </script>
+
+	function getDrinkPrice() { // get the selected drink id!
+		var e = document.getElementById('drinkSelectId');
+		// return e.options[e.selectedIndex].value; // returns the "value"
+		// return e.options[e.selectedIndex].text; // returns the "text" (selected item)
+		return parseFloat(e.options[e.selectedIndex].value);
+	}
+	
+</script>
 </head>
-<body>	
+<body>
 	<div class="container">
 		<header>
-			<h2>Welcome, waiter ... <%=session.getAttribute("username")%> </h2>
+			<h2>
+				Welcome, waiter ...
+				<%=session.getAttribute("username")%>
+			</h2>
 			<div class="support-note">
 				<span class="note-ie">Sorry, only modern browsers.</span>
 			</div>
 		</header>
-		
+
 		<section class="main">
-			<!-- what method should be used in order not to see the username/password in the url? -->
-			<form class="form-5" action=<%=getServletContext().getContextPath() + "/public/controller"%> method="post">
-					<input type="submit" name="action" value="logout">
+			<!-- what method should be used in order not to see the username/password in the url? -->
+			
+			<form class="form-5"
+				action=<%=getServletContext().getContextPath() + "/public/controller"%>
+				method="post">
+				<input type="submit" name="action" value="logout">
 			</form>
-			
+
 		</section>
 		<div>
 			<p>
-				<label>Choose an action:</label>
-				<select name="barmanActionSelect">
+				<label>Choose an action:</label> <select name="barmanActionSelect">
 					<option value="addClient" selected>Create a new consumer</option>
 					<option value="addOrder">Add a new order</option>
-				</select> 
+				</select>
 			</p>
-			<form action="createConsumerForm" >
+			<form action="createConsumerForm">
 				<p>
-					<label>Place</label> 
-					<input type="text" name="place" placeholder="Place/Table" required>
+					<label>Place</label> <input type="text" name="place"
+						placeholder="Place/Table" required>
 				</p>
 				<p>
-					<label>Date</label> 
-					<input type="text" name="date" disabled="disabled" contenteditable="false" value="<%= new Date()%>">
+					<label>Date</label> <input type="text" name="date"
+						disabled="disabled" contenteditable="false"
+						value="<%=new Date()%>">
 				</p>
 			</form>
-			<form name="addAnOrderForm" action=<%=getServletContext().getContextPath() + "/protected/waiters"%> method="post">
+			<form name="addAnOrderForm"
+				action=<%=getServletContext().getContextPath() + "/protected/waiters"%>
+				method="post">
 				<h4>Add an order</h4>
 				<p>
-					<label>Consumer</label> 
-					<input type="text" name="consumer"  required>
+					<label>Consumer /combo box of ACTIVE client places/</label> <input
+						type="text" name="consumer" required>
 				</p>
 				<p>
-					<label>Status</label> 
-					<input type="text" name="status" disabled="disabled" contenteditable="false" value="Pending">
+					<label>Status</label> <input type="text" name="status"
+						disabled="disabled" contenteditable="false" value="Pending">
 				</p>
 			</form>
-			<% 
-				DrinksManagement drinks = (DrinksManagement) getServletContext().getAttribute("drinksM");
-				Map<String, Drink> map = drinks.getAllDrinks();
+			<%
+			    DrinksManagement drinks = (DrinksManagement) getServletContext().getAttribute("drinksM");
+			    Map<String, Drink> map = drinks.getAllDrinks();
 			%>
-			<form name="drinkCountForm" oninput="bill.value=(drinkSelectId.value)*parseInt(drinkCountId.value)"> <!-- take the price of the selected drink!!!  -->
+			<form name="drinkCountForm" onclick="bill.value=(getDrinkPrice()*parseInt(countPerDrinkId.value)).toFixed(2)">
+				<!-- take the price of the selected drink!!!  -->
 				<p>
-					<label>Drink</label>
-					<select name="drinkSelect" id="drinkSelectId" ><!-- onclick="selectedDrink.value=drinkSelectId.value" >  -->
-					<%
-					int i=1;
-						for(Entry<String, Drink> e : map.entrySet()) {
-							out.print("<option value="+ i +">" + e.getKey() + "</option>");
-							i++;
-						}
-					%>
-					</select>
-					<a href="#openModal">(Ingredients)</a>
-					<label>Count</label> 
-					<input type="number" id="drinkCountId" name="count" placeholder="Count of drink" min="1" required >
-				</p>					
+					<label>Drink</label> <select name="drinkSelect" id="drinkSelectId"
+						onclick="drinkCountForm.oniput()">
+						<option value="0" selected>Select a drink</option>
+						<%
+						    for (Entry<String, Drink> e : map.entrySet()) {
+								out.print("<option value=" + e.getValue().getPrice() + ">" + e.getKey() + "</option>");
+						    }
+						%>
+					</select> 
+					<label>Count:</label> 
+					<input type="number" id="countPerDrinkId" name="count" min="1" value="1" required>
+				</p>
+				<!-- here was placed an ingredients modal dialog!  -->
+				<label>Bill</label>
+				<output name="bill" for="drinkSelectId drinkCountId"></output>
+			</form>
+			<input type="submit" name="action" value="Add Order">
+		</div>
+	</div>
+
+
+	<!-- <a href="#openModal">(Ingredients)</a>					
 				<div id="openModal" class="modalDialog">
 					<div>
 						<a href="#close" title="Close" class="close">X</a>
@@ -158,13 +155,6 @@ body {
 							document.write("<p>... </p>");
 						</script>
 					</div>
-				</div>
-				<label>Bill</label>
-				<output name="bill" for="drinkSelectId drinkCountId"></output>
-			</form>
-			<input type="submit" name="action" value="Add Order">
-		</div>
-	</div>
-
+				</div> -->
 </body>
 </html>

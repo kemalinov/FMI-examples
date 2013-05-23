@@ -26,7 +26,7 @@ public class UsersManagement {
     private List<User> allUsersList;
     private Map<String, String> userRoleMap = new HashMap<String, String>();
 
-    private List<Observer> barObservers = new ArrayList<Observer>();
+    private List<Observer> ordersObservers = new ArrayList<Observer>();
     
     private Map<String, Role> nameRoleMap;
     
@@ -45,7 +45,7 @@ public class UsersManagement {
     }
     
     public List<Observer> getObservers() {
-	return barObservers;
+	return ordersObservers;
     }
     
     
@@ -101,7 +101,7 @@ public class UsersManagement {
 	} else if (u.getRole().getRole().equals(RolesType.BARMAN)) {
 	    Barman b = new Barman(u);
 	    allUsersList.add(b);
-	    barObservers.add(b);
+	    ordersObservers.add(b);
 	} else if (u.getRole().getRole().equals(RolesType.MANAGER)) {
 	    allUsersList.add(new Manager(u));
 	}

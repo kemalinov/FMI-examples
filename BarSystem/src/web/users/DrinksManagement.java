@@ -7,9 +7,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
-import javax.ejb.Stateful;
 import javax.servlet.ServletContext;
 
 import services.DrinksLocal;
@@ -20,7 +17,7 @@ public class DrinksManagement {
     private static Logger log = Logger.getLogger(DrinksManagement.class.getName());
 
     private Map<String, Drink> nameDrinkMap;
-    private ServletContext context;
+//    private ServletContext context;
 
     private DrinksLocal services;
 

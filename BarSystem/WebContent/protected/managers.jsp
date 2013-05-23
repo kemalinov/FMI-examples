@@ -19,7 +19,8 @@
 	content="css3, login, form, custom, input, submit, button, html5, placeholder" />
 <meta name="author" content="Codrops" />
 
-<link rel="stylesheet" type="text/css" href="/BarMngmtSystem/css/style.css" />
+<link rel="stylesheet" type="text/css"
+	href="/BarMngmtSystem/css/style.css" />
 <link rel="icon" href="/BarMngmtSystem/images/favicon.ico">
 <!-- 
 <script src="/fmi/js/modernizr.custom.63321.js"></script>
@@ -41,26 +42,32 @@ body {
 }
 </style>
 </head>
-<body>	
+<body>
 	<div class="container">
 		<header>
-			<h2>Welcome, manager ... <%=session.getAttribute("username")%> </h2>
+			<h2>
+				Welcome, manager ...
+				<%=session.getAttribute("username")%>
+			</h2>
 			<div class="support-note">
 				<span class="note-ie">Sorry, only modern browsers.</span>
 			</div>
 
 		</header>
-		
+
 		<section class="main">
-			<!-- what method should be used in order not to see the username/password in the url? -->
-			<form class="form-5" action=<%=getServletContext().getContextPath() + "/public/controller"%> method="post">
-					<input type="submit" name="action" value="logout">
+			<!-- what method should be used in order not to see the username/password in the url? -->
+			
+			<form class="form-5"
+				action=<%=getServletContext().getContextPath() + "/public/controller"%>
+				method="post">
+				<input type="submit" name="action" value="logout">
 			</form>
-			
+
 			<%
 			    UsersManagement userM = (UsersManagement) getServletContext().getAttribute("usersM");
-				if (userM.isManagerUser((String)session.getAttribute("username"))) {
-				    //DrinksManagement drinksM = (DrinksManagement) getServletContext().getAttribute("drinksM");
+			    if (userM.isManagerUser((String) session.getAttribute("username"))) {
+					//DrinksManagement drinksM = (DrinksManagement) getServletContext().getAttribute("drinksM");
 					//drinksM.testPersistingDrink();
 					//OrdersManagement ordersM = (OrdersManagement) getServletContext().getAttribute("ordersM");
 					//ordersM.createNewOrder(null, null);
@@ -68,11 +75,10 @@ body {
 					//drinkM.testPersistingOrder();
 					//TopicClient.sendMessage();
 			%>
-				<button id="monitor_btn" name="Monitor">Manager's btn</button>
-				<%
-			}
-			
-			%>			
+			<button id="monitor_btn" name="Monitor">Manager's btn</button>
+			<%
+			    }
+			%>
 			<!--  if it is admin user show a monitoring button to forward to administration.jsp(list info about active sessions)
 			
 			for normal users do not show that button. and for normal users get the AuditLog and print the history for that user

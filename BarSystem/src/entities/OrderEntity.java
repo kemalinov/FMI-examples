@@ -28,12 +28,20 @@ import constants.OrderStatus;
 	@NamedNativeQuery(name = "OrderEntity.findOrdersByConsumerId", query = "SELECT * FROM app.orders WHERE consumer_id = ?", resultClass = OrderEntity.class),
 	@NamedNativeQuery(name = "OrderEntity.getBillForConsumerId", query = "SELECT sum(bill) FROM app.orders WHERE consumer_id = ?", resultClass = BigDecimal.class),
 	@NamedNativeQuery(name = "OrderEntity.getStatusForOrderId", query = "SELECT status FROM app.orders WHERE order_id = ?"),
-	@NamedNativeQuery(name = "OrderEntity.getCountOfOrderedDrinkForCustomerByDrinkIdAndConsumerId", query = "SELECT sum(od.drinks)" +
+	@NamedNativeQuery(name = "OrderEntity.getOrdersForActiveConsumerByUserId", 
+		query = "SELECT od.order_id, c.place, d.name, odd.drinks, od.status, od.bill" +
+			"FROM app.orders od " +
+			"JOIN app.consumers c " +
+				"ON c.closed = false AND od.consumer_consumer_id = c.consumer_id  AND c.user_user_id = ? " +
+			"JOIN app.ordered_drinks odd " +
+				"ON odd.orderentity_order_id = od.order_id " +
+			"JOIN app.drinks d " +
+				"ON d.drink_id = odd.drinks_key"),	
+	@NamedNativeQuery(name = "OrderEntity.getCountOfOrderedDrinkForCustomerByDrinkIdAndConsumerId", 
+		query = "SELECT sum(od.drinks)" +
 			"FROM app.ordered_drinks od " +
 			"JOIN app.orders o " +
-			"ON od.orderentity_order_id=o.order_id " +
-			"AND o.consumer_id = ? " +
-			"AND od.drinks = ? ", resultClass = Integer.class)
+				"ON od.orderentity_order_id=o.order_id AND o.consumer_consumer_id = ? AND od.drinks_key = ? ", resultClass = Integer.class)
 })
 public class OrderEntity {
 
@@ -47,8 +55,8 @@ public class OrderEntity {
 
     @ElementCollection
     @CollectionTable(name = "app.ordered_drinks")
-    @MapKeyColumn(name = "drinks_key")
-    private Map<DrinkEntity, Integer> drinks; // "drinks" is the count - "Integer"
+    @MapKeyColumn(name = "drinks_key")	//  "drinks_key" - a FK to a "drinks" table
+    private Map<DrinkEntity, Integer> drinks; // the column "drinks" is the number of ordered drink ("Integer" in the map)
 
     @Enumerated(value = EnumType.STRING)
     private OrderStatus status;

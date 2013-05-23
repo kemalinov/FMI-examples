@@ -39,6 +39,7 @@ CREATE TABLE app.consumers (
 	place VARCHAR(20) NOT NULL,
 	time_ TIMESTAMP NOT NULL,
 	user_user_id INTEGER NOT NULL,
+	closed BOOLEAN DEFAULT false,
 CONSTRAINT consumers_user_id_fk FOREIGN KEY (user_user_id)
 	REFERENCES app.users (user_id) ON DELETE NO ACTION ON UPDATE NO ACTION
 );	

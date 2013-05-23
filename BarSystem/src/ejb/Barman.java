@@ -26,9 +26,8 @@ public class Barman extends User implements Observer {
 
     @Override
     public void update(Order o) {
-	urgentOrders.add(o);
+//	urgentOrders.add(o);
+	System.out.println("barman id: " + super.getId() + " has been observerd for change in order: " + o.getId());
     }
-    
-    
     
 }

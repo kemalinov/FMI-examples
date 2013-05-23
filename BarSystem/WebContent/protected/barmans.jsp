@@ -26,18 +26,22 @@
 <meta name="author" content="Codrops" />
 
 <link rel="shortcut icon" href="/BarMngmtSystem/images/favicon.ico">
-<link rel="stylesheet" type="text/css" href="/BarMngmtSystem/css/style.css" />
+<link rel="stylesheet" type="text/css"
+	href="/BarMngmtSystem/css/style.css" />
+<link rel="stylesheet" type="text/css"
+	href="/BarMngmtSystem/css/modalDialog/modalD.css" />
 <!-- 
 <script src="/fmi/js/modernizr.custom.63321.js"></script>
  -->
 <!--[if lte IE 7]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
 <script type="text/javascript">
- function run() {
-     var e = document.getElementById('drinkSelectId');
-     var strUser = e.options[e.selectedIndex].value;
-     return document.getElementById('drinkSelectId').options[document.getElementById('drinkSelectId').selectedIndex].text;
- }
- </script>
+	function run() {
+		var e = document.getElementById('drinkSelectId');
+		var strUser = e.options[e.selectedIndex].value;
+		return document.getElementById('drinkSelectId').options[document
+				.getElementById('drinkSelectId').selectedIndex].text;
+	}
+</script>
 <style>
 @import url(http://fonts.googleapis.com/css?family=Raleway:400,700);
 
@@ -52,95 +56,83 @@ body {
 	color: #fff;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
 }
-
-
-.modalDialog {
-	position: fixed;
-	font-family: Arial, Helvetica, sans-serif;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background: rgba(0,0,0,0.8);
-	z-index: 99999;
-	opacity:0;
-	-webkit-transition: opacity 20ms ease-in;
-	-moz-transition: opacity 20ms ease-in;
-	transition: opacity 20ms ease-in;
-	pointer-events: none;
-}
-.modalDialog:target {
-	opacity:1;
-	pointer-events: auto;
-}
-
-.modalDialog > div {
-	width: 400px;
-	position: relative;
-	margin: 10% auto;
-	padding: 5px 20px 13px 20px;
-	border-radius: 10px;
-	background: #fff;
-	background: -moz-linear-gradient(#fff, #999);
-	background: -webkit-linear-gradient(#fff, #999);
-	background: -o-linear-gradient(#fff, #999);
-}
 </style>
 </head>
-<body>	
+<body>
 	<div class="container">
 		<header>
-			<h2>Welcome, barman ... <%=session.getAttribute("username")%></h2>
+			<h2>
+				Welcome, barman ...
+				<%=session.getAttribute("username")%></h2>
 			<div class="support-note">
 				<span class="note-ie">Sorry, only modern browsers.</span>
 			</div>
 		</header>
 		<section class="main">
-			<form class="form-5" action=<%=getServletContext().getContextPath() + "/public/controller"%> method="post">
-					<input type="submit" name="action" value="logout">
+			<form class="form-5"
+				action=<%=getServletContext().getContextPath() + "/public/controller"%>
+				method="post">
+				<input type="submit" name="action" value="logout">
 			</form>
-			<form class="form-5" action=<%=getServletContext().getContextPath() + "/protected/barmans"%> method="post">
-					<input type="submit" name="action" value="hangout">
+			<form class="form-5"
+				action=<%=getServletContext().getContextPath() + "/protected/barmans"%>
+				method="post">
+				<input type="submit" name="action" value="hangout">
 			</form>
 		</section>
 		<div>
-			<form name="addADrinkForm" action=<%=getServletContext().getContextPath() + "/protected/barmans"%> method="post">
-				<h4>Add a drink</h4>
-				<p>
-					<label>Name</label> 
-					<input type="text" name="drinkName"  required>
-				</p>
-				<p>
-					<label>Ingredients</label> 
-					<input type="text" name="ingredients" placeholder="ingredient,ml;[...]" required>
-				</p>
-				<p>
-					<label>Price</label>
-					<input type="text" name="price" required>
-				</p>
-				<input type="submit" name="action" value="Add Drink">
-			</form>
-		</div>
-		<div>
-			<a href="#openModal">Accept an order</a>
-			<div id="openModal" class="modalDialog">
+			<p>// A table of all "PENDING" and "OVERDUE" orders! With select
+				an order via a radio btn -> "accept" btn -> modal dialog for this
+				order -> "done" btn...</p>
+			<a href="#acceptAnOrderModal">Accept an order</a>
+			<div id="acceptAnOrderModal" class="modalDialog">
 				<div>
 					<a href="#close" title="Close" class="close">X</a>
-					<form name="acceptAnOrder" action=<%=getServletContext().getContextPath() + "/protected/barmans"%> method="post">
-						<h4>Accept an order</h4>
+					<form name="acceptAnOrder"
+						action=<%=getServletContext().getContextPath() + "/protected/barmans"%>
+						method="post">
+						<h4>Accepted an order id:...</h4>
 						<p>
-							list of waiting orders....
-						</p>
-						<input type="submit" name="action" value="Accept">
+							- Show the ingredients of every drink in the order <input
+								type="submit" name="action" value="Done">
 					</form>
 				</div>
-			</div>		
+			</div>
 		</div>
-		
-		
-		
+
+		<p>
+			<br>
+			<br>
+		</p>
+
+		<div>
+			<p>// Add a drink via a modal dialog form?</p>
+			<a href="#addADrinkModal">Add a new drink</a>
+			<div id="addADrinkModal" class="modalDialog">
+				<div>
+					<a href="#close" title="Close" class="close">X</a>
+					<form name="addADrinkForm"
+						action=<%=getServletContext().getContextPath() + "/protected/barmans"%>
+						method="post">
+						<h4>Add a drink</h4>
+						<p>
+							<label>Name</label> <input type="text" name="drinkName" required>
+						</p>
+						<p>
+							<label>Ingredients</label> <input type="text" name="ingredients"
+								placeholder="ingredient,ml;[...]" required>
+						</p>
+						<p>
+							<label>Price</label> <input type="text" name="price" required>
+						</p>
+						<input type="submit" name="action" value="Add Drink">
+					</form>
+				</div>
+			</div>
+			<!-- end of modal dialog  -->
+		</div>
 	</div>
-		
+
 
 
 </body>

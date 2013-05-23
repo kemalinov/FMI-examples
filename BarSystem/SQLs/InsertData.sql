@@ -95,14 +95,25 @@ alter table app.orders alter column bill NOT NULL
 RENAME COLUMN app.orders.consumer_id TO consumer_consumer_id
 
 SELECT status FROM app.orders WHERE order_id=5
-
 SELECT sum(bill) FROM app.orders WHERE consumer_id=6
+
+-- returns the orders for active consumers per user
+SELECT od.order_id, c.place, d.name, odd.drinks, od.status, od.bill 
+FROM app.orders od
+join app.consumers c 
+	on c.closed = false and od.consumer_consumer_id = c.consumer_id  and c.user_user_id = 1 
+join app.ordered_drinks odd 
+	on odd.orderentity_order_id = od.order_id
+join app.drinks d
+on d.drink_id = odd.drinks_key;
+
+
  
--- returns the count of buied drinks per kind for a client  
+-- returns the count of bought drinks per kind for a client  
 SELECT sum(od.drinks) 
 FROM app.ordered_drinks od
 join app.orders o
-on od.orderentity_order_id=o.order_id and o.consumer_id=6 and od.drinks=1 
+on od.orderentity_order_id=o.order_id and o.consumer_consumer_id=1 and od.drinks_key=1 
 
 
 

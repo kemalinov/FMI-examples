@@ -7,9 +7,6 @@ import java.util.PriorityQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.ejb.EJB;
-import javax.ejb.Singleton;
-import javax.ejb.Stateful;
 import javax.servlet.ServletContext;
 
 import services.OrdersLocal;
@@ -36,13 +33,21 @@ public class OrdersManagement implements Subject {
     
     
     public OrdersManagement(OrdersLocal services, ServletContext context) {
-//	this.context = context;
+	this.context = context;
 	this.services = services;
 	this.pendingOrders = new PriorityQueue<Order>();
     }
 
     
-    public void addOrderToConsumer(Consumer consumer, Map<Drink, Integer> drinks) {
+    public Consumer createNewClientOrder(User loggedUserName, Date date, String place, Map<Drink, Integer> drinks) {
+	// persist consumer
+	Consumer c = persistConsumer(loggedUserName, date, place);
+	// persist the order
+	addOrderToConsumer(c, drinks);
+	return c;
+    }
+    
+    public Order addOrderToConsumer(Consumer consumer, Map<Drink, Integer> drinks) {
 	System.out.println("Test of creation of an order...");
 	
 	// persist a consumer - get the logged user! 
@@ -71,28 +76,25 @@ public class OrdersManagement implements Subject {
 	    pendingOrders.add(ce);
 	    new OrderTimer(this, ce);
 	    System.out.println("orders size: " + pendingOrders.size());
-	    System.out.println("Test of persisting a order finished well!");	
+	    System.out.println("Test of persisting a order finished well!");
+	    return ce;
 	}
-    }
-    
-    public void createNewClienOrder(String loggedUserName, String place, Map<Drink, Integer> drinks) {
-	// persist consumer
-	Consumer c = persistConsumer(loggedUserName, place);
-	// persist the order
-	addOrderToConsumer(c, drinks);
+	return null;
     }
 
-    private Consumer persistConsumer(String loggedUserName, String place) {
+    private Consumer persistConsumer(User loggedUser, Date date, String place) {
 	System.out.println("Test of persisting a consumer...");
 	
 	// persist a consumer - get the logged user! 
-	UsersManagement userM = (UsersManagement) context.getAttribute("usersM");
-	User loggedUser = userM.getUserByName(loggedUserName);
+//	UsersManagement userM = (UsersManagement) context.getAttribute("usersM");
+//	User loggedUser = userM.getUserByName(loggedUserName);
 	
 	System.out.println(loggedUser);
 	User u = new User(loggedUser.getId(), loggedUser.getName(), loggedUser.getPassword(), new Role(loggedUser.getRole().getId(), loggedUser.getRole().getRole()));
 	
-	Consumer c = new Consumer(null, new Date(), place, false, u);
+	// date
+	// place
+	Consumer c = new Consumer(null, date, place, false, u);
 	Consumer ce = null;
 	try {
 	     ce = services.persistConsumer(c);
