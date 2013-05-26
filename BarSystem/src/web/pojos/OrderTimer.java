@@ -9,7 +9,7 @@ import constants.OrderStatus;
 
 public class OrderTimer {
     
-    private static final long TIMEOUT = 10 * 1000; // milliseconds
+    private static final long TIMEOUT = 30 * 1000; // milliseconds
     
     private Timer sendNotificationTimer;
     private Timer changeStatusTimer;
@@ -39,8 +39,7 @@ public class OrderTimer {
 	    OrderStatus status = ordersM.getOrderStatus(order); 
 
 	    if (status.equals(OrderStatus.PENDING)) {
-		// TODO:
-		ordersM.notifyObservers(order);
+		ordersM.notifyObservers();
 		System.out.println("Sent notification to the barmans!");
 		System.out.println("Started a new timer...");
 		changeStatusTimer = new Timer();
@@ -58,9 +57,8 @@ public class OrderTimer {
 	
 	public void run() {
 	    System.out.println("ChangeStatusTask's time is up!");
-	    
-	    OrderStatus status = ordersM.getOrderStatus(order); 
-	    if (! status.equals(OrderStatus.DONE)) {
+	    Order o = ordersM.findOrderById(order.getId());
+	    if (! o.getStatus().equals(OrderStatus.DONE)) {
 		order.setStatus(OrderStatus.OVERDUE);
 		ordersM.updateAnOrder(order);
 		

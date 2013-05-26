@@ -19,7 +19,8 @@ import javax.persistence.TemporalType;
     	@NamedNativeQuery(name = "ConsumerEntity.findAll", query = "SELECT * FROM app.consumers", resultClass = ConsumerEntity.class),
 	@NamedNativeQuery(name = "ConsumerEntity.findConsumerById", query = "SELECT * FROM app.consumers WHERE consumer_id = ?", resultClass = ConsumerEntity.class),
 	@NamedNativeQuery(name = "ConsumerEntity.findUserIdByConsumerId", query = "SELECT user_id FROM app.consumers WHERE consumer_id = ?", resultClass = UserEntity.class),
-    	@NamedNativeQuery(name = "ConsumerEntity.findActiveConsumersByUserId", query = "SELECT * FROM app.consumers WHERE closed = false AND consumer_id = ?", resultClass = ConsumerEntity.class)
+    	@NamedNativeQuery(name = "ConsumerEntity.findActiveConsumersByUserId", query = "SELECT * FROM app.consumers WHERE closed = false AND user_user_id = ?", resultClass = ConsumerEntity.class),
+    	@NamedNativeQuery(name = "ConsumerEntity.findActiveConsumersByPlace", query = "SELECT * FROM app.consumers WHERE closed = false AND place = ?", resultClass = ConsumerEntity.class)
 })
 public class ConsumerEntity {
     

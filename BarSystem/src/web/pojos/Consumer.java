@@ -7,7 +7,7 @@ import ejb.User;
 
 public class Consumer {
     
-    private Integer consumer_id;
+    private Integer id;
     
     private Date date;
     private String place;
@@ -16,7 +16,7 @@ public class Consumer {
     private Boolean isClosed;
 
     public Consumer(Integer id, Date date, String place, Boolean isClosed, User user) {
-	this.consumer_id  = id;
+	this.id  = id;
 	this.date = date;
 	this.place = place;
 	this.user = user;
@@ -24,11 +24,11 @@ public class Consumer {
     }
     
     public Integer getId() {
-        return consumer_id;
+        return id;
     }
 
     public void setId(Integer consumer_id) {
-        this.consumer_id = consumer_id;
+        this.id = consumer_id;
     }
 
     public String getPlace() {

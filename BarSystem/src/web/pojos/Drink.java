@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class Drink {
 
-    private Integer drink_id;
+    private Integer id;
 
     private String name;
     private String ingredients;	// [<sustavka,gr>;<...>]
@@ -13,18 +13,18 @@ public class Drink {
     
     public Drink(Integer id, String name, String ingredients,
 	    BigDecimal price) {
-	this.drink_id = id;
+	this.id = id;
 	this.name = name;
 	this.ingredients = ingredients;
 	this.price = price;
     }
 
     public Integer getId() {
-	return drink_id;
+	return id;
     }
 
     public void setId(Integer drink_id) {
-	this.drink_id = drink_id;
+	this.id = drink_id;
     }
 
     public String getName() {

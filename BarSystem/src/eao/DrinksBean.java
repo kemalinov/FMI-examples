@@ -24,6 +24,7 @@ public class DrinksBean {
     
     public Drink persistDrink(Drink persistDrinkRequest) {
 	DrinkEntity de = new DrinkEntity();
+	de.setId(persistDrinkRequest.getId());
 	de.setIngredients(persistDrinkRequest.getIngredients());
 	de.setName(persistDrinkRequest.getName());
 	de.setPrice(persistDrinkRequest.getPrice());

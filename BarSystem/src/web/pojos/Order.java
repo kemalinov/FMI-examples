@@ -9,15 +9,15 @@ import constants.OrderStatus;
 
 public class Order implements Comparable<Order>{
 
-    private Integer order_id;
-    private Consumer consumer_id;
+    private Integer id;
+    private Consumer consumerId;
     private Map<Drink, Integer> drinks; // "drinks" is the count - "Integer"
     private OrderStatus status;
     private BigDecimal bill;
 
     public Order(Integer id, Consumer consumer, Map<Drink, Integer> drinks, OrderStatus status, BigDecimal bill) {
-	this.order_id = id;
-	this.consumer_id = consumer;
+	this.id = id;
+	this.consumerId = consumer;
 	this.status = status;
 	this.bill = bill;
 	
@@ -31,19 +31,19 @@ public class Order implements Comparable<Order>{
     }
 
     public Integer getId() {
-	return order_id;
+	return id;
     }
 
     public void setId(Integer order_id) {
-	this.order_id = order_id;
+	this.id = order_id;
     }
 
     public Consumer getConsumerId() {
-	return consumer_id;
+	return consumerId;
     }
 
     public void setConsumerId(Consumer consumer_id) {
-	this.consumer_id = consumer_id;
+	this.consumerId = consumer_id;
     }
 
     public OrderStatus getStatus() {
@@ -84,7 +84,7 @@ public class Order implements Comparable<Order>{
 	    System.out.println(drinks.getValue());
 	    b = b.add(drinks.getKey().getPrice().multiply(new BigDecimal(drinks.getValue())));  
 	}
-	System.out.println("calculated bill for the order " + order_id + " is " + b);
+	System.out.println("calculated bill for the order " + id + " is " + b);
 	return b;
     }
 

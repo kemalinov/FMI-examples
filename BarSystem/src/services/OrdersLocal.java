@@ -24,5 +24,7 @@ public interface OrdersLocal extends ConsumersLocal {
     public BigDecimal getBillForConsumer(int findByConsumerIdRequest);
 
     public OrderStatus getStatusForOrder(int findByOrderIdRequest);
+    
+    public List<Order> findAllActiveOrdersByUserId(int findByUserIdRequest);
 
 }

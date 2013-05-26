@@ -47,10 +47,14 @@ public class OrderServices implements OrdersLocal, ConsumersLocal {
     }
 
     @Override
-    public List<Consumer> findActiveConsumersByUserId(int findByUserIdRequest) {
+    public List<Consumer> findAllActiveConsumersByUserId(int findByUserIdRequest) {
 	return consumers.findActiveConsumersByUserId(findByUserIdRequest);
     }
     
+    @Override
+    public Consumer findActiveConsumereByPlace(String place) {
+	return consumers.findActiveConsumereByPlace(place);
+    }
     
     // Orders services
     @Override
@@ -84,6 +88,11 @@ public class OrderServices implements OrdersLocal, ConsumersLocal {
     public OrderStatus getStatusForOrder(
 	    int findByOrderIdRequest) {
 	return orders.getStatusForOrder(findByOrderIdRequest);
+    }
+    
+    @Override
+    public List<Order> findAllActiveOrdersByUserId(int findByUserIdRequest) {
+        return orders.findAllActiveOrdersByUserId(findByUserIdRequest);
     }
     
 }

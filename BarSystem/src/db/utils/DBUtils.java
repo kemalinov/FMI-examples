@@ -23,6 +23,33 @@ public class DBUtils {
 	return new Consumer(ce.getId(), ce.getDate(), ce.getPlace(), ce.isClosed(), u);
     }
     
+    public static ConsumerEntity ConsumerToConsumerEntity(Consumer c) {
+	ConsumerEntity ce = new ConsumerEntity();
+	ce.setPlace(c.getPlace());
+	ce.setDate(c.getDate());
+	ce.setUserId(DBUtils.UserToUserEntity(c.getUserId()));
+	ce.setClosed(c.isClosed());
+	return ce;
+    }
+
+    public static RoleEntity RoleToRoleEntity(Role r) {
+	RoleEntity re = new RoleEntity();
+	re.setId(r.getId());
+	re.setRoleName(r.getRole());
+	return re;
+    }
+    
+    public static UserEntity UserToUserEntity(User u) {
+	UserEntity ue = new UserEntity();
+	ue.setId(u.getId());
+	ue.setName(u.getName());
+	ue.setPassword(u.getPassword());
+	ue.setRole(DBUtils.RoleToRoleEntity(u.getRole()));
+	return ue;
+    }
+    
+    
+    
     public static User UserEntityToUser(UserEntity entity) {
 	Role rDto = RoleEntityToRole(entity.getRole());
 	return new User(entity.getId(), entity.getName(), entity.getPassword(), rDto);

@@ -24,6 +24,7 @@ public class UsersBean {
     
     public User persistUser(User persistUserRequest) {
 	UserEntity ue = new UserEntity();
+	ue.setId(persistUserRequest.getId());
 	ue.setName(persistUserRequest.getName());
 	ue.setPassword(persistUserRequest.getPassword());
 	
@@ -40,7 +41,7 @@ public class UsersBean {
 		ue = em.merge(ue);
 	    }    
 	} catch (Exception e) {
-	    // TODO: handle exception
+	    System.err.println("Exception in persisting of a user method: " + e.getMessage());
 	} 
 	
 	return DBUtils.UserEntityToUser(ue);

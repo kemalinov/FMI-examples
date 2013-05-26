@@ -1,0 +1,29 @@
+/* main orders' table section */
+.ordersTableDiv {
+	margin: 0; padding: 0; border-collapse: collapse; width: 550px; height: 250px; overflow: hidden; border: 1px solid black; /* H = header's H + content's H; */
+}
+
+.ordersTableDiv>table { /* headers table */
+	margin: 0; padding: 0; border-collapse: collapse; color: black; width: 550px; height: 20px; text-align: left; background-color: rgb(240,248,255);
+}
+
+.ordersTableDiv>table tbody tr, .ordersTableDiv>table tbody tr th {
+	margin: 0; padding: 0; border-collapse: collapse;
+} 
+
+	/*  content section */
+	.ordersContentTableDiv {
+		margin: 0; padding: 0; border-collapse: collapse; width: 550px; height: 230px; overflow: auto;
+	}
+	
+	.ordersContentTableDiv>table { /* content table  */
+	margin: 0; padding: 0; border-collapse: collapse; width: 530px;	/* the whole W-20px(for srcoll bar) */
+	}
+	
+	.ordersContentTableDiv>table tbody, .ordersContentTableDiv>table tr {
+		margin: 0; padding: 0; border-collapse: collapse;
+	}
+	
+	.ordersContentTableDiv>table tr td {
+		border: 1px solid lightgrey;
+	}

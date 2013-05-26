@@ -44,17 +44,20 @@ public class ControllerServlet extends HttpServlet {
 	    String username = request.getParameter("username");
 	    String password = request.getParameter("password");
 
-	    if (users.checkUser(username, password)) {
+	    if (users.checkUser(username, password)) {	// if it is a valid one it is auto logged then! 
 		session.setAttribute("username", username);
-		User u = users.getUserByName(username);
+		User u = users.getLoggedUserByName(username);
+		session.setAttribute("loggedUser", u);
+		
 		if (u.getRole().getRole().equals(RolesType.WAITER)) {
-		    selectedScreen = "/protected/waiters.jsp";
+		    selectedScreen = "/protected/waiters";
 		} else if (u.getRole().getRole().equals(RolesType.BARMAN)) {
-		    selectedScreen = "/protected/barmans.jsp";
+		    selectedScreen = "/protected/barmans";
 		} else if (u.getRole().getRole().equals(RolesType.MANAGER)) {
 		    selectedScreen = "/protected/managers.jsp";
 		}
 		System.out.println("authentication successfully for user " + username);
+		
 	    } else {
 		// TODO: error handling?
 		System.out.println("authentication failed for user " + username);
@@ -81,6 +84,7 @@ public class ControllerServlet extends HttpServlet {
 
 	} else if (action.equals("logout")) {
 	    String username = (String) session.getAttribute("username");
+	    users.logoutUser(username);
 	    session.invalidate();
 	    selectedScreen = "/public/login.jsp";
 	    System.out.println("logout of " + username);

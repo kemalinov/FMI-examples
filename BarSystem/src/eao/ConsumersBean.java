@@ -25,13 +25,15 @@ public class ConsumersBean {
 
     public Consumer persistConsumer(Consumer persistConsumerRequest) {
 	ConsumerEntity ce = new ConsumerEntity();
+	ce.setId(persistConsumerRequest.getId());
 	ce.setDate(persistConsumerRequest.getDate());
 	ce.setPlace(persistConsumerRequest.getPlace());
 	
-	Query q = em.createNamedQuery("UserEntity.findUserById");
-	q.setParameter(1, persistConsumerRequest.getUserId().getId());
-	UserEntity ue = (UserEntity) q.getSingleResult();
-	ce.setUserId(ue);
+//	Query q = em.createNamedQuery("UserEntity.findUserById");
+//	q.setParameter(1, persistConsumerRequest.getUserId().getId());
+//	UserEntity ue = (UserEntity) q.getSingleResult();
+	ce.setUserId(DBUtils.UserToUserEntity(persistConsumerRequest.getUserId()));
+	ce.setClosed(persistConsumerRequest.isClosed());
 	try {
 	    if(ce.getId() == null) {
 		em.persist(ce);
@@ -40,7 +42,7 @@ public class ConsumersBean {
 		ce = em.merge(ce);
 	    }    
 	} catch (Exception e) {
-	    // TODO: handle exception
+	    System.err.println("Exception in persisting of a client method: " + e.getMessage());
 	} 
 	
 	return DBUtils.ConsumerEntityToConsumer(ce);
@@ -76,6 +78,7 @@ public class ConsumersBean {
 
     public List<Consumer> findActiveConsumersByUserId(int findByUserIdRequest) {
 	Query q = em.createNamedQuery("ConsumerEntity.findActiveConsumersByUserId");
+	q.setParameter(1, findByUserIdRequest);
 	List<ConsumerEntity> ceList = q.getResultList();
 	
 	List<Consumer> consumersList = new ArrayList<Consumer>(ceList.size());
@@ -83,5 +86,13 @@ public class ConsumersBean {
 	    consumersList.add(DBUtils.ConsumerEntityToConsumer(ce));
 	}
 	return consumersList;
+    }
+    
+    public Consumer findActiveConsumereByPlace(String place) {
+	Query q = em.createNamedQuery("findActiveConsumersByPlace");
+	q.setParameter(1, place);
+	ConsumerEntity ce =  (ConsumerEntity) q.getSingleResult();
+
+	return DBUtils.ConsumerEntityToConsumer(ce);
     }
 }

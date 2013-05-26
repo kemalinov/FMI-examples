@@ -23,21 +23,23 @@ public class UsersManagement {
     
     private static Logger log = Logger.getLogger(UsersManagement.class.getName());
 
-    private List<User> allUsersList;
+    private List<User> allRegisteredUsersList;
+    
     private Map<String, String> userRoleMap = new HashMap<String, String>();
-
+    private Map<String, User> loggedUsersList = new HashMap<String, User>();
+    
     private List<Observer> ordersObservers = new ArrayList<Observer>();
     
     private Map<String, Role> nameRoleMap;
     
-//    private ServletContext context;
+    private ServletContext context;
     
     private UsersLocal services;
 
     
     // constructor
     public UsersManagement(UsersLocal services, ServletContext context) {
-//	this.context = context;
+	this.context = context;
 	this.services = services;
 	System.out.println("userServices: " + this.services);
 	initUsers();
@@ -58,25 +60,16 @@ public class UsersManagement {
 	    log.log(Level.SEVERE, "Exception while calling findAllUsers()", e);
 	}
 	if (userList != null) {
-	    allUsersList = new ArrayList<User>(userList.size());
+	    allRegisteredUsersList = new ArrayList<User>(userList.size());
 	    for (User u : userList) {
-//		User u = Utils.UserDtoToUser(dto);
-		addNewUser(u);
+		userRoleMap.put(u.getName(), u.getRole().getRole());
+		allRegisteredUsersList.add(u);
 	    }
 	}
     }
     
     public List<Role> getAllRoles() {
 	return new ArrayList<Role>(nameRoleMap.values());
-    }
-    
-    public User getUserByName(String username) {
-	for(User u : allUsersList) {
-	    if (u.getName().equalsIgnoreCase(username)) {
-		return u;
-	    }
-	}
-	return null;
     }
     
     private void initRoles() {
@@ -94,25 +87,13 @@ public class UsersManagement {
 	}	
     }
     
-    private void addNewUser(User u) {
-	userRoleMap.put(u.getName(), u.getRole().getRole());
-	if (u.getRole().getRole().equals(RolesType.WAITER) ) {
-	    allUsersList.add(new Waiter(u));
-	} else if (u.getRole().getRole().equals(RolesType.BARMAN)) {
-	    Barman b = new Barman(u);
-	    allUsersList.add(b);
-	    ordersObservers.add(b);
-	} else if (u.getRole().getRole().equals(RolesType.MANAGER)) {
-	    allUsersList.add(new Manager(u));
-	}
-    }
-    
     public boolean checkUser(String username, String password) {
-	if (allUsersList != null) {
-        	for (User u : allUsersList) {
+	if (allRegisteredUsersList != null) {
+        	for (User u : allRegisteredUsersList) {
         	    if (u.getName().equalsIgnoreCase(username) && PasswordEncryption.checkPassords(password, u.getPassword())) {
         		System.out.println("User found: " + u.getName());
         		System.out.println("Role: " + u.getRole().getRole());
+        		addNewLoggedUser(u);
         		return true;
         	    }
         	}
@@ -120,24 +101,58 @@ public class UsersManagement {
 	return false;
     }
     
+    private void addNewLoggedUser(User u) {
+	User user = createAConcreteUserByRole(u);
+	loggedUsersList.put(user.getName(), user);
+	if (u instanceof Observer){
+	    ordersObservers.add((Observer) user);
+	}
+    }
+        
+    private User createAConcreteUserByRole(User u) {
+	if (u.getRole().getRole().equals(RolesType.WAITER) ) {
+	    return new Waiter(u, (OrdersManagement) context.getAttribute("ordersM"));
+	} else if (u.getRole().getRole().equals(RolesType.BARMAN)) {
+	    return new Barman(u, (OrdersManagement) context.getAttribute("ordersM"),
+		    (DrinksManagement) context.getAttribute("drinksM"));
+	} else if (u.getRole().getRole().equals(RolesType.MANAGER)) {
+	    return new Manager(u);
+	}
+	System.out.println("different roled user!!! add \"User\" object");
+	return u;
+    }
+
+    public User getLoggedUserByName(String username) {
+	System.out.println("logged users " + loggedUsersList.size());
+	return loggedUsersList.get(username);
+    }
+    
+    public void logoutUser(String username) {
+	System.out.println("logout user " + username);
+	User user = loggedUsersList.remove(username);
+	if (user instanceof Observer) {
+	    ordersObservers.remove(user);
+	}
+	System.out.println("logged users size: "+ loggedUsersList.size());
+    }
+    
     public boolean registerUser(String username, String password, String role) {
 	if (!userRoleMap.containsKey(username)) {
 	    String encryptedPass = PasswordEncryption.encryptPassword(password);
-	    User persistedEntity = null;
+	    User newRegedUser = null;
 	    try {
 		Role r = nameRoleMap.get(role);
-//		System.out.println("current role: " + r.getId() +", "+ r.getRole());
 		User u = new User(null, username.toLowerCase(), encryptedPass, r);
-		persistedEntity = services.persistUser(u);
+		newRegedUser = services.persistUser(u);
 	    } catch (Exception e) {
 		log.log(Level.SEVERE, "Exception while persists a new user: ", e);
 		return false;
 	    }
-	    System.out.println("persisted user: " + persistedEntity.getId());
-	    if(persistedEntity != null) {
-//		UserDTO dto = persistedEntity.getUser();
-//		User user = Utils.UserDtoToUser(dto);
-		addNewUser(persistedEntity);
+	    System.out.println("persisted user: " + newRegedUser.getId());
+	    if(newRegedUser != null) {
+//		addNewUser(newRegedUser);
+		userRoleMap.put(newRegedUser.getName(), newRegedUser.getRole().getRole());
+		allRegisteredUsersList.add(newRegedUser);
 		return true;
 	    }
 	} else {

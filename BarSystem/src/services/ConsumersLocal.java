@@ -19,5 +19,7 @@ public interface ConsumersLocal {
 
     public User findUserByConsumerId(int findByConsumerIdRequest);
     
-    public List<Consumer> findActiveConsumersByUserId(int findByUserIdRequest);
+    public List<Consumer> findAllActiveConsumersByUserId(int findByUserIdRequest);
+    
+    public Consumer findActiveConsumereByPlace(String place);
 }

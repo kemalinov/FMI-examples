@@ -1,6 +1,5 @@
 package web.users;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,17 +51,13 @@ public class DrinksManagement {
 	return nameDrinkMap;
     }
 
-    public void persistADrink(Drink drink) {
+    public Drink persistADrink(Drink drink) {
 	System.out.println("Test of persisting a drink...");
-
-	// persist a drink
-	// PersistDrinkRequest req = new PersistDrinkRequest(new DrinkDTO(null,
-	// "airqn", "voda,200;mlqko,200", new BigDecimal("1.20")));
-	Drink d = new Drink(null, "airqn", "voda,200;mlqko,200",
-		new BigDecimal("1.20"));
-
+	
+	//Drink d = new Drink(null, "airqn", "voda,200;mlqko,200", new BigDecimal("1.20"));
+	Drink dr = null;
 	try {
-	    Drink dr = services.persistDrink(d);
+	    dr = services.persistDrink(drink);
 	    addNewDrink(dr);
 	    System.out.println("New drink ID: " + dr.getId());
 
@@ -71,6 +66,8 @@ public class DrinksManagement {
 	}
 
 	System.out.println("Test of persisting a drink finished well!");
+	
+	return dr;
     }
 
     // ////////////////// Test methods

@@ -43,15 +43,15 @@ public final class ApplicationStartedListener implements ServletContextListener 
 //	}
 	
 	if (userServices != null && orderServices != null && drinkServices != null) {
-	    UsersManagement usersM = new UsersManagement(userServices, context);
-	    context.setAttribute("usersM", usersM); // accessible from JSPs, servlets,...
-	    context.setAttribute("roles", usersM.getAllRoles());
-
 	    DrinksManagement drinksM = new DrinksManagement(drinkServices, context);
 	    context.setAttribute("drinksM", drinksM);
 	    
 	    OrdersManagement ordersM = new OrdersManagement(orderServices, context);
 	    context.setAttribute("ordersM", ordersM);
+	    
+	    UsersManagement usersM = new UsersManagement(userServices, context);
+	    context.setAttribute("usersM", usersM); // accessible from JSPs, servlets,...
+	    context.setAttribute("roles", usersM.getAllRoles());
 
 	    System.out.println("application started...");
 	}
