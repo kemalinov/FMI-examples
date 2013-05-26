@@ -9,15 +9,17 @@ import ejb.User;
 
 @Local
 public interface ConsumersLocal {
-    
-    // Consumers services
-    public Consumer persistConsumer(Consumer persistConsumerRequest);
 
-    public List<Consumer> findAllConsumers();
+	// Consumers services
+	public Consumer persistConsumer(Consumer persistConsumerRequest);
 
-    public Consumer findConsumerById(int findByConsumerIdRequest);
+	public List<Consumer> findAllConsumers();
 
-    public User findUserByConsumerId(int findByConsumerIdRequest);
-    
-    public List<Consumer> findActiveConsumersByUserId(int findByUserIdRequest);
+	public Consumer findConsumerById(int findByConsumerIdRequest);
+
+	public User findUserByConsumerId(int findByConsumerIdRequest);
+
+	public List<Consumer> findAllActiveConsumersByUserId(int findByUserIdRequest);
+
+	public Consumer findActiveConsumereByPlace(String place);
 }

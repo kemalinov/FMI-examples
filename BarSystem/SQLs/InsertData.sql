@@ -64,23 +64,24 @@ select * from app.ordered_drinks;
 
 select * from app.orders;
 
-delete from app.ordered_drinks where orderentity_order_id=1
-
+delete from app.ordered_drinks where orderentity_order_id>30
 
 update app.drinks set price=1.90 where drink_id=1;
 
 
-delete from app.orders where order_id>3
-
-
 ALTER TABLE app.orders add COLUMN drinks user-defined
 
+delete from app.orders where order_id>30
 
 select * from app.consumers;
 RENAME COLUMN app.consumers.user_id TO user_user_id
 
-delete from app.consumers where consumer_id=2
+update app.consumers set user_user_id=2 where consumer_id=1;
+
+delete from app.consumers where consumer_id>6
 ALTER TABLE app.consumers ADD column closed BOOLEAN default false NOT NULL
+
+SELECT * FROM app.consumers WHERE closed = false AND user_user_id =4
 
 
 select * from app.drinks;
@@ -97,8 +98,12 @@ RENAME COLUMN app.orders.consumer_id TO consumer_consumer_id
 SELECT status FROM app.orders WHERE order_id=5
 SELECT sum(bill) FROM app.orders WHERE consumer_id=6
 
+
+
+
+
 -- returns the orders for active consumers per user
-SELECT od.order_id, c.place, d.name, odd.drinks, od.status, od.bill 
+SELECT od.order_id, od.consumer_consumer_id, c.place, d.name, odd.drinks, od.status, od.bill 
 FROM app.orders od
 join app.consumers c 
 	on c.closed = false and od.consumer_consumer_id = c.consumer_id  and c.user_user_id = 1 
@@ -114,7 +119,6 @@ SELECT sum(od.drinks)
 FROM app.ordered_drinks od
 join app.orders o
 on od.orderentity_order_id=o.order_id and o.consumer_consumer_id=1 and od.drinks_key=1 
-
 
 
 

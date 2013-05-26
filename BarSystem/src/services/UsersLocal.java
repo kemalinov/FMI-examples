@@ -10,20 +10,20 @@ import ejb.User;
 @Local
 public interface UsersLocal {
 
-    // Role services
-    public Role findRoleById(int findRoleByIdRequest);
+	// Role services
+	public Role findRoleById(int findRoleByIdRequest);
 
-    public List<Role> findAllRoles();
+	public List<Role> findAllRoles();
 
-    public Role findRoleByUserId(int findByUserIdRequest);
+	public Role findRoleByUserId(int findByUserIdRequest);
 
-    // User services
-    public User persistUser(User persistUserRequest);
+	// User services
+	public User persistUser(User persistUserRequest);
 
-    public User findUserById(int findUserByIdRequest);
+	public User findUserById(int findUserByIdRequest);
 
-    public List<User> findAllUsers();
+	public List<User> findAllUsers();
 
-    public List<User> findUsersByRoleId(int findByRoleIdRequest);
+	public List<User> findUsersByRoleId(int findByRoleIdRequest);
 
 }

@@ -18,51 +18,53 @@ import web.users.UsersManagement;
 @WebListener
 public final class ApplicationStartedListener implements ServletContextListener {
 
-    private static Logger log = Logger.getLogger(ApplicationStartedListener.class.getName());
+	private static Logger log = Logger.getLogger(ApplicationStartedListener.class.getName());
 
-    private ServletContext context = null;
+	private ServletContext context = null;
 
-    @EJB(beanName="DrinkServices")
-    private DrinksLocal drinkServices;
+	@EJB(beanName = "DrinkServices")
+	private DrinksLocal drinkServices;
 
-    @EJB(beanName="UserServices")
-    private UsersLocal userServices;
-    
-    @EJB(beanName="OrderServices")
-    private OrdersLocal orderServices;
-    
-    
-    // initialize DB, allocate some big stuff
-    public void contextInitialized(ServletContextEvent event) {
-	context = event.getServletContext();
+	@EJB(beanName = "UserServices")
+	private UsersLocal userServices;
 
-//	try { 
-//	    services = (Facade) new InitialContext().lookup("java:global/BarSystem/Facade");
-//	} catch (NamingException e) {d
-//	    log.log(Level.SEVERE, "Exception on performing a JNDI lookup to the Facade: ", e);
-//	}
-	
-	if (userServices != null && orderServices != null && drinkServices != null) {
-	    UsersManagement usersM = new UsersManagement(userServices, context);
-	    context.setAttribute("usersM", usersM); // accessible from JSPs, servlets,...
-	    context.setAttribute("roles", usersM.getAllRoles());
+	@EJB(beanName = "OrderServices")
+	private OrdersLocal orderServices;
 
-	    DrinksManagement drinksM = new DrinksManagement(drinkServices, context);
-	    context.setAttribute("drinksM", drinksM);
-	    
-	    OrdersManagement ordersM = new OrdersManagement(orderServices, context);
-	    context.setAttribute("ordersM", ordersM);
+	// initialize DB, allocate some big stuff
+	public void contextInitialized(ServletContextEvent event) {
+		context = event.getServletContext();
 
-	    System.out.println("application started...");
+		// try {
+		// services = (Facade) new
+		// InitialContext().lookup("java:global/BarSystem/Facade");
+		// } catch (NamingException e) {d
+		// log.log(Level.SEVERE,
+		// "Exception on performing a JNDI lookup to the Facade: ", e);
+		// }
+
+		if (userServices != null && orderServices != null && drinkServices != null) {
+			DrinksManagement drinksM = new DrinksManagement(drinkServices, context);
+			context.setAttribute("drinksM", drinksM);
+
+			OrdersManagement ordersM = new OrdersManagement(orderServices, context);
+			context.setAttribute("ordersM", ordersM);
+
+			UsersManagement usersM = new UsersManagement(userServices, context);
+			context.setAttribute("usersM", usersM); // accessible from JSPs,
+													// servlets,...
+			context.setAttribute("roles", usersM.getAllRoles());
+
+			System.out.println("application started...");
+		}
 	}
-    }
 
-    public void contextDestroyed(ServletContextEvent event) {
-	// context.removeAttribute("auditLog");
-	context.removeAttribute("userM");
-	context.removeAttribute("drinksM");
-	context.removeAttribute("ordersM");
-	
-	System.out.println("application stopping...");
-    }
+	public void contextDestroyed(ServletContextEvent event) {
+		// context.removeAttribute("auditLog");
+		context.removeAttribute("userM");
+		context.removeAttribute("drinksM");
+		context.removeAttribute("ordersM");
+
+		System.out.println("application stopping...");
+	}
 }

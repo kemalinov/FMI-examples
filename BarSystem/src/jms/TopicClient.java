@@ -16,37 +16,36 @@ import javax.jms.Topic;
 
 public class TopicClient {
 
-    private static Logger log = Logger.getLogger(TopicClient.class.getName());
+	private static Logger log = Logger.getLogger(TopicClient.class.getName());
 
-    @Resource(mappedName = "jms/TopicFactory")
-    private static ConnectionFactory topicFactory;
+	@Resource(mappedName = "jms/TopicFactory")
+	private static ConnectionFactory topicFactory;
 
-    @Resource(mappedName = "jms/Topic")
-    private static Topic topic;
+	@Resource(mappedName = "jms/Topic")
+	private static Topic topic;
 
-    public static void sendMessage() {
-	Connection topicConnection = null;
-	Session session = null;
-	MapMessage message = null;
-	MessageProducer producer = null;
+	public static void sendMessage() {
+		Connection topicConnection = null;
+		Session session = null;
+		MapMessage message = null;
+		MessageProducer producer = null;
 
-	try {
-	    topicConnection = topicFactory.createConnection();
-	    session = topicConnection.createSession(false,
-		    Session.AUTO_ACKNOWLEDGE);
+		try {
+			topicConnection = topicFactory.createConnection();
+			session = topicConnection.createSession(false, Session.AUTO_ACKNOWLEDGE);
 
-	    producer = session.createProducer(topic);
+			producer = session.createProducer(topic);
 
-	    message = session.createMapMessage();
-	    message.setString("lastname", "Smith");
-	    message.setString("firstname", "John");
-	    message.setString("id", "0100");
+			message = session.createMapMessage();
+			message.setString("lastname", "Smith");
+			message.setString("firstname", "John");
+			message.setString("id", "0100");
 
-	    producer.send(message);
+			producer.send(message);
 
-	    System.out.println("sent a message");
-	} catch (Exception e) {
-	    log.log(Level.SEVERE, "Topic client exception: ", e);
+			System.out.println("sent a message");
+		} catch (Exception e) {
+			log.log(Level.SEVERE, "Topic client exception: ", e);
+		}
 	}
-    }
 }

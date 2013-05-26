@@ -10,35 +10,34 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "App.Roles")
-@NamedNativeQueries({
-	@NamedNativeQuery(name = "RoleEntity.findAll", query = "SELECT * FROM app.roles", resultClass = RoleEntity.class),
-	@NamedNativeQuery(name = "RoleEntity.findRoleById", query = "SELECT * FROM app.roles WHERE role_id = ?", resultClass = RoleEntity.class)
+@NamedNativeQueries({ @NamedNativeQuery(name = "RoleEntity.findAll", query = "SELECT * FROM app.roles", resultClass = RoleEntity.class),
+		@NamedNativeQuery(name = "RoleEntity.findRoleById", query = "SELECT * FROM app.roles WHERE role_id = ?", resultClass = RoleEntity.class)
 // ? @NamedNativeQuery(name = "RoleEntity.findRoleByUserId", query =
 // "SELECT roleid_role_id FROM app.user_role_map WHERE userid_user_id = ?",
 // resultClass = RoleEntity.class) // like the nested one in UserEntity!
 })
 public class RoleEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer role_id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer role_id;
 
-    private String name;
+	private String name;
 
-    public Integer getId() {
-	return role_id;
-    }
+	public Integer getId() {
+		return role_id;
+	}
 
-    public void setId(Integer id) {
-	this.role_id = id;
-    }
+	public void setId(Integer id) {
+		this.role_id = id;
+	}
 
-    public String getRoleName() {
-	return name;
-    }
+	public String getRoleName() {
+		return name;
+	}
 
-    public void setRoleName(String roleName) {
-	this.name = roleName;
-    }
+	public void setRoleName(String roleName) {
+		this.name = roleName;
+	}
 
 }

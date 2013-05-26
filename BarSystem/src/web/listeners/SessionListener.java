@@ -10,7 +10,7 @@ import web.sessions.SessionManager;
 public class SessionListener implements HttpSessionListener {
 
 	private SessionManager manager = SessionManager.getInstance();
-	
+
 	@Override
 	public void sessionCreated(HttpSessionEvent event) {
 		manager.addSession(event.getSession());
@@ -24,4 +24,5 @@ public class SessionListener implements HttpSessionListener {
 }
 // Session listener - this one
 // application listener - ApplicationStartedListener
-// one more listener - in a new listener <request, response> object on every click
+// one more listener - in a new listener <request, response> object on every
+// click

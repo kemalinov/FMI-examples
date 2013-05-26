@@ -1,6 +1,5 @@
 package services;
 
-
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -12,17 +11,19 @@ import constants.OrderStatus;
 @Local
 public interface OrdersLocal extends ConsumersLocal {
 
-    // Orders services
-    public Order persistOrder(Order persistOrderRequest);
+	// Orders services
+	public Order persistOrder(Order persistOrderRequest);
 
-    public List<Order> findAll();
+	public List<Order> findAll();
 
-    public Order findOrderById(int findByOrderIdRequest);
+	public Order findOrderById(int findByOrderIdRequest);
 
-    public List<Order> findOrdersByConsumer(int findByConsumerIdRequest);
+	public List<Order> findOrdersByConsumer(int findByConsumerIdRequest);
 
-    public BigDecimal getBillForConsumer(int findByConsumerIdRequest);
+	public BigDecimal getBillForConsumer(int findByConsumerIdRequest);
 
-    public OrderStatus getStatusForOrder(int findByOrderIdRequest);
+	public OrderStatus getStatusForOrder(int findByOrderIdRequest);
+
+	public List<Order> findAllActiveOrdersByUserId(int findByUserIdRequest);
 
 }
