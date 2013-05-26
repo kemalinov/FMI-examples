@@ -38,10 +38,7 @@ public class OrdersBean {
 			ConsumerEntity ce = (ConsumerEntity) q.getSingleResult();
 
 			oe.setId(persistOrderRequest.getId());
-			oe.setConsumerId(ce/*
-							    * DBUtils.ConsumerToConsumerEntity(
-							    * persistOrderRequest.getConsumerId())
-							    */);
+			oe.setConsumerId(ce);
 			oe.setStatus(persistOrderRequest.getStatus());
 			oe.setBill(persistOrderRequest.getBill());
 			for (Entry<Drink, Integer> e : persistOrderRequest.getDrinks().entrySet()) {
