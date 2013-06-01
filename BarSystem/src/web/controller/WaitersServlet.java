@@ -15,11 +15,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import web.management.DrinksManagement;
 import web.pojos.Consumer;
 import web.pojos.Drink;
 import web.pojos.Order;
-import web.users.DrinksManagement;
-import web.users.UsersManagement;
 import ejb.Waiter;
 
 /**
@@ -29,85 +28,12 @@ import ejb.Waiter;
 public class WaitersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-<<<<<<< HEAD
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public WaitersServlet() {
 		super();
-=======
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public WaitersServlet() {
-	super();
-    }
-
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-     *      response)
-     */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	HttpSession session = request.getSession();
-	String action = request.getParameter("action");
-	String selectedScreen = null;
-
-	UsersManagement usersM = (UsersManagement) getServletContext().getAttribute("usersM");
-	Waiter waiter = (Waiter) usersM.getLoggedUserByName((String) session.getAttribute("username"));
-	
-	DrinksManagement drinksM = (DrinksManagement) getServletContext().getAttribute("drinksM");
-
-	System.out.println("in waiters' servlet!... " + waiter.getName() +" , id:" + waiter.getId());
-	
-	if (waiter != null) {
-	    System.out.println("in waiters' servlet!..." + action);
-	    	
-	    if (action != null) {
-        	if (action.equals("Add")) { // add consumer/and oreder
-        	    String radioAction = request.getParameter("radioAction");
-        	    String place = request.getParameter("place");
-        	    String dateParam = request.getParameter("dateHid");
-        	    String orderedDrinkCount = request.getParameter("orderedDrinkNumber");
-        	    String consumer = request.getParameter("clientSelect");
-
-        	    System.out.println(radioAction.equals("0") ? "Adding a client..." : "Adding an order...");
-        	    
-        	    if (radioAction.equals("0")) {	// "Adding a client..."
-        		System.out.println(place);
-            	    	System.out.println(dateParam);	
-            	    	
-            	    	System.out.println("ordered drinks count: "+ orderedDrinkCount);
-            	    	Map<Drink, Integer> drinks = loadTheDrinks(request, drinksM, orderedDrinkCount);
-        	    	createTheOrder(waiter, place, dateParam, drinks);
-
-        	    } else {	// "Adding an order..."
-        		
-        		System.out.println(consumer);
-            	    	
-        		// get the consumer with call to the DB
-        		// persist the 
-        		
-        		//waiter.addAnOdrer(consumer, drinks);
-        	    }
-        	} else if (action.equalsIgnoreCase("Close an Order")) {
-        	    String doneOrder = request.getParameter("doneAnOrderRadioBtn");
-        	    System.out.println("Done an order: " + doneOrder);
-        	    
-        	}
-	    }
-	    
-	    List<Order> ordersList = waiter.getMyActiveOrders();
-	    List<Consumer> consumersList = waiter.getAllMyClients();
-	    request.setAttribute("orders", ordersList);
-	    request.setAttribute("consumers", consumersList);
-	    request.setAttribute("loggedUser", waiter);
-
-	    selectedScreen = "/protected/waiters.jsp";
-	} else {
-	    selectedScreen = "";
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 	}
-<<<<<<< HEAD
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
@@ -117,17 +43,8 @@ public class WaitersServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
 		String selectedScreen = "";
-=======
-	
-	// get host, port, context,... programatically
-	//response.sendRedirect("http://localhost:8080/BarMngmtSystem" + selectedScreen);
-	request.getRequestDispatcher(selectedScreen).forward(request, response);
-    }
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
-<<<<<<< HEAD
-		UsersManagement usersM = (UsersManagement) getServletContext().getAttribute("usersM");
-		Waiter waiter = (Waiter) usersM.getLoggedUserByName((String) session.getAttribute("username"));
+		Waiter waiter = (Waiter) session.getAttribute("loggedUser");
 
 		DrinksManagement drinksM = (DrinksManagement) getServletContext().getAttribute("drinksM");
 
@@ -140,20 +57,17 @@ public class WaitersServlet extends HttpServlet {
 				if (action.equals("Add")) { // add consumer/and oreder
 					String radioAction = request.getParameter("radioAction");
 					String place = request.getParameter("place");
-					String dateParam = request.getParameter("dateHid");
+					String dateParam = request.getParameter("date");
 					String orderedDrinkCount = request.getParameter("orderedDrinkNumber");
 					String consumer = request.getParameter("clientSelect");
-
-					System.out.println(radioAction.equals("0") ? "Adding a client..." : "Adding an order...");
 
 					if (radioAction.equals("0")) { // "Adding a client..."
 						System.out.println(place);
 						System.out.println(dateParam);
 
-						// System.out.println("ordered drinks count: "+
-						// orderedDrinkCount);
-//						 Map<Drink, Integer> drinks = loadTheDrinks(request, drinksM, orderedDrinkCount);
-//						 createTheOrder(waiter, place, dateParam, drinks);
+						 System.out.println("ordered drinks count: "+ orderedDrinkCount);
+						 Map<Drink, Integer> drinks = loadTheDrinks(request, drinksM, orderedDrinkCount);
+						 createTheOrder(waiter, place, dateParam, drinks);
 
 					} else { // "Adding an order..."
 						System.out.println("Adding an order...");
@@ -161,8 +75,8 @@ public class WaitersServlet extends HttpServlet {
 						System.out.println("ordered drinks count: " + orderedDrinkCount);
 
 						// persist the
-//						 Map<Drink, Integer> drinks = loadTheDrinks(request, drinksM, orderedDrinkCount);
-//						 waiter.addAnOdrerTo(place, drinks); // tuk moje i da grumne?
+						 Map<Drink, Integer> drinks = loadTheDrinks(request, drinksM, orderedDrinkCount);
+						 waiter.addAnOdrerTo(place, drinks); // tuk moje i da grumne?
 					}
 
 				} else if (action.equalsIgnoreCase("Close an Order")) {
@@ -183,7 +97,6 @@ public class WaitersServlet extends HttpServlet {
 			List<Consumer> consumersList = waiter.getMyClients();
 			request.setAttribute("orders", ordersList);
 			request.setAttribute("consumers", consumersList);
-			request.setAttribute("loggedUser", waiter);
 
 			selectedScreen = "/protected/waiters.jsp";
 		} 
@@ -234,50 +147,5 @@ public class WaitersServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-=======
-    private void createTheOrder(Waiter waiter, String place, String dateParam, Map<Drink, Integer> drinks) {
-	Date date = null;
-	try {
-	    date = new SimpleDateFormat("dd/MM/yy hh:mm:ss").parse(dateParam);
-	} catch (ParseException e) {
-	    e.printStackTrace();
-	}
-	Consumer c = waiter.createConsumerWOrder(date, place, drinks);
-	if (c != null && c.getId() != null) {
-	    System.out.println("created new consumer " + c.getId() +" successfuly");
-	} else {
-	    System.out.println("creation of the new consumer failed!");
-	}
-    }
-
-    private Map<Drink, Integer> loadTheDrinks(HttpServletRequest request, DrinksManagement drinksM, String orderedDrinkCount) {
-	Map<String, Drink> allDrinksMap = drinksM.getAllDrinks();
-	Map<Drink, Integer> drinks = new HashMap<Drink, Integer>();
-	int numberOfDrinks  = Integer.valueOf(orderedDrinkCount.trim());
-	for(int i=0; i < numberOfDrinks; i++) {
-	    String tmpDrinkName = request.getParameter("drinkName_"+i);
-	    String tmpDrinkCount = request.getParameter("drinkCount_"+i);
-	    
-	    if(allDrinksMap.containsKey(tmpDrinkName)) {
-		Drink drink = allDrinksMap.get(tmpDrinkName);
-		drinks.put(drink, new Integer(tmpDrinkCount));            	    	    
-	    }
-	    System.out.println("drinkName_"+ i + ": " + request.getParameter("drinkName_"+i));
-	    System.out.println("drinCount_"+ i + ": " + request.getParameter("drinkCount_"+i));
-	}
-	return drinks;
-    }
-
-    
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-     *      response)
-     */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	doGet(request, response);
-    }
-    
-    
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
 }

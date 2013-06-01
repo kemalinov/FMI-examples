@@ -1,9 +1,8 @@
-<%@page import="jms.TopicClient"%>
-<%@page import="web.users.OrdersManagement"%>
-<%@page import="web.users.DrinksManagement"%>
-<%@page import="web.users.UsersManagement"%>
+<%@page import="web.management.OrdersManagement"%>
+<%@page import="web.management.DrinksManagement"%>
+<%@page import="web.management.UsersManagement"%>
 <%@page import="java.util.LinkedList"%>
-<%@page import="web.users.UsersManagement"%>
+<%@page import="web.management.UsersManagement"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" session="true" %>
 
@@ -46,15 +45,13 @@ body {
 	<div class="container">
 		<header>
 			<h2>
-				Welcome, manager ...
-				<%=session.getAttribute("username")%>
+				Welcome, manager... <%=session.getAttribute("username")%>
 			</h2>
 			<div class="support-note">
 				<span class="note-ie">Sorry, only modern browsers.</span>
 			</div>
 
 		</header>
-
 		<section class="main">
 			<!-- what method should be used in order not to see the username/password in the url? -->
 			

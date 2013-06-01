@@ -2,8 +2,6 @@ package eao;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map.Entry;
 
@@ -25,53 +23,13 @@ public class OrdersBean {
 	@PersistenceContext(unitName = "BarSysPersistenceUnit")
 	private EntityManager em;
 
-<<<<<<< HEAD
 	public OrdersBean() {
-=======
-    public OrdersBean() {
-    }
-
-    public Order persistOrder(Order persistOrderRequest) {
-	OrderEntity oe = null;
-	if(persistOrderRequest.getId() == null) { // persist a new order
-	    oe = new OrderEntity();
-	    
-	    Query q = em.createNamedQuery("ConsumerEntity.findConsumerById");
-	    q.setParameter(1, persistOrderRequest.getConsumerId().getId());
-	    ConsumerEntity ce = (ConsumerEntity) q.getSingleResult();
-	    
-	    oe.setId(persistOrderRequest.getId());
-	    oe.setConsumerId(ce/*DBUtils.ConsumerToConsumerEntity(persistOrderRequest.getConsumerId())*/);
-	    oe.setStatus(persistOrderRequest.getStatus());
-	    oe.setBill(persistOrderRequest.getBill());
-	    for (Entry<Drink, Integer> e : persistOrderRequest.getDrinks().entrySet()) {
-    	    	oe.addDrink(DBUtils.DrinkToDrinkEntity(e.getKey()), e.getValue());
-	    }
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 	}
-<<<<<<< HEAD
 
 	public Order persistOrder(Order persistOrderRequest) {
 		OrderEntity oe = null;
 		if (persistOrderRequest.getId() == null) { // persist a new order
 			oe = new OrderEntity();
-=======
-	try {
-	    if (persistOrderRequest.getId() == null) {
-		em.persist(oe);
-		em.flush();
-	    } else {
-		oe = em.find(OrderEntity.class, persistOrderRequest.getId());
-		oe.setStatus(persistOrderRequest.getStatus());
-		oe = em.merge(oe);		
-		System.out.println("after EM update " + oe.getId());
-	    }
-	} catch (Exception e) {
-	    System.err.println("Exception in persisting of an order method: " + e.getMessage());
-	}
-	return DBUtils.OrderEntityToOrder(oe);
-    }
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
 			Query q = em.createNamedQuery("ConsumerEntity.findConsumerById");
 			q.setParameter(1, persistOrderRequest.getConsumerId().getId());
@@ -162,7 +120,7 @@ public class OrdersBean {
 		// em.createNamedQuery("OrderEntity.getOrdersForActiveConsumersByUserId");
 		// q.setParameter(1, findByUserIdRequest);
 		StringBuilder query = new StringBuilder();
-		query.append("SELECT od.order_id, od.consumer_consumer_id, c.place, d.name, odd.drinks, od.status, od.bill ");
+		query.append("SELECT DISTINCT od.order_id, od.consumer_consumer_id, c.place, od.status, od.bill ");
 		query.append("FROM app.orders od ");
 		query.append("JOIN app.consumers c ");
 		query.append("ON c.closed = false AND od.consumer_consumer_id = c.consumer_id ");
@@ -197,43 +155,4 @@ public class OrdersBean {
 		return res;
 	}
 
-    public List<Order> findAllActiveOrdersByUserId(int findByUserIdRequest) {
-//	Query q = em.createNamedQuery("OrderEntity.getOrdersForActiveConsumersByUserId");
-//	q.setParameter(1, findByUserIdRequest);
-	StringBuilder query = new StringBuilder();
-	query.append("SELECT od.order_id, od.consumer_consumer_id, c.place, d.name, odd.drinks, od.status, od.bill ");
-	query.append("FROM app.orders od ");
-	query.append("JOIN app.consumers c ");
-	query.append("ON c.closed = false AND od.consumer_consumer_id = c.consumer_id ");
-	if (findByUserIdRequest > 0) { // a valid one
-	    query.append("AND c.user_user_id = ? "); 
-	}
-	query.append("JOIN app.ordered_drinks odd ");
-	query.append("ON odd.orderentity_order_id = od.order_id ");
-	query.append("JOIN app.drinks d ");
-	query.append("ON d.drink_id = odd.drinks_key");
-	
-	Query q = em.createNativeQuery(query.toString(), OrderEntity.class);
-	if (findByUserIdRequest > 0) { // a valid one
-	    q.setParameter(1, findByUserIdRequest);
-	}
-	
-	List<OrderEntity> l = q.getResultList();
-	List<Order> res = new ArrayList<Order>(l.size());
-	for(OrderEntity oe : l) {
-	    Order o = DBUtils.OrderEntityToOrder(oe);
-	    res.add(o);
-	}
-	Collections.sort(res, new Comparator<Order>() {
-	    public int compare(Order o1, Order o2) {
-		if (o1.getStatus().compareTo(OrderStatus.OVERDUE) == 0) {
-		    return -1;
-		} 
-		return 1;		
-	    }
-	});
-	return res;	
-    }
-    
-    
 }

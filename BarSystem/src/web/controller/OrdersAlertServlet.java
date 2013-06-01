@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
+import web.management.OrdersManagement;
 import web.pojos.Order;
-import web.users.OrdersManagement;
 
 @WebServlet(name="OrdersAlertName", urlPatterns = { "/OrdersAlert" })
 public class OrdersAlertServlet extends HttpServlet {
@@ -37,11 +37,10 @@ public class OrdersAlertServlet extends HttpServlet {
 			}
 	        JSONObject obj = new JSONObject();
 	        obj.put("size", ordersList.size());
-	        obj.put("arr", "<p> Waiting orders :" + wOrders + "! </p>");
+	        obj.put("arr", "<p> Waiting orders:" + wOrders + "! </p>");
 	        out.write(obj.toString());
 
 	        System.out.println("alert for " + wOrders);
-//			out.print("<p> Waiting orders :" + wOrders + "</p>");
 		}
 		
 		//req.setAttribute("param", "hoho");
