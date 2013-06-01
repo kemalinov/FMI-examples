@@ -15,6 +15,7 @@ public interface ConsumersLocal {
 
 	public List<Consumer> findAllConsumers();
 
+<<<<<<< HEAD
 	public Consumer findConsumerById(int findByConsumerIdRequest);
 
 	public User findUserByConsumerId(int findByConsumerIdRequest);
@@ -22,4 +23,11 @@ public interface ConsumersLocal {
 	public List<Consumer> findAllActiveConsumersByUserId(int findByUserIdRequest);
 
 	public Consumer findActiveConsumereByPlace(String place);
+=======
+    public User findUserByConsumerId(int findByConsumerIdRequest);
+    
+    public List<Consumer> findAllActiveConsumersByUserId(int findByUserIdRequest);
+    
+    public Consumer findActiveConsumereByPlace(String place);
+>>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 }

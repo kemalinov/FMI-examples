@@ -20,12 +20,59 @@ public class DrinksManagement {
 
 	private DrinksLocal services;
 
+<<<<<<< HEAD
 	public DrinksManagement(DrinksLocal services, ServletContext context) {
 		// this.context = context;
 		this.services = services;
 		loadDrinks();
+=======
+    public DrinksManagement(DrinksLocal services, ServletContext context) {
+	// this.context = context;
+	 this.services = services;
+	loadDrinks();
+    }
+
+    private void loadDrinks() {
+	List<Drink> drinkList = null;
+	try {
+	    drinkList = services.findAllDrinks();
+	} catch (Exception e) {
+	    log.log(Level.SEVERE, "Exception while calling findAllDrinks()", e);
+	}
+	if (drinkList != null) {
+	    nameDrinkMap = new HashMap<String, Drink>(drinkList.size());
+	    for (Drink d : drinkList) {
+		// Drink d = Utils.DrinkToDrink(dto);
+		addNewDrink(d);
+	    }
+	    System.out.println("drinks size: " + nameDrinkMap.size());
+	}
+    }
+
+    private void addNewDrink(Drink d) {
+	nameDrinkMap.put(d.getName(), d);
+    }
+
+    public Map<String, Drink> getAllDrinks() {
+	return nameDrinkMap;
+    }
+
+    public Drink persistADrink(Drink drink) {
+	System.out.println("Test of persisting a drink...");
+	
+	//Drink d = new Drink(null, "airqn", "voda,200;mlqko,200", new BigDecimal("1.20"));
+	Drink dr = null;
+	try {
+	    dr = services.persistDrink(drink);
+	    addNewDrink(dr);
+	    System.out.println("New drink ID: " + dr.getId());
+
+	} catch (Exception e) {
+	    log.log(Level.SEVERE, "Exception while persists a new drink: ", e);
+>>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 	}
 
+<<<<<<< HEAD
 	private void loadDrinks() {
 		List<Drink> drinkList = null;
 		try {
@@ -42,6 +89,12 @@ public class DrinksManagement {
 			System.out.println("drinks size: " + nameDrinkMap.size());
 		}
 	}
+=======
+	System.out.println("Test of persisting a drink finished well!");
+	
+	return dr;
+    }
+>>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
 	private void addNewDrink(Drink d) {
 		nameDrinkMap.put(d.getName(), d);

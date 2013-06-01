@@ -25,11 +25,34 @@ public class OrderServices implements OrdersLocal, ConsumersLocal {
 	public OrderServices() {
 	}
 
+<<<<<<< HEAD
 	// Consumers services
 	@Override
 	public Consumer persistConsumer(Consumer persistConsumerRequest) {
 		return consumers.persistConsumer(persistConsumerRequest);
 	}
+=======
+    @Override
+    public List<Consumer> findAllActiveConsumersByUserId(int findByUserIdRequest) {
+	return consumers.findActiveConsumersByUserId(findByUserIdRequest);
+    }
+    
+    @Override
+    public Consumer findActiveConsumereByPlace(String place) {
+	return consumers.findActiveConsumereByPlace(place);
+    }
+    
+    // Orders services
+    @Override
+    public Order persistOrder(Order persistOrderRequest) {
+	return orders.persistOrder(persistOrderRequest);
+    }
+    
+    @Override
+    public List<Order> findAll() {
+	return orders.findAll();
+    }
+>>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
 	@Override
 	public List<Consumer> findAllConsumers() {
@@ -46,6 +69,7 @@ public class OrderServices implements OrdersLocal, ConsumersLocal {
 		return consumers.findUserByConsumerId(findByConsumerIdRequest);
 	}
 
+<<<<<<< HEAD
 	@Override
 	public List<Consumer> findAllActiveConsumersByUserId(int findByUserIdRequest) {
 		return consumers.findActiveConsumersByUserId(findByUserIdRequest);
@@ -92,4 +116,17 @@ public class OrderServices implements OrdersLocal, ConsumersLocal {
 		return orders.findAllActiveOrdersByUserId(findByUserIdRequest);
 	}
 
+=======
+    @Override
+    public OrderStatus getStatusForOrder(
+	    int findByOrderIdRequest) {
+	return orders.getStatusForOrder(findByOrderIdRequest);
+    }
+    
+    @Override
+    public List<Order> findAllActiveOrdersByUserId(int findByUserIdRequest) {
+        return orders.findAllActiveOrdersByUserId(findByUserIdRequest);
+    }
+    
+>>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 }

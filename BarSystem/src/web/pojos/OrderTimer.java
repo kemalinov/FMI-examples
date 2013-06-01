@@ -8,11 +8,51 @@ import web.users.OrdersManagement;
 import constants.OrderStatus;
 
 public class OrderTimer {
+<<<<<<< HEAD
+=======
+    
+    private static final long TIMEOUT = 30 * 1000; // milliseconds
+    
+    private Timer sendNotificationTimer;
+    private Timer changeStatusTimer;
+    
+    private Order order;
+    private OrdersManagement ordersM;
+>>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
 	private static final long TIMEOUT = 30 * 1000; // milliseconds
 
+<<<<<<< HEAD
 	private Timer sendNotificationTimer;
 	private Timer changeStatusTimer;
+=======
+	    if (status.equals(OrderStatus.PENDING)) {
+		ordersM.notifyObservers();
+		System.out.println("Sent notification to the barmans!");
+		System.out.println("Started a new timer...");
+		changeStatusTimer = new Timer();
+		changeStatusTimer.schedule(new ChangeStatusTask(), TIMEOUT);
+	    }
+	    
+	    sendNotificationTimer.cancel(); //Not necessary because we call System.exit
+	}
+    }
+    
+    class ChangeStatusTask extends TimerTask {
+	
+	public ChangeStatusTask() {
+	}
+	
+	public void run() {
+	    System.out.println("ChangeStatusTask's time is up!");
+	    Order o = ordersM.findOrderById(order.getId());
+	    if (! o.getStatus().equals(OrderStatus.DONE)) {
+		order.setStatus(OrderStatus.OVERDUE);
+		ordersM.updateAnOrder(order);
+		
+		System.out.println("Changed the order status");		
+	    }
+>>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
 	private Order order;
 	private OrdersManagement ordersM;

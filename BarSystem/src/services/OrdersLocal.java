@@ -22,8 +22,14 @@ public interface OrdersLocal extends ConsumersLocal {
 
 	public BigDecimal getBillForConsumer(int findByConsumerIdRequest);
 
+<<<<<<< HEAD
 	public OrderStatus getStatusForOrder(int findByOrderIdRequest);
 
 	public List<Order> findAllActiveOrdersByUserId(int findByUserIdRequest);
+=======
+    public OrderStatus getStatusForOrder(int findByOrderIdRequest);
+    
+    public List<Order> findAllActiveOrdersByUserId(int findByUserIdRequest);
+>>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
 }

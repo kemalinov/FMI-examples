@@ -16,10 +16,47 @@ import entities.DrinkEntity;
 @Stateless
 public class DrinksBean {
 
+<<<<<<< HEAD
 	@PersistenceContext(unitName = "BarSysPersistenceUnit")
 	private EntityManager em;
 
 	public DrinksBean() {
+=======
+    @PersistenceContext(unitName="BarSysPersistenceUnit")
+    private EntityManager em;
+    
+    public DrinksBean(){
+    }
+    
+    public Drink persistDrink(Drink persistDrinkRequest) {
+	DrinkEntity de = new DrinkEntity();
+	de.setId(persistDrinkRequest.getId());
+	de.setIngredients(persistDrinkRequest.getIngredients());
+	de.setName(persistDrinkRequest.getName());
+	de.setPrice(persistDrinkRequest.getPrice());
+	
+	try {
+	    if(de.getId() == null) {
+		em.persist(de);
+		em.flush();
+	    } else {
+		de = em.merge(de);
+	    }    
+	} catch (Exception e) {
+	    // TODO: handle exception
+	} 
+	
+	return DBUtils.DrinkEntityToDrink(de);
+    }
+    
+    public List<Drink> findAllDrinks() {
+	Query q = em.createNamedQuery("DrinkEntity.findAll");
+	List<DrinkEntity> entities = q.getResultList();
+	
+	List<Drink> entitiesDtoList = new ArrayList<Drink>(entities.size());
+	for(DrinkEntity de : entities) {
+	    entitiesDtoList.add(DBUtils.DrinkEntityToDrink(de));
+>>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 	}
 
 	public Drink persistDrink(Drink persistDrinkRequest) {
