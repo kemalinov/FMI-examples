@@ -42,10 +42,12 @@ public class ConsumersBean {
 				em.persist(ce);
 				em.flush();
 			} else {
+				System.out.println("updating a consumer " + persistConsumerRequest.getId() + " to status" + persistConsumerRequest.isClosed());
 				ce = em.find(ConsumerEntity.class, persistConsumerRequest.getId());
 				ce.setClosed(persistConsumerRequest.isClosed());
 
 				ce = em.merge(ce);
+				System.out.println("updating a consumer " + ce.getId() + ", with status" + ce.isClosed());
 			}
 		} catch (Exception e) {
 			System.err.println("Exception in persisting of a client method: " + e.getMessage());

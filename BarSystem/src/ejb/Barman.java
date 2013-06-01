@@ -29,12 +29,10 @@ public class Barman extends User implements Observer {
 	}
 
 	public void acceptAnOrder(Order order) {
-		order.setStatus(OrderStatus.ACCEPTED);
 		ordersM.acceptAnOrder(order);
 	}
 
 	public void finishAnOrder(Order order) {
-		order.setStatus(OrderStatus.DONE);
 		ordersM.finishAnOrder(order);
 	}
 

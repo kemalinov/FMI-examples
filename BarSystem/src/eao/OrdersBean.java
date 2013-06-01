@@ -117,7 +117,7 @@ public class OrdersBean {
 		return OrderStatus.valueOf((String) status.get(0));
 	}
 
-	public List<Order> findAllActiveOrdersByUserId(int findByUserIdRequest) {
+	public List<Order> findAllActiveOrdersByUserId(int findByUserIdRequest) { // if it is >0 => for waiter, but <0 for barmans only ("Pending"&&"Overdue")
 		// Query q =
 		// em.createNamedQuery("OrderEntity.getOrdersForActiveConsumersByUserId");
 		// q.setParameter(1, findByUserIdRequest);
@@ -126,14 +126,23 @@ public class OrdersBean {
 		query.append("FROM app.orders od ");
 		query.append("JOIN app.consumers c ");
 		query.append("ON c.closed = false AND od.consumer_consumer_id = c.consumer_id ");
-		if (findByUserIdRequest > 0) { // a valid one
+		if (findByUserIdRequest > 0) { // a valid one: >0 - waiter, <0 - skip it(i.e. get all but filter by status)!
 			query.append("AND c.user_user_id = ? ");
 		}
 		query.append("JOIN app.ordered_drinks odd ");
 		query.append("ON odd.orderentity_order_id = od.order_id ");
 		query.append("JOIN app.drinks d ");
-		query.append("ON d.drink_id = odd.drinks_key");
-
+		query.append("ON d.drink_id = odd.drinks_key ");
+		if (findByUserIdRequest < 0) { // i.e. get all but filter by status
+			query.append("WHERE (od.status like 'P%') or (od.status like 'O%') ");
+		}
+		query.append("ORDER BY CASE ");	// for sorting!
+		query.append("WHEN od.status = 'OVERDUE' THEN 1 ");
+		query.append("WHEN od.status = 'PENDING' THEN 2 ");
+		query.append("WHEN od.status = 'ACCEPTED' THEN 3 ");
+		query.append("WHEN od.status = 'DONE' THEN 4 ");
+		query.append("END");
+		
 		Query q = em.createNativeQuery(query.toString(), OrderEntity.class);
 		if (findByUserIdRequest > 0) { // a valid one
 			q.setParameter(1, findByUserIdRequest);
@@ -145,14 +154,6 @@ public class OrdersBean {
 			Order o = DBUtils.OrderEntityToOrder(oe);
 			res.add(o);
 		}
-		Collections.sort(res, new Comparator<Order>() {
-			public int compare(Order o1, Order o2) {
-				if (o1.getStatus().compareTo(OrderStatus.OVERDUE) == 0) {
-					return -1;
-				}
-				return 1;
-			}
-		});
 		return res;
 	}
 

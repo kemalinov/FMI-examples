@@ -19,7 +19,7 @@
  -->
 <!--[if lte IE 7]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
 <style>
-@import url(http://fonts.googleapis.com/css?family=Raleway:400,700);
+/* @import url(http://fonts.googleapis.com/css?family=Raleway:400,700); */
 
 body {
 	background: #7f9b4e url(/fmi/images/bg2.jpg) no-repeat center top;

@@ -8,6 +8,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletContext;
+import javax.swing.text.StyledEditorKit.BoldAction;
 
 import services.OrdersLocal;
 import web.pojos.Consumer;
@@ -25,10 +26,9 @@ public class OrdersManagement implements Subject {
 	private static Logger log = Logger.getLogger(OrdersManagement.class.getName());
 
 	private List<Order> activeOrdersList;
+	private List<Order> alertedOrders = new ArrayList<Order>();
+	
 	private ServletContext context;
-
-	// private Map<Order, OrderStatus> orderStatusMap = new HashMap<Order,
-	// OrderStatus>();
 
 	private OrdersLocal services;
 
@@ -39,13 +39,7 @@ public class OrdersManagement implements Subject {
 	}
 
 	private void loadAllActiveOrders() {
-		List<Order> l = services.findAllActiveOrdersByUserId(-1); // a negative
-																  // Id to get
-																  // all order
-																  // independent
-																  // of the
-																  // waiters who
-																  // serves them
+		List<Order> l = services.findAllActiveOrdersByUserId(-1); // will get all orders for the barmans - with status "Pending" and "Overdue"
 		this.activeOrdersList = new ArrayList<Order>(l.size());
 		for (Order o : l) {
 			activeOrdersList.add(o);
@@ -165,11 +159,23 @@ public class OrdersManagement implements Subject {
 	}
 
 	public synchronized void acceptAnOrder(Order order) {
+		order.setStatus(OrderStatus.ACCEPTED);
+		for (Order o : alertedOrders) {
+			if (o.getId().compareTo(order.getId()) == 0) {
+				alertedOrders.remove(o);
+			}
+		}
 		updateAnOrder(order);
 	}
 
 	public synchronized void finishAnOrder(Order order) {
+		order.setStatus(OrderStatus.DONE);
 		updateAnOrder(order);
+	}
+	
+	public void closeAConsumer(Consumer consumer) {
+		consumer.setClosed(Boolean.TRUE);
+		services.persistConsumer(consumer);
 	}
 
 	public List<Order> getAllActiveOrdersList() {
@@ -178,6 +184,14 @@ public class OrdersManagement implements Subject {
 
 	public Order findOrderById(int orderId) {
 		return services.findOrderById(orderId);
+	}
+	
+	public List<Order> getAlerterOrders() {
+		return alertedOrders;
+	}
+	
+	public void addOrderToAlert(Order o) {
+		alertedOrders.add(o);
 	}
 
 	@Override

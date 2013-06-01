@@ -36,7 +36,7 @@ public class BarmansServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
-		String selectedScreen = null;
+		String selectedScreen = "";
 
 		UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
 		Barman barman = (Barman) users.getLoggedUserByName((String) session.getAttribute("username"));
@@ -54,26 +54,24 @@ public class BarmansServlet extends HttpServlet {
 					String drinkIngredients = request.getParameter("ingredients");
 					String drinkPrice = request.getParameter("price");
 
-					Drink drink = barman.createADrink(drinkName, drinkIngredients, drinkPrice);
+//					Drink drink = barman.createADrink(drinkName, drinkIngredients, drinkPrice);
 
-					System.out.println("added drink " + drink.getId() + " by " + barman.getName());
+//					System.out.println("added drink " + drink.getId() + " by " + barman.getName());
 
 				} else if (action.equalsIgnoreCase("Done")) { // accept an order
 
 					String orderId = request.getParameter("acceptedOrderIdName");
-					for (Order o : ordersList) {
-						if (o.getId().compareTo(Integer.valueOf(orderId)) == 0) {
-							barman.finishAnOrder(o);
-							break;
-						}
-					}
+//					for (Order o : ordersList) {
+//						if (o.getId().compareTo(Integer.valueOf(orderId)) == 0) {
+//							barman.finishAnOrder(o);
+//							break;
+//						}
+//					}
 					System.out.println("Done order id " + orderId + " by " + barman.getName());
 				}
 			}
 
 			selectedScreen = "/protected/barmans.jsp";
-		} else {
-			selectedScreen = "";
 		}
 
 		// get host, port, context,... programatically

@@ -49,29 +49,87 @@
 } */
 	
 function setOrderIdFromRadioBtn(e) { // not used!!! otherwise is called on onchange on input/radio // for the modal dialog when accept an order
-	document.getElementsByName('acceptedOrderIdName')[0].value=e.value;
+	document.getElementsByName('orderIDRadioBtn')[0].value=e.value;
 }
 
 function setParamAndSubmit() { // it is used to pass the accepted/done orderId to the JSP file!
     var hidden = document.createElement('input');
     hidden.type = "hidden";
 	hidden.name = "orderId";
-	hidden.value = document.getElementsByName('acceptedOrderIdName')[0].value;
+	hidden.value = document.getElementsByName('orderIDRadioBtn')[0].value;
 	var f = document.getElementById('acceptAnOrderFormId');
 	f.appendChild(hidden);
 	f.action=<%= getServletContext().getContextPath() + "/protected/barmans" %>;
 	f.submit();
 }
 
-function addInput(divName){ // to add new UI compoments (when adding drinks to a new client) !!!! BOOKMARKED 
+function addInput(divName){ // not used!!! to add new UI compoments (when adding drinks to a new client) !!!! BOOKMARKED 
 	  var newdiv = document.createElement('div');
       newdiv.innerHTML = "Entry " + (counter + 1) + " <br><input type='text' name='myInputs[]'>";
       document.getElementById(divName).appendChild(newdiv);
       counter++;
 }
 </script>
+<script type="text/javascript" src="/BarMngmtSystem/js/jquery-1.9.1.min.js"></script>  
+<script type="text/javascript">  
+	 
+ var ordersTableAutoRefresh = setInterval(  
+	 function ()  
+	 {  
+	     $('#ordersTable').load('http://localhost:8080/BarMngmtSystem/LoadOrders').fadeIn("slow");
+	 }, 10000
+ );
+
+ var ordersAlertNotif = setInterval(  
+	 function ()  
+	 {  
+		$.get('http://localhost:8080/BarMngmtSystem/OrdersAlert', function (data) {
+			if(data.size != '0') {
+				$("#alertOrderP").html(data.arr);
+				$("#aId").trigger("click");			
+			}
+		}, "json");
+	 }, 5000
+ );
+ 
+ //////////////////////////////
+ var auto_show_msg = setInterval(  
+		 function ()  
+		 {  
+		   //  $("#aId").trigger("click");
+		 }, 5000
+	 );
+ 
+ function showMessage(type)
+ {
+ 	$('.'+ type +'-trigger').click(function(){
+ 		  hideAllMessages();				  
+ 		  $('.'+type).animate({top:"0"}, 500);
+ 	});
+ }
+ 
+ function hideAllMessages()
+ {
+	  //$('.' + 'info').outerHeight(); // fill array
+	  $('.' + 'info').css('top', -500); //move element outside viewport	  
+ }
+ 
+ $(document).ready(function(){
+	 // Initially, hide them all
+	 hideAllMessages();
+	 
+	 // Show message
+	 showMessage('info');
+	 
+	 // When message is clicked, hide it
+	 $('.message').click(function(){			  
+			  $(this).animate({top: "500"}, 0);
+	  });		 
+	 
+});  
+</script>  
 <style>
-@import url(http://fonts.googleapis.com/css?family=Raleway:400,700);
+/* @import url(http://fonts.googleapis.com/css?family=Raleway:400,700); */
 
 body {
 	background: #7f9b4e url(/fmi/images/bg2.jpg) no-repeat center top;
@@ -84,9 +142,71 @@ body {
 	color: #fff;
 	text-shadow: 0 1px 1px rgba(0, 0, 0, 0.7);
 }
+
+/* //////////////////////// */
+.message{
+		background-size: 40px 40px;
+		background-image: linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+							transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+							transparent 75%, transparent);										
+		 box-shadow: inset 0 -1px 0 rgba(255,255,255,.4);
+		 width: 100%;
+		 border: 1px solid;
+		 color: #fff;
+		 padding: 15px;
+		 position: fixed;
+		 _position: absolute;
+		 text-shadow: 0 1px 0 rgba(0,0,0,.5);
+		 animation: animate-bg 5s linear infinite;
+}
+
+.info{
+		 background-color: #4ea5cd;
+		 border-color: #3b8eb5;
+}
+
+.message h3{
+		 margin: 0 0 5px 0;													 
+}
+
+.message p{
+		 margin: 0;													 
+}
+
+@keyframes animate-bg {
+    from {
+        background-position: 0 0;
+    }
+    to {
+       background-position: -80px 0;
+    }
+}
+
+.trigger
+{
+		 display: inline-block;
+		 background: #ddd;
+		 border: 1px solid #777;
+		 padding: 10px 20px;
+		 margin: 0 5px;
+		 font: bold 12px Arial, Helvetica;
+		 text-decoration: none;
+		 color: #333;
+		 -moz-border-radius: 3px;
+		 -webkit-border-radius: 3px;
+		 border-radius: 3px;
+}
 </style>
 </head>
 <body>
+<!-- THE NOTIFICATION BAR STARTS-->
+	<a id="aId" style="display:none;" href="#" class="trigger info-trigger"></a>
+	<div class="info message" >
+		 <h3>FYI, something just happened!</h3>
+		 <p id="alertOrderP" >This is just an info notification message.</p>
+	</div>
+<!-- THE NOTIFICATION BAR ENDS-->
+	
 	<div class="container">
 		<header>
 			<h2>
@@ -128,7 +248,7 @@ body {
 						</tbody>
 					</table>
 					<div class="ordersContentTableDiv">
-						<table>
+						<table id="ordersTable">
 							<colgroup>
 								<col width="20px" />
 								<col width="40px" /><col width="80px" /><col width="150px" />
@@ -136,26 +256,20 @@ body {
 							</colgroup>
 							<tbody>
 							    <c:forEach items="${orders}" var="order">
-								   <c:if test="${order.status=='OVERDUE'}">
+								   <c:if test="${order.status == 'OVERDUE'}">
 								   		<tr style="background-color: red;">
 								   </c:if>
-								   <c:if test="${order.status!='OVERDUE'}">
+								   <c:if test="${order.status != 'OVERDUE'}">
 								   		<tr>
 								   </c:if>
-								   <c:if test="${(order.status=='OVERDUE') || (order.status=='PENDING')}">
-								   		<td><INPUT TYPE="radio" NAME="acceptOrderRadioBtn" VALUE="${order.id}"></td>
-								   </c:if>
-								   <c:if test="${(order.status=='ACCEPTED') || (order.status=='DONE')}">
-								   		<td><INPUT TYPE="radio" NAME="acceptOrderRadioBtn" VALUE="${order.id}" disabled="disabled"></td>
-								   </c:if>
-					                	<%-- <td><INPUT TYPE="radio" NAME="acceptOrderRadioBtn" VALUE="${order.id}"></td> --%>
+								   		<td><INPUT TYPE="radio" NAME="orderIDRadioBtn" VALUE="${order.id}"></td>
 					                    <td><c:out value="${order.id}" /></td>
 					                    <td><c:out value="${order.consumerId.place}" /></td>
 					                    <td><c:out value="[pitie1, pitie2,..]" /></td>
 					                    <td><c:out value="[c1, c2,...]" /></td>
 					                    <td><c:out value="${order.status}" /></td>
 					                    <td><c:out value="${order.bill}" /></td>
-					               </tr>
+					                    </tr>
 					            </c:forEach>
 							</tbody>
 						</table>
@@ -168,7 +282,7 @@ body {
 				<div>
 					<form name="acceptAnOrderForm" id="acceptAnOrderFormId" action=<%= getServletContext().getContextPath() + "/protected/barmans"%> method="post">
 						<% 
-							String orderID = (String) request.getParameter("acceptOrderRadioBtn"); 
+							String orderID = (String) request.getParameter("orderIDRadioBtn"); 
 							Barman barman = (Barman) session.getAttribute("loggedUser");
 						%>
 							<h4> Accepted order id: <% out.print(orderID); %> by <% out.print(barman.getName()); %> </h4>
@@ -176,7 +290,7 @@ body {
 							if (orderID != null) {
 								Order order = barman.getOrderById(Integer.valueOf(orderID.trim()));
 								if (order != null) {
-					        	    barman.acceptAnOrder(order);
+					        	   // barman.acceptAnOrder(order);
 					        	    for(Entry<Drink, Integer> e : order.getDrinks().entrySet()) {
 					        			out.write("<p>"+ e.getKey().getName() + " (" + e.getKey().getIngredients() + "), count: " + e.getValue() + "</p>");
 					        	    }

@@ -44,9 +44,7 @@ public class ControllerServlet extends HttpServlet {
 			String username = request.getParameter("username");
 			String password = request.getParameter("password");
 
-			if (users.checkUser(username, password)) { // if it is a valid one
-													   // it is auto logged
-													   // then!
+			if (users.checkUser(username, password)) { // if it is a valid one it is auto logged then!
 				session.setAttribute("username", username);
 				User u = users.getLoggedUserByName(username);
 				session.setAttribute("loggedUser", u);
@@ -106,8 +104,6 @@ public class ControllerServlet extends HttpServlet {
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		// what will happen if we do not call doGet?
 		doGet(request, response);
 	}
 

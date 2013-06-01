@@ -28,9 +28,21 @@ import constants.OrderStatus;
 		@NamedNativeQuery(name = "OrderEntity.findOrdersByConsumerId", query = "SELECT * FROM app.orders WHERE consumer_id = ?", resultClass = OrderEntity.class),
 		@NamedNativeQuery(name = "OrderEntity.getBillForConsumerId", query = "SELECT sum(bill) FROM app.orders WHERE consumer_id = ?", resultClass = BigDecimal.class),
 		@NamedNativeQuery(name = "OrderEntity.getStatusForOrderId", query = "SELECT status FROM app.orders WHERE order_id = ?"),
-		@NamedNativeQuery(name = "OrderEntity.getOrdersForActiveConsumersByUserId", query = "SELECT od.order_id, od.consumer_consumer_id, c.place, d.name, odd.drinks, od.status, od.bill "
-				+ "FROM app.orders od " + "JOIN app.consumers c " + "ON c.closed = false AND od.consumer_consumer_id = c.consumer_id  AND c.user_user_id = ? " + "JOIN app.ordered_drinks odd "
-				+ "ON odd.orderentity_order_id = od.order_id " + "JOIN app.drinks d " + "ON d.drink_id = odd.drinks_key", resultClass = OrderEntity.class),
+		/*@NamedNativeQuery(name = "OrderEntity.getOrdersForActiveConsumersByUserId", 
+			query = "SELECT od.order_id, od.consumer_consumer_id, c.place, d.name, odd.drinks, od.status, od.bill "
+					+ "FROM app.orders od " 
+					+ "JOIN app.consumers c " 
+					+ "ON c.closed = false AND od.consumer_consumer_id = c.consumer_id  AND c.user_user_id = ? " 
+					+ "JOIN app.ordered_drinks odd "
+					+ "ON odd.orderentity_order_id = od.order_id " 
+					+ "JOIN app.drinks d " 
+					+ "ON d.drink_id = odd.drinks_key "
+					+ "ORDER BY CASE od.status "
+					+ 	"WHEN 'OVERDUE' THEN 1 "
+					+	"WHEN 'PENDING' THEN 2 "
+					+	"WHEN 'ACCEPTED' THEN 3 "
+					+	"WHEN 'DONE' THEN 4 "
+					+ "END", resultClass = OrderEntity.class),*/
 		@NamedNativeQuery(name = "OrderEntity.getCountOfOrderedDrinkForCustomerByDrinkIdAndConsumerId", query = "SELECT sum(od.drinks)" + "FROM app.ordered_drinks od " + "JOIN app.orders o "
 				+ "ON od.orderentity_order_id=o.order_id AND o.consumer_consumer_id = ? AND od.drinks_key = ? ", resultClass = Integer.class) })
 public class OrderEntity {

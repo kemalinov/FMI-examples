@@ -38,7 +38,7 @@ public class OrderTimer {
 			OrderStatus status = ordersM.getOrderStatus(order);
 
 			if (status.equals(OrderStatus.PENDING)) {
-				ordersM.notifyObservers();
+				ordersM.addOrderToAlert(order);
 				System.out.println("Sent notification to the barmans!");
 				System.out.println("Started a new timer...");
 				changeStatusTimer = new Timer();
@@ -61,7 +61,6 @@ public class OrderTimer {
 			if (!o.getStatus().equals(OrderStatus.DONE)) {
 				order.setStatus(OrderStatus.OVERDUE);
 				ordersM.updateAnOrder(order);
-
 				System.out.println("Changed the order status");
 			}
 

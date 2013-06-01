@@ -131,6 +131,20 @@ function addComponents() {
 }
 
 </script>
+<script type="text/javascript" src="/BarMngmtSystem/js/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">  
+
+  var auto_refresh = setInterval(  
+	 function ()  
+	 {  
+	     $('#ordersTable').load('http://localhost:8080/BarMngmtSystem/LoadOrders').fadeIn("slow");
+	   /*$.get('http://localhost:8080/BarMngmtSystem/LoadOrders', function(data) {
+	    	 $('#ordersTable').html(data);
+	    	}); */
+	 }, 10000
+ );
+  
+</script>  
 </head>
 <body>
 	<div class="container">
@@ -174,15 +188,15 @@ function addComponents() {
 							</tr>
 						</tbody>
 					</table>
-					<div class="ordersContentTableDiv">
-						<table>
+					<div id="ordersContentTableDivId" class="ordersContentTableDiv">
+						<table id="ordersTable">
 							<colgroup>
 								<col width="20px" />
 								<col width="40px" /><col width="80px" /><col width="150px" />
 								<col width="100px" /><col width="80px" /><col width="60px" />
 							</colgroup>
 							<tbody>
-							    <c:forEach items="${orders}" var="order">
+							   <c:forEach items="${orders}" var="order">
 								   <c:if test="${order.status=='OVERDUE'}">
 								   		<tr style="background-color: red;">
 								   </c:if>
@@ -190,10 +204,10 @@ function addComponents() {
 								   		<tr>
 								   </c:if>
 								   <c:if test="${(order.status=='OVERDUE') || (order.status=='PENDING') || (order.status=='ACCEPTED')}">
-								   		<td><INPUT TYPE="radio" NAME="doneAnOrderRadioBtn" VALUE="${order.id}" disabled="disabled"></td>
+								   		<td><INPUT TYPE="radio" NAME="orderIDRadioBtn" VALUE="${order.id}" disabled="disabled"></td>
 								   </c:if>
 								   <c:if test="${order.status=='DONE'}">
-								   		<td><INPUT TYPE="radio" NAME="doneAnOrderRadioBtn" VALUE="${order.id}" ></td>
+								   		<td><INPUT TYPE="radio" NAME="orderIDRadioBtn" VALUE="${order.id}" ></td>
 								   </c:if>
 					                    <td><c:out value="${order.id}" /></td>
 					                    <td><c:out value="${order.consumerId.place}" /></td>
@@ -218,9 +232,8 @@ function addComponents() {
 						onclick="bill.value=calculateAllBills()" method="post"> <!-- (getDrinkPrice()*parseInt(countPerDrinkId.value)).toFixed(2) -->
 				<p>
 					<h3>Choose an action:</h3>
-					<input type="radio" checked="checked" name="radioAction" onclick="showClientDiv('block')" value="0" />&nbsp;Add a client
-					<input type="radio" name="radioAction" id="e1" onclick="showClientDiv('none')" value="1" />&nbsp;Add an order&nbsp;&nbsp;&nbsp;
-				</p>
+					<input type="radio" checked="checked" id="addClientRBId" name="radioAction" onclick="showClientDiv('block')" value="0" />&nbsp;Add a client
+					<input type="radio" name="radioAction" id="addOrderRBId" onclick="showClientDiv('none')" value="1" />&nbsp;Add an order&nbsp;&nbsp;&nbsp;
 			
 				<div id="clientDivId">
 					<p>
@@ -260,7 +273,7 @@ function addComponents() {
 										out.print("<option value=" + e.getValue().getPrice() + ">" + e.getKey() + "</option>");
 								    }
 								%>
-							</select> 
+							</select>
 							<label>Count:&nbsp;</label>
 							<input type="number" id="countPerDrinkId" name="count" min="1" value="1" required />
 						</p>

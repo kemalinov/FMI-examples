@@ -76,9 +76,9 @@ delete from app.orders where order_id>30
 select * from app.consumers;
 RENAME COLUMN app.consumers.user_id TO user_user_id
 
-update app.consumers set user_user_id=2 where consumer_id=1;
+update app.consumers set closed='false' where consumer_id=1;
 
-delete from app.consumers where consumer_id>6
+delete from app.consumers where consumer_id=20
 ALTER TABLE app.consumers ADD column closed BOOLEAN default false NOT NULL
 
 SELECT * FROM app.consumers WHERE closed = false AND user_user_id =4
@@ -104,13 +104,18 @@ SELECT sum(bill) FROM app.orders WHERE consumer_id=6
 
 -- returns the orders for active consumers per user
 SELECT od.order_id, od.consumer_consumer_id, c.place, d.name, odd.drinks, od.status, od.bill 
-FROM app.orders od
+FROM app.orders od 
 join app.consumers c 
-	on c.closed = false and od.consumer_consumer_id = c.consumer_id  and c.user_user_id = 1 
+	on c.closed = false and od.consumer_consumer_id = c.consumer_id  and c.user_user_id = 4 
 join app.ordered_drinks odd 
 	on odd.orderentity_order_id = od.order_id
 join app.drinks d
-on d.drink_id = odd.drinks_key;
+on d.drink_id = odd.drinks_key
+where (od.status like 'P%') or (od.status like 'O%') -- filter for barmans only!
+order by case -- for sorting!
+	when od.status = 'overdue' then 1
+	else 2
+	end
 
 
  

@@ -43,7 +43,7 @@ public class WaitersServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		String action = request.getParameter("action");
-		String selectedScreen = null;
+		String selectedScreen = "";
 
 		UsersManagement usersM = (UsersManagement) getServletContext().getAttribute("usersM");
 		Waiter waiter = (Waiter) usersM.getLoggedUserByName((String) session.getAttribute("username"));
@@ -53,7 +53,7 @@ public class WaitersServlet extends HttpServlet {
 		System.out.println("in waiters' servlet!... " + waiter.getName() + " , id:" + waiter.getId());
 
 		if (waiter != null) {
-			System.out.println("in waiters' servlet!..." + action);
+			System.out.println("action: " + action);
 
 			if (action != null) {
 				if (action.equals("Add")) { // add consumer/and oreder
@@ -71,39 +71,41 @@ public class WaitersServlet extends HttpServlet {
 
 						// System.out.println("ordered drinks count: "+
 						// orderedDrinkCount);
-						// Map<Drink, Integer> drinks = loadTheDrinks(request,
-						// drinksM, orderedDrinkCount);
-						// createTheOrder(waiter, place, dateParam, drinks);
+//						 Map<Drink, Integer> drinks = loadTheDrinks(request, drinksM, orderedDrinkCount);
+//						 createTheOrder(waiter, place, dateParam, drinks);
 
 					} else { // "Adding an order..."
-
-						System.out.println(consumer);
+						System.out.println("Adding an order...");
+						System.out.println("to consumer " + consumer);
 						System.out.println("ordered drinks count: " + orderedDrinkCount);
 
-						// get the consumer with call to the DB
 						// persist the
-
-						// waiter.addAnOdrer(consumer, drinks);
+//						 Map<Drink, Integer> drinks = loadTheDrinks(request, drinksM, orderedDrinkCount);
+//						 waiter.addAnOdrerTo(place, drinks); // tuk moje i da grumne?
 					}
 
 				} else if (action.equalsIgnoreCase("Close an Order")) {
-					String doneOrder = request.getParameter("doneAnOrderRadioBtn");
-					System.out.println("Done an order: " + doneOrder);
+					String doneOrderId = request.getParameter("orderIDRadioBtn");
 
-					// TODO: close the client
+					if (doneOrderId != null) {
+        				String place = waiter.getPlaceOfOrder(Integer.valueOf(doneOrderId));
+        				System.out.println("About to close an order: " + doneOrderId +" on place: "+ place);
+        				if (place != null) {
+        					System.out.println("closing the order...");
+        					waiter.closeAnOrder(place);
+        				}
+					}
 				}
 			}
 
-			List<Order> ordersList = waiter.getMyActiveOrders();
-			List<Consumer> consumersList = waiter.getAllMyClients();
+			List<Order> ordersList = waiter.getMyOrders();
+			List<Consumer> consumersList = waiter.getMyClients();
 			request.setAttribute("orders", ordersList);
 			request.setAttribute("consumers", consumersList);
 			request.setAttribute("loggedUser", waiter);
 
 			selectedScreen = "/protected/waiters.jsp";
-		} else {
-			selectedScreen = "";
-		}
+		} 
 
 		// get host, port, context,... programatically
 		// response.sendRedirect("http://localhost:8080/BarMngmtSystem" +
