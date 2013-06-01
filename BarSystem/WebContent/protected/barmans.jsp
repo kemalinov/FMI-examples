@@ -8,7 +8,6 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.Set"%>
-<%@page import="jms.TopicClient"%>
 <%@page import="web.users.OrdersManagement"%>
 <%@page import="web.users.DrinksManagement"%>
 <%@page import="web.users.UsersManagement"%>

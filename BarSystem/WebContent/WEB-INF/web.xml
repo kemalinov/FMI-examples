@@ -1,24 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	id="WebApp_ID" version="3.0">
-	<display-name>BarMngmtSystem</display-name>
-	<welcome-file-list>
-		<welcome-file>/public/login.jsp</welcome-file>
-	</welcome-file-list>
-
-	<!-- <ejb-local-ref id="EjbRef_1"> <ejb-ref-name>UserServices</ejb-ref-name> 
-		<ejb-ref-type>Session</ejb-ref-type> <local>services.UsersLocal</local> </ejb-local-ref> -->
-	<!-- 	
-	<servlet>
-    <servlet-name>LoadOrdersName</servlet-name>
-    <servlet-class>web.controller.LoadOrdersServlet</servlet-class>
-  	</servlet>
-	<servlet-mapping>
-		<servlet-name>LoadOrdersName</servlet-name>
-		<url-pattern>/LoadOrders</url-pattern>
-	</servlet-mapping> -->
-	
-
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>BarMngmtSystem</display-name>
+  <welcome-file-list>
+    <welcome-file>/public/login.jsp</welcome-file>
+  </welcome-file-list>
 </web-app>
