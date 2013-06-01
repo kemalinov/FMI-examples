@@ -5,6 +5,7 @@
 <%@page import="java.util.Map.Entry"%>
 <%@page import="web.pojos.Drink"%>
 <%@page import="java.util.Map"%>
+<%@page import="jms.TopicClient"%>
 <%@page import="web.users.OrdersManagement"%>
 <%@page import="web.users.DrinksManagement"%>
 <%@page import="web.users.UsersManagement"%>
@@ -187,7 +188,6 @@ function addComponents() {
 							</tr>
 						</tbody>
 					</table>
-<<<<<<< HEAD
 					<div id="ordersContentTableDivId" class="ordersContentTableDiv">
 						<table id="ordersTable">
 							<colgroup>
@@ -208,28 +208,6 @@ function addComponents() {
 								   </c:if>
 								   <c:if test="${order.status=='DONE'}">
 								   		<td><INPUT TYPE="radio" NAME="orderIDRadioBtn" VALUE="${order.id}" ></td>
-=======
-					<div class="ordersContentTableDiv">
-						<table>
-							<colgroup>
-								<col width="20px" />
-								<col width="40px" /><col width="80px" /><col width="150px" />
-								<col width="100px" /><col width="80px" /><col width="60px" />
-							</colgroup>
-							<tbody>
-							    <c:forEach items="${orders}" var="order">
-								   <c:if test="${order.status=='OVERDUE'}">
-								   		<tr style="background-color: red;">
-								   </c:if>
-								   <c:if test="${order.status!='OVERDUE'}">
-								   		<tr>
-								   </c:if>
-								   <c:if test="${(order.status=='OVERDUE') || (order.status=='PENDING') || (order.status=='ACCEPTED')}">
-								   		<td><INPUT TYPE="radio" NAME="doneAnOrderRadioBtn" VALUE="${order.id}" disabled="disabled"></td>
-								   </c:if>
-								   <c:if test="${order.status=='DONE'}">
-								   		<td><INPUT TYPE="radio" NAME="doneAnOrderRadioBtn" VALUE="${order.id}" ></td>
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 								   </c:if>
 					                    <td><c:out value="${order.id}" /></td>
 					                    <td><c:out value="${order.consumerId.place}" /></td>
@@ -254,7 +232,6 @@ function addComponents() {
 						onclick="bill.value=calculateAllBills()" method="post"> <!-- (getDrinkPrice()*parseInt(countPerDrinkId.value)).toFixed(2) -->
 				<p>
 					<h3>Choose an action:</h3>
-<<<<<<< HEAD
 					<input type="radio" checked="checked" id="addClientRBId" name="radioAction" onclick="showClientDiv('block')" value="0" />&nbsp;Add a client
 					<input type="radio" name="radioAction" id="addOrderRBId" onclick="showClientDiv('none')" value="1" />&nbsp;Add an order&nbsp;&nbsp;&nbsp;
 			
@@ -297,51 +274,6 @@ function addComponents() {
 								    }
 								%>
 							</select>
-=======
-					<input type="radio" checked="checked" name="radioAction" onclick="showClientDiv('block')" value="0" />&nbsp;Add a client
-					<input type="radio" name="radioAction" id="e1" onclick="showClientDiv('none')" value="1" />&nbsp;Add an order&nbsp;&nbsp;&nbsp;
-				</p>
-			
-				<div id="clientDivId">
-					<p>
-						<label>Place</label>
-						<!-- TODO: validate that the current place is "empty"(there is no active client on it!!!) -->
-						<input type="text" name="place" placeholder="Place/Table" required > 
-					</p>
-					<p>
-						<label>Date</label> 
-						<input type="text" name="date" disabled="disabled" contenteditable="false" value="<%= new SimpleDateFormat("dd/MM/yy hh:mm:ss").format(new Date()) %>" >
-					</p>
-				</div>
-				<div>
-					<h4>Add an order</h4>
-					<p id="consumerComboId" style="display: none;"> <!-- not to be shown be default  -->
-						<label>Consumer:&nbsp;</label> <!-- if one is about to add an order => combo, else => don't show it! -->
-						<select name="clientSelect" id="clientSelectId">
-							<option value="0" selected>Select a client</option>
-							<c:forEach items="${consumers}" var="consumer">
-								<option value="${consumer.id}"><c:out value="${consumer.place}" /></option>
-				            </c:forEach>
-						</select> 
-					</p>
-					<p>
-						<label>Status</label>
-						<input type="text" name="status" disabled="disabled" contenteditable="false" value="Pending">
-					</p>
-					<div id="drinkChoiceDiv" >
-						<p id="drinkP">
-							<label>Drink</label>
-							<select name="drinkSelect" id="drinkSelectId">
-								<option value="0" selected>Select a drink</option>
-								<%
-								    DrinksManagement drinks2 = (DrinksManagement) getServletContext().getAttribute("drinksM");
-								    Map<String, Drink> map2 = drinks2.getAllDrinks();
-								    for (Entry<String, Drink> e : map2.entrySet()) {
-										out.print("<option value=" + e.getValue().getPrice() + ">" + e.getKey() + "</option>");
-								    }
-								%>
-							</select> 
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 							<label>Count:&nbsp;</label>
 							<input type="number" id="countPerDrinkId" name="count" min="1" value="1" required />
 						</p>

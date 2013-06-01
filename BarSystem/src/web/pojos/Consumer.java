@@ -5,42 +5,11 @@ import java.util.Date;
 import ejb.User;
 
 public class Consumer {
-<<<<<<< HEAD
-=======
-    
-    private Integer id;
-    
-    private Date date;
-    private String place;
-    
-    private User user; // FK to app.users
-    private Boolean isClosed;
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
-<<<<<<< HEAD
 	private Integer id;
-=======
-    public Consumer(Integer id, Date date, String place, Boolean isClosed, User user) {
-	this.id  = id;
-	this.date = date;
-	this.place = place;
-	this.user = user;
-	this.isClosed = isClosed;
-    }
-    
-    public Integer getId() {
-        return id;
-    }
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
-<<<<<<< HEAD
 	private Date date;
 	private String place;
-=======
-    public void setId(Integer consumer_id) {
-        this.id = consumer_id;
-    }
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
 	private User user; // FK to app.users
 	private Boolean isClosed;

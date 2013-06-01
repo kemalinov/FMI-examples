@@ -20,45 +20,7 @@ public class ConsumersBean {
 	@PersistenceContext(unitName = "BarSysPersistenceUnit")
 	private EntityManager em;
 
-<<<<<<< HEAD
 	public ConsumersBean() {
-=======
-    public ConsumersBean() {
-    }
-
-    public Consumer persistConsumer(Consumer persistConsumerRequest) {
-	ConsumerEntity ce = new ConsumerEntity();
-	ce.setId(persistConsumerRequest.getId());
-	ce.setDate(persistConsumerRequest.getDate());
-	ce.setPlace(persistConsumerRequest.getPlace());
-	
-//	Query q = em.createNamedQuery("UserEntity.findUserById");
-//	q.setParameter(1, persistConsumerRequest.getUserId().getId());
-//	UserEntity ue = (UserEntity) q.getSingleResult();
-	ce.setUserId(DBUtils.UserToUserEntity(persistConsumerRequest.getUserId()));
-	ce.setClosed(persistConsumerRequest.isClosed());
-	try {
-	    if(ce.getId() == null) {
-		em.persist(ce);
-		em.flush();
-	    } else {
-		ce = em.merge(ce);
-	    }    
-	} catch (Exception e) {
-	    System.err.println("Exception in persisting of a client method: " + e.getMessage());
-	} 
-	
-	return DBUtils.ConsumerEntityToConsumer(ce);
-    }
-    
-    public List<Consumer> findAll() {
-	Query q = em.createNamedQuery("ConsumerEntity.findAll");
-	List<ConsumerEntity> entities = q.getResultList();
-	
-	List<Consumer> consumersList = new ArrayList<Consumer>(entities.size());
-	for(ConsumerEntity ce : entities) {
-	    consumersList.add(DBUtils.ConsumerEntityToConsumer(ce));
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 	}
 
 	public Consumer persistConsumer(Consumer persistConsumerRequest) {
@@ -84,7 +46,6 @@ public class ConsumersBean {
 				ce = em.find(ConsumerEntity.class, persistConsumerRequest.getId());
 				ce.setClosed(persistConsumerRequest.isClosed());
 
-<<<<<<< HEAD
 				ce = em.merge(ce);
 				System.out.println("updating a consumer " + ce.getId() + ", with status" + ce.isClosed());
 			}
@@ -93,18 +54,7 @@ public class ConsumersBean {
 		}
 
 		return DBUtils.ConsumerEntityToConsumer(ce);
-=======
-    public List<Consumer> findActiveConsumersByUserId(int findByUserIdRequest) {
-	Query q = em.createNamedQuery("ConsumerEntity.findActiveConsumersByUserId");
-	q.setParameter(1, findByUserIdRequest);
-	List<ConsumerEntity> ceList = q.getResultList();
-	
-	List<Consumer> consumersList = new ArrayList<Consumer>(ceList.size());
-	for(ConsumerEntity ce : ceList) {
-	    consumersList.add(DBUtils.ConsumerEntityToConsumer(ce));
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 	}
-<<<<<<< HEAD
 
 	public List<Consumer> findAll() {
 		Query q = em.createNamedQuery("ConsumerEntity.findAll");
@@ -153,16 +103,4 @@ public class ConsumersBean {
 
 		return DBUtils.ConsumerEntityToConsumer(ce);
 	}
-=======
-	return consumersList;
-    }
-    
-    public Consumer findActiveConsumereByPlace(String place) {
-	Query q = em.createNamedQuery("findActiveConsumersByPlace");
-	q.setParameter(1, place);
-	ConsumerEntity ce =  (ConsumerEntity) q.getSingleResult();
-
-	return DBUtils.ConsumerEntityToConsumer(ce);
-    }
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 }

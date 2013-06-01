@@ -9,108 +9,21 @@ import constants.OrderStatus;
 
 public class Order implements Comparable<Order> {
 
-<<<<<<< HEAD
 	private Integer id;
 	private Consumer consumerId;
 	private Map<Drink, Integer> drinks; // "drinks" is the count - "Integer"
 	private OrderStatus status;
 	private BigDecimal bill;
-=======
-    private Integer id;
-    private Consumer consumerId;
-    private Map<Drink, Integer> drinks; // "drinks" is the count - "Integer"
-    private OrderStatus status;
-    private BigDecimal bill;
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
-<<<<<<< HEAD
 	public Order(Integer id, Consumer consumer, Map<Drink, Integer> drinks, OrderStatus status, BigDecimal bill) {
 		this.id = id;
 		this.consumerId = consumer;
 		this.status = status;
 		this.bill = bill;
-=======
-    public Order(Integer id, Consumer consumer, Map<Drink, Integer> drinks, OrderStatus status, BigDecimal bill) {
-	this.id = id;
-	this.consumerId = consumer;
-	this.status = status;
-	this.bill = bill;
-	
-	this.drinks = new HashMap<Drink, Integer>(drinks.size());
-	this.drinks.putAll(drinks);
-    }
-    
-    // constructor
-    public Order() {
-	drinks = new HashMap<Drink, Integer>();
-    }
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
-<<<<<<< HEAD
 		this.drinks = new HashMap<Drink, Integer>(drinks.size());
 		this.drinks.putAll(drinks);
-=======
-    public Integer getId() {
-	return id;
-    }
-
-    public void setId(Integer order_id) {
-	this.id = order_id;
-    }
-
-    public Consumer getConsumerId() {
-	return consumerId;
-    }
-
-    public void setConsumerId(Consumer consumer_id) {
-	this.consumerId = consumer_id;
-    }
-
-    public OrderStatus getStatus() {
-	return status;
-    }
-
-    public void setStatus(OrderStatus status) {
-	this.status = status;
-    }
-
-    public BigDecimal getBill() {
-	return bill;
-    }
-
-    public void setBill(BigDecimal bill) {
-	this.bill = bill;
-    }
-
-    public Map<Drink, Integer> getDrinks() {
-	return drinks;
-    }
-
-    public void setDrinks(Map<Drink, Integer> drinks) {
-	this.drinks = drinks;
-    }
-
-    public void setCalculatedBill() {
-	setBill(calculateBill());
-    }
-
-    private BigDecimal calculateBill(){
-	BigDecimal b = new BigDecimal(0);
-	System.out.println("Order's drnks size " + this.drinks.size());
-	for(Entry<Drink, Integer> drinks : this.drinks.entrySet()) {
-	    // add the bill of every ordered drink (drink*count) to the whole bill
-	    System.out.println(drinks.getKey().getName());
-	    System.out.println(drinks.getKey().getPrice());
-	    System.out.println(drinks.getValue());
-	    b = b.add(drinks.getKey().getPrice().multiply(new BigDecimal(drinks.getValue())));  
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 	}
-<<<<<<< HEAD
-=======
-	System.out.println("calculated bill for the order " + id + " is " + b);
-	return b;
-    }
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 
 	// constructor
 	public Order() {

@@ -8,6 +8,7 @@
 <%@page import="java.util.Map"%>
 <%@page import="java.util.Iterator"%>
 <%@page import="java.util.Set"%>
+<%@page import="jms.TopicClient"%>
 <%@page import="web.users.OrdersManagement"%>
 <%@page import="web.users.DrinksManagement"%>
 <%@page import="web.users.UsersManagement"%>
@@ -48,7 +49,6 @@
 } */
 	
 function setOrderIdFromRadioBtn(e) { // not used!!! otherwise is called on onchange on input/radio // for the modal dialog when accept an order
-<<<<<<< HEAD
 	document.getElementsByName('orderIDRadioBtn')[0].value=e.value;
 }
 
@@ -64,23 +64,6 @@ function setParamAndSubmit() { // it is used to pass the accepted/done orderId t
 }
 
 function addInput(divName){ // not used!!! to add new UI compoments (when adding drinks to a new client) !!!! BOOKMARKED 
-=======
-	document.getElementsByName('acceptedOrderIdName')[0].value=e.value;
-}
-
-function setParamAndSubmit() { // it is used to pass the accepted/done orderId to the JSP file!
-    var hidden = document.createElement('input');
-    hidden.type = "hidden";
-	hidden.name = "orderId";
-	hidden.value = document.getElementsByName('acceptedOrderIdName')[0].value;
-	var f = document.getElementById('acceptAnOrderFormId');
-	f.appendChild(hidden);
-	f.action=<%= getServletContext().getContextPath() + "/protected/barmans" %>;
-	f.submit();
-}
-
-function addInput(divName){ // to add new UI compoments (when adding drinks to a new client) !!!! BOOKMARKED 
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 	  var newdiv = document.createElement('div');
       newdiv.innerHTML = "Entry " + (counter + 1) + " <br><input type='text' name='myInputs[]'>";
       document.getElementById(divName).appendChild(newdiv);
@@ -265,7 +248,6 @@ body {
 						</tbody>
 					</table>
 					<div class="ordersContentTableDiv">
-<<<<<<< HEAD
 						<table id="ordersTable">
 							<colgroup>
 								<col width="20px" />
@@ -288,36 +270,6 @@ body {
 					                    <td><c:out value="${order.status}" /></td>
 					                    <td><c:out value="${order.bill}" /></td>
 					                    </tr>
-=======
-						<table>
-							<colgroup>
-								<col width="20px" />
-								<col width="40px" /><col width="80px" /><col width="150px" />
-								<col width="100px" /><col width="80px" /><col width="60px" />
-							</colgroup>
-							<tbody>
-							    <c:forEach items="${orders}" var="order">
-								   <c:if test="${order.status=='OVERDUE'}">
-								   		<tr style="background-color: red;">
-								   </c:if>
-								   <c:if test="${order.status!='OVERDUE'}">
-								   		<tr>
-								   </c:if>
-								   <c:if test="${(order.status=='OVERDUE') || (order.status=='PENDING')}">
-								   		<td><INPUT TYPE="radio" NAME="acceptOrderRadioBtn" VALUE="${order.id}"></td>
-								   </c:if>
-								   <c:if test="${(order.status=='ACCEPTED') || (order.status=='DONE')}">
-								   		<td><INPUT TYPE="radio" NAME="acceptOrderRadioBtn" VALUE="${order.id}" disabled="disabled"></td>
-								   </c:if>
-					                	<%-- <td><INPUT TYPE="radio" NAME="acceptOrderRadioBtn" VALUE="${order.id}"></td> --%>
-					                    <td><c:out value="${order.id}" /></td>
-					                    <td><c:out value="${order.consumerId.place}" /></td>
-					                    <td><c:out value="[pitie1, pitie2,..]" /></td>
-					                    <td><c:out value="[c1, c2,...]" /></td>
-					                    <td><c:out value="${order.status}" /></td>
-					                    <td><c:out value="${order.bill}" /></td>
-					               </tr>
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 					            </c:forEach>
 							</tbody>
 						</table>
@@ -330,7 +282,6 @@ body {
 				<div>
 					<form name="acceptAnOrderForm" id="acceptAnOrderFormId" action=<%= getServletContext().getContextPath() + "/protected/barmans"%> method="post">
 						<% 
-<<<<<<< HEAD
 							String orderID = (String) request.getParameter("orderIDRadioBtn"); 
 							Barman barman = (Barman) session.getAttribute("loggedUser");
 						%>
@@ -340,17 +291,6 @@ body {
 								Order order = barman.getOrderById(Integer.valueOf(orderID.trim()));
 								if (order != null) {
 					        	   // barman.acceptAnOrder(order);
-=======
-							String orderID = (String) request.getParameter("acceptOrderRadioBtn"); 
-							Barman barman = (Barman) session.getAttribute("loggedUser");
-						%>
-							<h4> Accepted order id: <% out.print(orderID); %> by <% out.print(barman.getName()); %> </h4>
-						<% 
-							if (orderID != null) {
-								Order order = barman.getOrderById(Integer.valueOf(orderID.trim()));
-								if (order != null) {
-					        	    barman.acceptAnOrder(order);
->>>>>>> branch 'master' of https://github.com/kemalinov/FMI-examples.git
 					        	    for(Entry<Drink, Integer> e : order.getDrinks().entrySet()) {
 					        			out.write("<p>"+ e.getKey().getName() + " (" + e.getKey().getIngredients() + "), count: " + e.getValue() + "</p>");
 					        	    }
