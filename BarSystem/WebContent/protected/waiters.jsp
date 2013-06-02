@@ -38,7 +38,7 @@
  -->
 <!--[if lte IE 7]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
 <style>
-@import url(http://fonts.googleapis.com/css?family=Raleway:400,700);
+/* @import url(http://fonts.googleapis.com/css?family=Raleway:400,700); */
 
 body {
 	background: #7f9b4e url(/fmi/images/bg2.jpg) no-repeat center top;
@@ -53,14 +53,6 @@ body {
 }
 </style>
 <script type="text/javascript">
-
-function getCheckedRadioBtn() {
-    for (var i = 0; i < document.getElementsByName('radioAction').length; i++) {
-   		if(document.getElementsByName('radioAction')[i].checked == true) {
-        	return document.getElementsByName('radioAction')[i].value;
-       	}
-    }
-}
 
 function setParamsAndSubmitTheOrder() { // it is used to pass correct parameters
 	var f = document.getElementById('createNewOrderFormId');
@@ -94,15 +86,6 @@ function setParamsAndSubmitTheOrder() { // it is used to pass correct parameters
 	f.submit();
 }
 
-var ordersTableAutoRefresh = setInterval(  
-	 function ()  
-	 {  
-	     $('#ordersTable').load('http://localhost:8080/BarMngmtSystem/LoadOrders').fadeIn("slow");
-	   /*$.get('http://localhost:8080/BarMngmtSystem/LoadOrders', function(data) {
-	    	 $('#ordersTable').html(data);
-	    	}); */
-	 }, 10000
- );
 </script>
 
 </head>

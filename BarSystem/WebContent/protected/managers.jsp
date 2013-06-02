@@ -4,7 +4,8 @@
 <%@page import="java.util.LinkedList"%>
 <%@page import="web.management.UsersManagement"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8" session="true" %>
+	pageEncoding="UTF-8" session="true"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -18,15 +19,17 @@
 	content="css3, login, form, custom, input, submit, button, html5, placeholder" />
 <meta name="author" content="Codrops" />
 
-<link rel="stylesheet" type="text/css"
-	href="/BarMngmtSystem/css/style.css" />
+<link rel="stylesheet" type="text/css" href="/BarMngmtSystem/css/style.css" />
+<link rel="stylesheet" type="text/css"	href="/BarMngmtSystem/css/orders/orders.css" />
+
 <link rel="icon" href="/BarMngmtSystem/images/favicon.ico">
+
 <!-- 
 <script src="/fmi/js/modernizr.custom.63321.js"></script>
  -->
 <!--[if lte IE 7]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
 <style>
-@import url(http://fonts.googleapis.com/css?family=Raleway:400,700);
+/* @import url(http://fonts.googleapis.com/css?family=Raleway:400,700); */
 
 body {
 	background: #7f9b4e url(/fmi/images/bg2.jpg) no-repeat center top;
@@ -45,44 +48,55 @@ body {
 	<div class="container">
 		<header>
 			<h2>
-				Welcome, manager... <%=session.getAttribute("username")%>
-			</h2>
+				Welcome, manager...
+				<%=session.getAttribute("username")%></h2>
 			<div class="support-note">
 				<span class="note-ie">Sorry, only modern browsers.</span>
 			</div>
-
 		</header>
 		<section class="main">
-			<!-- what method should be used in order not to see the username/password in the url? -->
-			
 			<form class="form-5"
 				action=<%=getServletContext().getContextPath() + "/public/controller"%>
 				method="post">
 				<input type="submit" name="action" value="logout">
 			</form>
+			<p>Logged users list:</p>
+			<div class="ordersTableDiv" style="height: 170">
+				<!-- starts the orders's table  -->
+				<table>
+					<colgroup>
+						<col width="20px" />
+						<col width="40px" />
+					</colgroup>
+					<tbody>
+						<tr>
+							<th>&nbsp;&nbsp;Name</th>
+							<th>&nbsp;&nbsp;Role</th>
+							<th></th>
+						</tr>
+					</tbody>
+				</table>
+				<div class="ordersContentTableDiv" style="height: 150">
+					<table id="ordersTable">
+						<colgroup>
+							<col width="20px" />
+							<col width="40px" />
+						</colgroup>
+						<tbody>
+							<c:forEach items="${loggedUsers}" var="user">
+								<tr>
+									<td><c:out value="${user.name}" /></td>
+									<td><c:out value="${user.role.role}" /></td>
+								</tr>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<!-- ends the logged user's table  -->
 
-			<%
-			    UsersManagement userM = (UsersManagement) getServletContext().getAttribute("usersM");
-			    if (userM.isManagerUser((String) session.getAttribute("username"))) {
-					//DrinksManagement drinksM = (DrinksManagement) getServletContext().getAttribute("drinksM");
-					//drinksM.testPersistingDrink();
-					//OrdersManagement ordersM = (OrdersManagement) getServletContext().getAttribute("ordersM");
-					//ordersM.createNewOrder(null, null);
-					//drinkM.testPersistingConsumer((String)session.getAttribute("username"));
-					//drinkM.testPersistingOrder();
-					//TopicClient.sendMessage();
-			%>
-			<button id="monitor_btn" name="Monitor">Manager's btn</button>
-			<%
-			    }
-			%>
-			<!--  if it is admin user show a monitoring button to forward to administration.jsp(list info about active sessions)
-			
-			for normal users do not show that button. and for normal users get the AuditLog and print the history for that user
-			
-			-->
+
 		</section>
-
 	</div>
 
 </body>

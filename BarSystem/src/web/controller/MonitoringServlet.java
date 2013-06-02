@@ -1,6 +1,7 @@
 package web.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,8 +12,9 @@ import javax.servlet.http.HttpSession;
 
 import web.management.UsersManagement;
 import ejb.Manager;
+import ejb.User;
 
-@WebServlet(urlPatterns = { "/protected/monitoring" })
+@WebServlet(urlPatterns = { "/protected/managers" })
 public class MonitoringServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -29,13 +31,17 @@ public class MonitoringServlet extends HttpServlet {
 			String action = request.getParameter("action");
 			String selectedScreen = "";
 
-			UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
-			Manager manager = (Manager) users.getLoggedUserByName((String) session.getAttribute("username"));
+			UsersManagement usersM = (UsersManagement) getServletContext().getAttribute("usersM");
+			Manager manager = (Manager) session.getAttribute("loggedUser");
 
 			if (manager != null) {
 				System.out.println("in monitoring servlet....");
 				
-				selectedScreen = "/protected/barmans.jsp";
+				List<User> loggedUsers = usersM.getAllLoggedUsers();
+				request.setAttribute("loggedUsers", loggedUsers);
+				
+				
+				selectedScreen = "/protected/managers.jsp";
 			}
 
 			// get host, port, context,... programatically

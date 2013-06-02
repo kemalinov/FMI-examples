@@ -27,7 +27,7 @@ public class UsersManagement {
 	private List<User> allRegisteredUsersList;
 
 	private Map<String, String> userRoleMap = new HashMap<String, String>();
-	private Map<String, User> loggedUsersList = new HashMap<String, User>();
+	private Map<String, User> loggedUsersMap = new HashMap<String, User>();
 
 	private Map<String, Role> nameRoleMap;
 
@@ -96,7 +96,7 @@ public class UsersManagement {
 
 	private void addNewLoggedUser(User u) {
 		User user = createAConcreteUserByRole(u);
-		loggedUsersList.put(user.getName(), user);
+		loggedUsersMap.put(user.getName(), user);
 		if (user instanceof Observer) {
 			OrdersNotification.getInstance().registerObserver((Observer) user);
 		}
@@ -115,18 +115,22 @@ public class UsersManagement {
 	}
 
 	public User getLoggedUserByName(String username) {
-		System.out.println("logged users " + loggedUsersList.size());
-		return loggedUsersList.get(username);
+		System.out.println("logged users " + loggedUsersMap.size());
+		return loggedUsersMap.get(username);
 	}
 
-	public void logoutUser(String username) {
-		System.out.println("logout user " + username);
-		User user = loggedUsersList.remove(username);
-		if (user instanceof Observer) {
-			OrdersNotification.getInstance().registerObserver((Observer) user);
+	public void logoutUser(User user) {
+		System.out.println("logouting user " + user.getName());
+		User u = loggedUsersMap.remove(user.getName());
+		if (u instanceof Observer) {
+			OrdersNotification.getInstance().registerObserver((Observer) u);
 		}
-		System.out.println("logged users size: " + loggedUsersList.size());
+		System.out.println("logged users size: " + loggedUsersMap.size());
 	}
+	
+	public List<User> getAllLoggedUsers() {
+		return new ArrayList<User>(loggedUsersMap.values());
+	} 
 
 	public boolean registerUser(String username, String password, String role) {
 		if (!userRoleMap.containsKey(username)) {

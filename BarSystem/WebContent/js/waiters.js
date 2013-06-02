@@ -1,5 +1,13 @@
 // Waiter's page JS
 
+function getCheckedRadioBtn() { // not used!
+    for (var i = 0; i < document.getElementsByName('radioAction').length; i++) {
+   		if(document.getElementsByName('radioAction')[i].checked == true) {
+        	return document.getElementsByName('radioAction')[i].value;
+       	}
+    }
+}
+
 function getDrinkPrice() { // get the selected drink id!
 	var e = document.getElementById('drinkSelectId');
 	// return e.options[e.selectedIndex].value; // returns the "value"
@@ -33,3 +41,15 @@ function addComponents() {
  	var foo = document.getElementById("drinkChoiceDiv");
 	foo.appendChild(clone);   
 }
+
+// refresh orders' table content
+var ordersTableAutoRefresh = setInterval(  
+	 function ()  
+	 {  
+	     $('#ordersTable').load('http://localhost:8080/BarMngmtSystem/LoadOrders').fadeIn("slow");
+	   /*$.get('http://localhost:8080/BarMngmtSystem/LoadOrders', function(data) {
+	    	 $('#ordersTable').html(data);
+	    	}); */
+		 }, 10000
+);
+

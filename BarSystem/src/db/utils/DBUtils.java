@@ -62,7 +62,6 @@ public class DBUtils {
 	}
 
 	public static Order OrderEntityToOrder(OrderEntity oe) {
-		System.out.println("map size before convert " + oe.getDrinks().size());
 		Role rd = new Role(oe.getConsumerId().getUserId().getRole().getId(), oe.getConsumerId().getUserId().getRole().getRoleName());
 		User ud = new User(oe.getConsumerId().getUserId().getId(), oe.getConsumerId().getUserId().getName(), oe.getConsumerId().getUserId().getPassword(), rd);
 		Consumer cd = new Consumer(oe.getConsumerId().getId(), oe.getConsumerId().getDate(), oe.getConsumerId().getPlace(), oe.getConsumerId().isClosed(), ud);
@@ -70,7 +69,6 @@ public class DBUtils {
 		for (Entry<DrinkEntity, Integer> e : oe.getDrinks().entrySet()) {
 			drinksMap.put(DBUtils.DrinkEntityToDrink(e.getKey()), e.getValue());
 		}
-		System.out.println("map size after convert " + drinksMap.size());
 		return new Order(oe.getId(), cd, drinksMap, oe.getStatus(), oe.getBill());
 	}
 

@@ -21,7 +21,7 @@
 <script src="../js/modernizr.custom.63321.js"></script> -->
 <!--[if lte IE 7]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
 <style>
-@import url(http://fonts.googleapis.com/css?family=Raleway:400,700);
+/* @import url(http://fonts.googleapis.com/css?family=Raleway:400,700); */
 
 body {
 	background: #7f9b4e url(../images/bg2.jpg) no-repeat center top;

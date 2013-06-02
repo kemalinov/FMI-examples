@@ -18,13 +18,6 @@ public class OrdersNotification implements Subject {
 	}
 	
 	@Override
-	public void notifyObservers() {
-		for (Observer o : observers) {
-			o.update();
-		}
-	}
-
-	@Override
 	public void registerObserver(Observer observer) {
 		observers.add(observer);
 	}
@@ -34,4 +27,11 @@ public class OrdersNotification implements Subject {
 		observers.remove(observer);
 	}
 
+	@Override
+	public void notifyObservers() {
+		for (Observer o : observers) {
+			o.update();
+		}
+	}
+	
 }

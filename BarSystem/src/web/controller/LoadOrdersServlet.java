@@ -33,8 +33,8 @@ public class LoadOrdersServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-		UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
-		User user = (User) users.getLoggedUserByName((String) session.getAttribute("username"));
+//		UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
+		User user = (User) session.getAttribute("loggedUser");
 	
 		String selectedScreen = "";
 		List<Order> ordersList = null;
@@ -62,7 +62,7 @@ public class LoadOrdersServlet extends HttpServlet {
     			
     			createTable(user, ordersList, out);
     		}
-    		System.out.println("sent orders to " + selectedScreen);
+    		System.out.println("sent orders to " + user.getName() + ", " + selectedScreen);
 		} else {
 			System.out.println("In LoadOrdersServlet user is null!");
 		}

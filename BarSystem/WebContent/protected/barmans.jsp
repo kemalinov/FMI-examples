@@ -35,6 +35,7 @@
 
 <script type="text/javascript" src="/BarMngmtSystem/js/jquery-1.9.1.min.js"></script>  
 <script type="text/javascript" src="/BarMngmtSystem/js/barmans.js"></script>  
+
 <!-- 
 <script src="/fmi/js/modernizr.custom.63321.js"></script>
  -->
@@ -169,13 +170,15 @@ body {
 							if (orderID != null) {
 								Order order = barman.getOrderById(Integer.valueOf(orderID.trim()));
 								if (order != null) {
-					        	   // barman.acceptAnOrder(order);
+					        		barman.acceptAnOrder(order);
 					        	    for(Entry<Drink, Integer> e : order.getDrinks().entrySet()) {
 					        			out.write("<p>"+ e.getKey().getName() + " (" + e.getKey().getIngredients() + "), count: " + e.getValue() + "</p>");
 					        	    }
 			    		       	 }
 							}
 						%>
+						<p>Example video...</p>
+						<iframe width="320" height="240" src="http://www.youtube.com/embed/lGOkgbdGqKs" ></iframe>
 						<input name="acceptedOrderIdName" hidden="true" value=<% out.print(orderID); %>></input> <!-- via this input the JSP gets the order id  -->
 						<input  type="submit" name="action" value="Done" /> 
 					</form>

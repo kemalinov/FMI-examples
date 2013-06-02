@@ -24,6 +24,9 @@ function addInput(divName){ // not used!!! to add new UI compoments (when adding
 	 }, 10000
  );
 
+ 
+// orders alert notifications...
+ 
  var ordersAlertNotif = setInterval(  
 	 function ()  
 	 {  
@@ -37,7 +40,7 @@ function addInput(divName){ // not used!!! to add new UI compoments (when adding
  );
  
  
- //////////////////////////////
+
  var auto_show_msg = setInterval(  
 		 function ()  
 		 {  

@@ -54,7 +54,7 @@ public class ControllerServlet extends HttpServlet {
 				} else if (u.getRole().getRole().equals(RolesType.BARMAN)) {
 					selectedScreen = "/protected/barmans";
 				} else if (u.getRole().getRole().equals(RolesType.MANAGER)) {
-					selectedScreen = "/protected/managers.jsp";
+					selectedScreen = "/protected/managers";
 				}
 				System.out.println("authentication successfully for user " + username);
 
@@ -83,11 +83,11 @@ public class ControllerServlet extends HttpServlet {
 			selectedScreen = "/public/login.jsp";
 
 		} else if (action.equals("logout")) {
-			String username = (String) session.getAttribute("username");
-			users.logoutUser(username);
+			User user = (User) session.getAttribute("loggedUser");
+			users.logoutUser(user);
 			session.invalidate();
 			selectedScreen = "/public/login.jsp";
-			System.out.println("logout of " + username);
+			System.out.println("logout of " + user.getName());
 			// auditLog.log("logout", username, true, request.getRemoteAddr());
 		} else { // cancel
 			selectedScreen = "/public/login.jsp";
