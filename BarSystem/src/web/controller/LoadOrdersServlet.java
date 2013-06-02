@@ -33,8 +33,9 @@ public class LoadOrdersServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		HttpSession session = req.getSession();
-//		UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
-		User user = (User) session.getAttribute("loggedUser");
+		
+		UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
+		User user = (User) session.getAttribute("loggedUser"); 
 	
 		String selectedScreen = "";
 		List<Order> ordersList = null;

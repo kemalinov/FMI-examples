@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import web.management.DrinksManagement;
+import web.management.UsersManagement;
 import web.pojos.Consumer;
 import web.pojos.Drink;
 import web.pojos.Order;
@@ -44,7 +45,8 @@ public class WaitersServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		String selectedScreen = "";
 
-		Waiter waiter = (Waiter) session.getAttribute("loggedUser");
+		UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
+		Waiter waiter = (Waiter) session.getAttribute("loggedUser");  //users.getLoggedUserByName((String) session.getAttribute("username"));
 
 		DrinksManagement drinksM = (DrinksManagement) getServletContext().getAttribute("drinksM");
 
@@ -56,12 +58,12 @@ public class WaitersServlet extends HttpServlet {
 			if (action != null) {
 				if (action.equals("Add")) { // add consumer/and oreder
 					String radioAction = request.getParameter("radioAction");
-					String place = request.getParameter("place");
-					String dateParam = request.getParameter("date");
 					String orderedDrinkCount = request.getParameter("orderedDrinkNumber");
-					String consumer = request.getParameter("clientSelect");
 
 					if (radioAction.equals("0")) { // "Adding a client..."
+						String place = request.getParameter("place");
+						String dateParam = request.getParameter("dateHid");
+						
 						System.out.println(place);
 						System.out.println(dateParam);
 
@@ -71,12 +73,19 @@ public class WaitersServlet extends HttpServlet {
 
 					} else { // "Adding an order..."
 						System.out.println("Adding an order...");
-						System.out.println("to consumer " + consumer);
+						
+						String consumerPlace = request.getParameter("clientSelect");
+						System.out.println("to consumer on " + consumerPlace);
 						System.out.println("ordered drinks count: " + orderedDrinkCount);
 
 						// persist the
 						 Map<Drink, Integer> drinks = loadTheDrinks(request, drinksM, orderedDrinkCount);
-						 waiter.addAnOdrerTo(place, drinks); // tuk moje i da grumne?
+						 Order o = waiter.addAnOdrerTo(consumerPlace, drinks); // tuk moje i da grumne?
+						 if (o != null) {
+							 System.out.println("Added new order successfuly!");
+						 } else {
+							 System.err.println("Adding new order failed!");
+						 }
 					}
 
 				} else if (action.equalsIgnoreCase("Close an Order")) {

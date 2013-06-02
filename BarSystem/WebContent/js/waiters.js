@@ -8,22 +8,33 @@ function getCheckedRadioBtn() { // not used!
     }
 }
 
+var ordersTableAutoRefresh = setInterval(  
+		 function ()  
+		 {  
+		     $('#ordersTable').load('http://localhost:8080/BarMngmtSystem/LoadOrders').fadeIn("slow");
+		   /*$.get('http://localhost:8080/BarMngmtSystem/LoadOrders', function(data) {
+		    	 $('#ordersTable').html(data);
+		    	}); */
+			 }, 10000
+	);
+
+function showClientDiv(showClientUIStyle) {
+	document.getElementById('clientDivId').style.display = showClientUIStyle;
+	if (showClientUIStyle == "block") { /* to show consumer and data fields  */
+		document.getElementById('consumerComboId').style.display = "none"; /* hides the consumers' place combo */
+		$("#placeId").prop("required", true);
+	} else {
+		document.getElementById('consumerComboId').style.display = "block";
+		$("#placeId").prop("required", false);
+	}
+}
+
+
 function getDrinkPrice() { // get the selected drink id!
 	var e = document.getElementById('drinkSelectId');
 	// return e.options[e.selectedIndex].value; // returns the "value"
 	// return e.options[e.selectedIndex].text; // returns the "text" (selected item)
 	return parseFloat(e.options[e.selectedIndex].value);
-}
-
-function showClientDiv(showClientUIStyle) {
-	document.getElementById('clientDivId').style.display = showClientUIStyle;
-	if (showClientUIStyle == "block") {
-		document.getElementById('consumerComboId').style.display = "none";
-		$("#placeId").prop("required", false);
-	} else {
-		document.getElementById('consumerComboId').style.display = "block";
-		$("#placeId").prop("required", true);
-	}
 }
 
 function calculateAllBills(){
@@ -41,15 +52,4 @@ function addComponents() {
  	var foo = document.getElementById("drinkChoiceDiv");
 	foo.appendChild(clone);   
 }
-
-// refresh orders' table content
-var ordersTableAutoRefresh = setInterval(  
-	 function ()  
-	 {  
-	     $('#ordersTable').load('http://localhost:8080/BarMngmtSystem/LoadOrders').fadeIn("slow");
-	   /*$.get('http://localhost:8080/BarMngmtSystem/LoadOrders', function(data) {
-	    	 $('#ordersTable').html(data);
-	    	}); */
-		 }, 10000
-);
 

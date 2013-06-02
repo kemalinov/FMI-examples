@@ -30,7 +30,7 @@ function addInput(divName){ // not used!!! to add new UI compoments (when adding
  var ordersAlertNotif = setInterval(  
 	 function ()  
 	 {  
-		$.get('http://localhost:8080/BarMngmtSystem/OrdersAlert', function (data) {
+		$.get('http://localhost:8080/BarMngmtSystem/OrdersAlert', function (data) { // change the host!!! 130.185.253.67
 			if(data.size != '0') {
 				$("#alertOrderP").html(data.arr);
 				$("#aId").trigger("click");			

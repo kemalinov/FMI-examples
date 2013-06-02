@@ -204,7 +204,7 @@ function setParamsAndSubmitTheOrder() { // it is used to pass correct parameters
 						<select name="clientSelect" id="clientSelectId">
 							<option value="0" selected>Select a client</option>
 							<c:forEach items="${consumers}" var="consumer">
-								<option value="${consumer.id}"><c:out value="${consumer.place}" /></option>
+								<option value="${consumer.place}"><c:out value="${consumer.place}" /></option>
 				            </c:forEach>
 						</select> 
 					</p>

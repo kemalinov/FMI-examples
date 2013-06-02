@@ -94,7 +94,8 @@ public class ControllerServlet extends HttpServlet {
 		}
 
 		// get host, port, context,... programatically
-		response.sendRedirect("http://localhost:8080/BarMngmtSystem" + selectedScreen);
+		
+		response.sendRedirect(getServletContext().getContextPath() + selectedScreen);
 		// request.getRequestDispatcher(selectedScreen).forward(request,
 		// response);
 	}

@@ -32,7 +32,7 @@ public class MonitoringServlet extends HttpServlet {
 			String selectedScreen = "";
 
 			UsersManagement usersM = (UsersManagement) getServletContext().getAttribute("usersM");
-			Manager manager = (Manager) session.getAttribute("loggedUser");
+			Manager manager = (Manager) session.getAttribute("loggedUser"); 
 
 			if (manager != null) {
 				System.out.println("in monitoring servlet....");

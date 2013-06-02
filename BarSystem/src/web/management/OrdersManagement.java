@@ -132,14 +132,17 @@ public class OrdersManagement {
 		System.out.println("Test of updating an order finished well!");
 	}
 
-	public synchronized void acceptAnOrder(Order order) {
-		order.setStatus(OrderStatus.ACCEPTED);
-		for (Order o : alertedOrders) {
-			if (o.getId().compareTo(order.getId()) == 0) {
-				alertedOrders.remove(o);
+	public void acceptAnOrder(Order order) {
+		synchronized (alertedOrders) {
+			order.setStatus(OrderStatus.ACCEPTED);
+			for (Order o : alertedOrders) {
+				if (o.getId().compareTo(order.getId()) == 0) {
+					alertedOrders.remove(o);
+				}
 			}
+			updateAnOrder(order);	
 		}
-		updateAnOrder(order);
+		
 	}
 
 	public synchronized void finishAnOrder(Order order) {

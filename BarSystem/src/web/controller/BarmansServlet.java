@@ -11,9 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import web.management.UsersManagement;
 import web.pojos.Drink;
 import web.pojos.Order;
 import ejb.Barman;
+import ejb.User;
 
 /**
  * Servlet implementation class ControllerSevlet
@@ -38,6 +40,8 @@ public class BarmansServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		String selectedScreen = "";
 
+		UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
+//		User user = (User) users.getLoggedUserByName((String) req.getAttribute("username"));
 		Barman barman = (Barman) session.getAttribute("loggedUser"); 
 
 		if (barman != null) {

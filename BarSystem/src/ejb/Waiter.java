@@ -57,14 +57,20 @@ public class Waiter extends User implements Observer {
 	
 	public Order addAnOdrerTo(String place, Map<Drink, Integer> drinks) {
 		Consumer cons = getConsumerByPlace(place);
-		Order order = ordersM.addOrderToConsumer(cons, drinks);
-		return order;
+		if (cons != null) {
+			Order order = ordersM.addOrderToConsumer(cons, drinks);
+			return order;
+		} else {
+			return null;
+		}
 	}
 
 	private Consumer getConsumerByPlace(String place) {
 		if (clientsMap.containsKey(place)) {
+			System.out.println("The consumer is found!");
 			return clientsMap.get(place);
 		}
+		System.out.println("The consumer was not found!");
 		return null;
 	}
 
