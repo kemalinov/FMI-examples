@@ -128,19 +128,18 @@ body {
 							</colgroup>
 							<tbody>
 							    <c:forEach items="${orders}" var="order">
-								   <c:if test="${order.status == 'OVERDUE'}">
+									<c:if test="${order.status == 'OVERDUE'}">
 								   		<tr style="background-color: red;">
-								   </c:if>
-								   <c:if test="${order.status != 'OVERDUE'}">
+								  	</c:if>
+								   	<c:if test="${order.status != 'OVERDUE'}">
 								   		<tr>
-								   </c:if>
-								<%-- 	   		<td><INPUT TYPE="radio" NAME="orderIDRadioBtn" VALUE="${order.id}"></td> --%>
+								   	</c:if>
 									<c:if test="${(order.status=='OVERDUE') || (order.status=='PENDING')}">
 								   		<td><INPUT TYPE="radio" NAME="orderIDRadioBtn" VALUE="${order.id}"></td>
-								   </c:if>
-								   <c:if test="${order.status=='ACCEPTED'}">
+								   	</c:if>
+								   	<c:if test="${order.status=='ACCEPTED'}">
 								   		<td><INPUT TYPE="radio" NAME="orderIDRadioBtn" VALUE="${order.id}" disabled="disabled"></td>
-								   </c:if>
+								   	</c:if>
 						                    <td><c:out value="${order.id}" /></td>
 						                    <td><c:out value="${order.consumerId.place}" /></td>
 						                     <!-- drinks... -->
@@ -169,8 +168,7 @@ body {
 					<form name="acceptAnOrderForm" id="acceptAnOrderFormId" action=<%= getServletContext().getContextPath() + "/protected/barmans"%> method="post">
 						<% 
 							String orderID = (String) request.getParameter("orderIDRadioBtn"); 
-							UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
-							Barman barman = (Barman) users.getLoggedUserByName((String) session.getAttribute("username"));// session.getAttribute("loggedUser");
+							Barman barman = (Barman) session.getAttribute("loggedUser");
 						%>
 							<h4> Accepted order id: <% out.print(orderID); %> by <% out.print(barman.getName()); %> </h4>
 						<% 
