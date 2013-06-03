@@ -46,7 +46,7 @@ public class WaitersServlet extends HttpServlet {
 		String selectedScreen = "";
 
 		UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
-		Waiter waiter = (Waiter) session.getAttribute("loggedUser");  //users.getLoggedUserByName((String) session.getAttribute("username"));
+		Waiter waiter = (Waiter) users.getLoggedUserByName((String) session.getAttribute("username")); //session.getAttribute("loggedUser"); 
 
 		DrinksManagement drinksM = (DrinksManagement) getServletContext().getAttribute("drinksM");
 

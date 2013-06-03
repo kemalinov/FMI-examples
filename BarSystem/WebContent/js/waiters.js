@@ -11,7 +11,7 @@ function getCheckedRadioBtn() { // not used!
 var ordersTableAutoRefresh = setInterval(  
 		 function ()  
 		 {  
-		     $('#ordersTable').load('http://localhost:8080/BarMngmtSystem/LoadOrders').fadeIn("slow");
+		     $('#ordersTable').load('http://192.168.0.2:8080/BarMngmtSystem/LoadWaitersOrders').fadeIn("slow");
 		   /*$.get('http://localhost:8080/BarMngmtSystem/LoadOrders', function(data) {
 		    	 $('#ordersTable').html(data);
 		    	}); */

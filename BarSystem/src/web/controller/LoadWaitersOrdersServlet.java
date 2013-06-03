@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import web.management.OrdersManagement;
 import web.management.UsersManagement;
 import web.pojos.Drink;
 import web.pojos.Order;
@@ -21,11 +22,11 @@ import ejb.Barman;
 import ejb.User;
 import ejb.Waiter;
 
-@WebServlet(name="LoadOrdersName", urlPatterns = { "/LoadOrders" })
-public class LoadOrdersServlet extends HttpServlet {
+@WebServlet(name="LoadWaitersOrdersName", urlPatterns = { "/LoadWaitersOrders" })
+public class LoadWaitersOrdersServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	public LoadOrdersServlet() {
+	public LoadWaitersOrdersServlet() {
 		super();
 	}
 
@@ -35,27 +36,18 @@ public class LoadOrdersServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 		
 		UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
-		User user = (User) session.getAttribute("loggedUser"); 
-	
+		User user = (User) users.getLoggedUserByName((String) session.getAttribute("username"));
+		
 		String selectedScreen = "";
 		List<Order> ordersList = null;
 		
 		if (user != null) {
-    		if (user.getRole().getRole().equals(RolesType.BARMAN)) {
-    			Barman barman = (Barman) user;
-    			
-    			ordersList = barman.getActiveOrders();
-    			req.setAttribute("orders", ordersList);
-    			
-    			selectedScreen = "/protected/barmans.jsp";
-    		} else if (user.getRole().getRole().equals(RolesType.WAITER)) {
-    			Waiter waiter = (Waiter) user;
-    			
-    			ordersList = waiter.getMyOrders();
-    			req.setAttribute("orders", ordersList);
-    		
-    			selectedScreen = "/protected/waiters.jsp";
-    		}
+			Waiter waiter = (Waiter) user;
+			
+			ordersList = waiter.getMyOrders();
+			req.setAttribute("orders", ordersList);
+		
+			selectedScreen = "/protected/waiters.jsp";
     	
     		if (ordersList != null) {
     			resp.setContentType("text/html");
@@ -114,37 +106,3 @@ public class LoadOrdersServlet extends HttpServlet {
 	}
 
 }
-
-
-
-//resp.setContentType("text/html");
-//PrintWriter out = resp.getWriter();
-//
-//out.print("<table>");
-//out.print("<colgroup><col width=\"20px\" /><col width=\"40px\" /><col width=\"80px\" /><col width=\"150px\" />" +
-//		"<col width=\"100px\" /><col width=\"80px\" /><col width=\"60px\" />" +
-//		"</colgroup>");
-//out.print("<tbody>");
-//out.print("<c:forEach items=\"${orders}\" var=\"order\">");
-//out.print("<c:if test=\"${order.status=='OVERDUE'}\">");
-//out.print("<tr style=\"background-color: red;\">");
-//out.print("</c:if>");
-//out.print("<c:if test=\"${order.status!='OVERDUE'}\">");
-//out.print("<tr>");
-//out.print("</c:if>");
-//out.print("<c:if test=\"${(order.status=='OVERDUE') || (order.status=='PENDING') || (order.status=='ACCEPTED')}\">");
-//out.print("<td><INPUT TYPE=\"radio\" NAME=\"doneAnOrderRadioBtn\" VALUE=\"${order.id}\" disabled=\"disabled\"></td>");
-//out.print("</c:if>");
-//out.print("<c:if test=\"${order.status=='DONE'}\">");
-//out.print("<td><INPUT TYPE=\"radio\" NAME=\"doneAnOrderRadioBtn\" VALUE=\"${order.id}\" ></td>");
-//out.print("</c:if>");
-//out.print("<td><c:out value=\"${order.id}\" /></td>");
-//out.print("<td><c:out value=\"${order.consumerId.place}\" /></td>");
-//out.print("<td><c:out value=\"pitieta..\" /></td>");
-//out.print("<td><c:out value=\"broi;...\" /></td>");
-//out.print("<td><c:out value=\"${order.status}\" /></td>");
-//out.print("<td><c:out value=\"${order.bill}\" /></td>");
-//out.print("</tr>");
-//out.print("</c:forEach>");	
-//out.print("</tbody>");
-//out.print("</table>");

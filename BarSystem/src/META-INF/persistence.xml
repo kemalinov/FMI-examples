@@ -9,11 +9,11 @@
                 <property name="eclipselink.target-database" 
                     value="Derby"/>
                 <!-- JDBC connection properties -->
-                <property name="eclipselink.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
-                <property name="eclipselink.jdbc.url" 
+                <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+                <property name="javax.persistence.jdbc.url" 
 					value="jdbc:derby://localhost:1527/BarGFDB;retrieveMessagesFromServerOnGetMessage=true;create=true;"/>
-                <property name="eclipselink.jdbc.user" value="user"/>
-                <property name="eclipselink.jdbc.password" value="123"/>
+                <property name="javax.persistence.jdbc.user" value="user"/>
+                <property name="javax.persistence.jdbc.password" value="123"/>
             </properties>
   </persistence-unit>
 </persistence>

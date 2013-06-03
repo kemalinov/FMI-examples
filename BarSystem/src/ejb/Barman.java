@@ -28,6 +28,7 @@ public class Barman extends User implements Observer {
 	}
 
 	public void acceptAnOrder(Order order) {
+		System.out.println("accepting an order with id " + order.getId() +", by "+ getName());
 		ordersM.acceptAnOrder(order);
 	}
 
@@ -46,6 +47,7 @@ public class Barman extends User implements Observer {
 
 	public List<Order> getActiveOrders() {
 		return activeOrders;
+		
 	}
 
 	public Order getOrderById(int id) {

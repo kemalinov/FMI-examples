@@ -132,7 +132,7 @@ public class OrdersBean {
 		query.append("JOIN app.drinks d ");
 		query.append("ON d.drink_id = odd.drinks_key ");
 		if (findByUserIdRequest < 0) { // i.e. get all but filter by status
-			query.append("WHERE (od.status like 'P%') or (od.status like 'O%') or (od.status like 'A%')");
+			query.append("WHERE (od.status like 'P%') or (od.status like 'O%') or (od.status like 'A%')"); // TODO: accept all and then delete the case of 'A%'!
 		}
 		query.append("ORDER BY CASE ");	// for sorting!
 		query.append("WHEN od.status = 'OVERDUE' THEN 1 ");

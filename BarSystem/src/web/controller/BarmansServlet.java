@@ -41,13 +41,11 @@ public class BarmansServlet extends HttpServlet {
 		String selectedScreen = "";
 
 		UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
-//		User user = (User) users.getLoggedUserByName((String) req.getAttribute("username"));
-		Barman barman = (Barman) session.getAttribute("loggedUser"); 
+		User user = (User) users.getLoggedUserByName((String) session.getAttribute("username"));
+//		Barman barman = (Barman) session.getAttribute("loggedUser"); 
 
-		if (barman != null) {
-			List<Order> ordersList = barman.getActiveOrders();
-			request.setAttribute("orders", ordersList);
-
+		if (user != null) {
+			Barman barman = (Barman) user;
 			System.out.println("in barmans servlet!...");
 			
 			if (action != null) {
@@ -78,7 +76,10 @@ public class BarmansServlet extends HttpServlet {
 					System.out.println("Done order id " + orderId + " by " + barman.getName());
 				}
 			}
-
+			
+			List<Order> ordersList = barman.getActiveOrders();
+			request.setAttribute("orders", ordersList);
+			
 			selectedScreen = "/protected/barmans.jsp";
 		}
 

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,7 +25,9 @@ public class OrdersManagement {
 
 	private static Logger log = Logger.getLogger(OrdersManagement.class.getName());
 
-	private List<Order> alertedOrders = new ArrayList<Order>();
+	private ConcurrentHashMap<Integer, Order> activeOrdersMap = new ConcurrentHashMap<Integer, Order>();
+	
+	private List<Order> alertedOrders = new CopyOnWriteArrayList<Order>();
 	
 	private ServletContext context;
 
@@ -32,7 +36,20 @@ public class OrdersManagement {
 	public OrdersManagement(OrdersLocal services, ServletContext context) {
 		this.context = context;
 		this.services = services;
+		loadAllActiveOrders();
 	}
+	
+	private void loadAllActiveOrders() {
+		List<Order> list = services.findAllActiveOrdersByUserId(-1);
+		activeOrdersMap.clear();
+		for (Order o : list) {
+			activeOrdersMap.put(o.getId(), o);
+		}
+	}
+	
+//	public List<Order> getAllCurrentActiveOrdersForBarmans() {
+//		return new ArrayList<Order>(activeOrdersMap.values());
+//	}
 
 	// returns all orders for barmans
 	public List<Order> findAllActiveOrdersForBarmans() {
@@ -115,7 +132,7 @@ public class OrdersManagement {
 		return status;
 	}
 
-	public synchronized void updateAnOrder(Order order) {
+	public void updateAnOrder(Order order) {
 		System.out.println("The order " + order.getId() + " is about to be updated...");
 		Order resOrder = null;
 		try {
@@ -126,28 +143,42 @@ public class OrdersManagement {
 		}
 
 		if (resOrder != null) {
+			loadAllActiveOrders();
 			System.out.println("Updated order: " + resOrder.getId());
 		}
 		OrdersNotification.getInstance().notifyObservers();
 		System.out.println("Test of updating an order finished well!");
 	}
 
-	public void acceptAnOrder(Order order) {
-		synchronized (alertedOrders) {
-			order.setStatus(OrderStatus.ACCEPTED);
-			for (Order o : alertedOrders) {
-				if (o.getId().compareTo(order.getId()) == 0) {
-					alertedOrders.remove(o);
-				}
+	public synchronized void acceptAnOrder(Order order) {
+		if (activeOrdersMap.containsKey(order.getId())) {
+			Order o = activeOrdersMap.get(order.getId());
+			if (! o.getStatus().equals(OrderStatus.ACCEPTED)) {
+    			o.setStatus(OrderStatus.ACCEPTED);
+    			updateAnOrder(o);	
 			}
-			updateAnOrder(order);	
+		} else {
+			System.out.println("The order is not in the MAP!!!");
 		}
-		
+		for (Order o : alertedOrders) {
+			if (o.getId().compareTo(order.getId()) == 0) {
+				alertedOrders.remove(o);
+			}
+		}
 	}
 
-	public synchronized void finishAnOrder(Order order) {
-		order.setStatus(OrderStatus.DONE);
-		updateAnOrder(order);
+	public void finishAnOrder(Order order) {
+		if (activeOrdersMap.containsKey(order.getId())) {
+			Order o = activeOrdersMap.remove(order.getId());
+        	if (o.getStatus().equals(OrderStatus.ACCEPTED)) {
+        		o.setStatus(OrderStatus.DONE);
+        		updateAnOrder(o);
+        	} else {
+        		System.err.println("The order's status is not an appropriate type for finishing!");
+        	}
+		} else {
+			System.out.println("The order is not in the MAP!!!");
+		}
 	}
 	
 	public void closeAConsumer(Consumer consumer) {

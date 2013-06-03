@@ -17,10 +17,10 @@ function addInput(divName){ // not used!!! to add new UI compoments (when adding
       counter++;
 }
 	 
- var ordersTableAutoRefresh = setInterval(  
+ var bordersTableAutoRefresh = setInterval(  
 	 function ()  
 	 {  
-	     $('#ordersTable').load('http://localhost:8080/BarMngmtSystem/LoadOrders').fadeIn("slow");
+	     $('#ordersTable').load('http://192.168.0.2:8080/BarMngmtSystem/LoadBarmansOrders').fadeIn("slow");
 	 }, 10000
  );
 
@@ -30,7 +30,7 @@ function addInput(divName){ // not used!!! to add new UI compoments (when adding
  var ordersAlertNotif = setInterval(  
 	 function ()  
 	 {  
-		$.get('http://localhost:8080/BarMngmtSystem/OrdersAlert', function (data) { // change the host!!! 130.185.253.67
+		$.get('http://192.168.0.2:8080/BarMngmtSystem/OrdersAlert', function (data) { // change the host!!! 130.185.253.67
 			if(data.size != '0') {
 				$("#alertOrderP").html(data.arr);
 				$("#aId").trigger("click");			

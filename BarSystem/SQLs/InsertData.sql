@@ -90,6 +90,8 @@ alter table app.drinks alter column price NOT NULL
 
 
 select * from app.orders;
+update app.orders set status='DONE' where status='ACCEPTED';
+
 alter table app.orders add column bill DECIMAL(5,2)
 alter table app.orders alter column bill NOT NULL
 
