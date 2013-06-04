@@ -1,4 +1,4 @@
-package web.controller;
+package web.controller.orders;
 
 import java.io.IOException;
 import java.io.PrintWriter;
