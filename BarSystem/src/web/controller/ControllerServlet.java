@@ -82,7 +82,7 @@ public class ControllerServlet extends HttpServlet {
 			// after successful creation of the profile forward to login page
 			selectedScreen = "/public/login.jsp";
 
-		} else if (action.equals("logout")) {
+		} else if (action.equals("logout") && session.getAttribute("loggedUser") != null) {
 			User user = (User) session.getAttribute("loggedUser");
 			users.logoutUser(user);
 			session.invalidate();

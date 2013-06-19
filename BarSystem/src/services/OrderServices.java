@@ -14,7 +14,7 @@ import eao.OrdersBean;
 import ejb.User;
 
 @Stateless(name = "OrderServices")
-public class OrderServices implements OrdersLocal, ConsumersLocal {
+public class OrderServices implements OrdersLocal {
 
 	@EJB
 	private ConsumersBean consumers;

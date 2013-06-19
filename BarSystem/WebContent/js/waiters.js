@@ -9,14 +9,14 @@ function getCheckedRadioBtn() { // not used!
 }
 
 var ordersTableAutoRefresh = setInterval(  
-		 function ()  
-		 {  
-		     $('#ordersTable').load('http://192.168.0.2:8080/BarMngmtSystem/LoadWaitersOrders').fadeIn("slow");
-		   /*$.get('http://localhost:8080/BarMngmtSystem/LoadOrders', function(data) {
-		    	 $('#ordersTable').html(data);
-		    	}); */
-			 }, 10000
-	);
+	 function ()  
+	 {  
+	     $('#ordersTable').load('http://192.168.0.2:8080/BarMngmtSystem/LoadWaitersOrders?currUser='+$("#cUser").val()).fadeIn("slow"); /*(link, {...,...}) for POST*/
+	   /*$.get('http://localhost:8080/BarMngmtSystem/LoadOrders', function(data) {
+	    	 $('#ordersTable').html(data);
+	    	}); */
+		 }, 10000
+);
 
 function showClientDiv(showClientUIStyle) {
 	document.getElementById('clientDivId').style.display = showClientUIStyle;

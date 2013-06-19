@@ -7,7 +7,7 @@ import java.util.Map.Entry;
 
 import constants.OrderStatus;
 
-public class Order implements Comparable<Order> {
+public class Order {
 
 	private Integer id;
 	private Consumer consumerId;
@@ -87,11 +87,6 @@ public class Order implements Comparable<Order> {
 		}
 		System.out.println("calculated bill for the order " + id + " is " + b);
 		return b;
-	}
-
-	@Override
-	public int compareTo(Order o) {
-		return status.compareTo(o.getStatus());
 	}
 
 	// public void addDrink(DrinkDTO d, Integer count) {

@@ -29,7 +29,6 @@
 <link rel="stylesheet" type="text/css" href="/BarMngmtSystem/css/modalDialog/modalD.css" />
 <link rel="stylesheet" type="text/css" href="/BarMngmtSystem/css/orders/orders.css" />
 	
-<script type="text/javascript" src="/BarMngmtSystem/js/visibility/EventHelpers.js"></script>
 <script type="text/javascript" src="/BarMngmtSystem/js/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="/BarMngmtSystem/js/waiters.js"></script>
 
@@ -41,7 +40,8 @@
 /* @import url(http://fonts.googleapis.com/css?family=Raleway:400,700); */
 
 body {
-	background: #7f9b4e url(/fmi/images/bg2.jpg) no-repeat center top;
+	/* background: #7f9b4e url(/fmi/images/bg2.jpg) no-repeat center top; */
+	background-color: #FAEBD7;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;
@@ -90,12 +90,10 @@ function setParamsAndSubmitTheOrder() { // it is used to pass correct parameters
 
 </head>
 <body>
+<input id="cUser" type="text" hidden="true" value=<%=session.getAttribute("username")%>> <!-- hidden input  -->
 	<div class="container">
 		<header>
-			<h2>
-				Welcome, waiter ...
-				<%=session.getAttribute("username")%>
-			</h2>
+			<h2>Welcome, waiter...<%=session.getAttribute("username")%></h2>
 			<div class="support-note">
 				<span class="note-ie">Sorry, only modern browsers.</span>
 			</div>

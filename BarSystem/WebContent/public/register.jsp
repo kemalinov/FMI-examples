@@ -24,7 +24,8 @@
 /* @import url(http://fonts.googleapis.com/css?family=Raleway:400,700); */
 
 body {
-	background: #7f9b4e url(../images/bg2.jpg) no-repeat center top;
+	/* background: #7f9b4e url(../images/bg2.jpg) no-repeat center top; */
+	background-color: #FAEBD7;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;

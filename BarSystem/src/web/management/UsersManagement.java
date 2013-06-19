@@ -13,12 +13,10 @@ import services.UsersLocal;
 import web.pojos.Role;
 import web.utils.PasswordEncryption;
 import constants.RolesType;
-import ejb.Barman;
-import ejb.Manager;
 import ejb.Observer;
 import ejb.OrdersNotification;
 import ejb.User;
-import ejb.Waiter;
+import ejb.UserFactory;
 
 public class UsersManagement {
 
@@ -95,26 +93,27 @@ public class UsersManagement {
 	}
 
 	private void addNewLoggedUser(User u) {
-		User user = createAConcreteUserByRole(u);
+		OrdersManagement ordersM = (OrdersManagement) context.getAttribute("ordersM");
+		DrinksManagement drinksM = (DrinksManagement) context.getAttribute("drinksM");
+		User user = UserFactory.createUserMethod(u, ordersM, drinksM);
 		loggedUsersMap.put(user.getName(), user);
 		if (user instanceof Observer) {
 			OrdersNotification.getInstance().registerObserver((Observer) user);
 		}
 	}
 
-	private User createAConcreteUserByRole(User u) {
-		if (u.getRole().getRole().equals(RolesType.WAITER)) {
-			return new Waiter(u, (OrdersManagement) context.getAttribute("ordersM"));
-		} else if (u.getRole().getRole().equals(RolesType.BARMAN)) {
-			return new Barman(u, (OrdersManagement) context.getAttribute("ordersM"), (DrinksManagement) context.getAttribute("drinksM"));
-		} else if (u.getRole().getRole().equals(RolesType.MANAGER)) {
-			return new Manager(u);
-		}
-		System.out.println("different roled user!!! add \"User\" object");
-		return u;
-	}
+//	private User createAConcreteUser(User u) {
+//		if (u.getRole().getRole().equals(RolesType.WAITER)) {
+//			u = new Waiter(u, (OrdersManagement) context.getAttribute("ordersM"));
+//		} else if (u.getRole().getRole().equals(RolesType.BARMAN)) {
+//			u = new Barman(u, (OrdersManagement) context.getAttribute("ordersM"), (DrinksManagement) context.getAttribute("drinksM"));
+//		} else if (u.getRole().getRole().equals(RolesType.MANAGER)) {
+//			u = new Manager(u);
+//		}
+//		return u;
+//	}
 
-	public User getLoggedUserByName(String username) {
+	public synchronized User getLoggedUserByName(String username) {
 		System.out.println("logged users " + loggedUsersMap.size());
 		return loggedUsersMap.get(username);
 	}

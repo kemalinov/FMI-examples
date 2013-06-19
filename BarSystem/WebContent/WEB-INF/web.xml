@@ -10,14 +10,22 @@
 
 	<!-- <ejb-local-ref id="EjbRef_1"> <ejb-ref-name>UserServices</ejb-ref-name> 
 		<ejb-ref-type>Session</ejb-ref-type> <local>services.UsersLocal</local> </ejb-local-ref> -->
-	<!-- 	
-	<servlet>
-    <servlet-name>LoadOrdersName</servlet-name>
-    <servlet-class>web.controller.LoadOrdersServlet</servlet-class>
+	 	
+<!-- 	<servlet>
+	    <servlet-name>LoadBarmansOrdersName</servlet-name>
+	    <servlet-class>web.controller.orders.LoadBarmansOrdersServlet</servlet-class>
+  	</servlet>
+  	<servlet>
+	    <servlet-name>LoadWaitersOrdersName</servlet-name>
+	    <servlet-class>web.controller.orders.LoadWaitersOrdersServlet</servlet-class>
   	</servlet>
 	<servlet-mapping>
-		<servlet-name>LoadOrdersName</servlet-name>
-		<url-pattern>/LoadOrders</url-pattern>
+		<servlet-name>LoadBarmansOrdersName</servlet-name>
+		<url-pattern>/LoadBarmansOrders</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>LoadWaitersOrdersName</servlet-name>
+		<url-pattern>/LoadWaitersOrders</url-pattern>
 	</servlet-mapping> -->
 	
 

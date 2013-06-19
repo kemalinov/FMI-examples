@@ -1,7 +1,7 @@
 package ejb;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class OrdersNotification implements Subject {
 
@@ -10,7 +10,7 @@ public class OrdersNotification implements Subject {
 	private List<Observer> observers = null;
 	
 	private OrdersNotification() {
-		observers = new ArrayList<Observer>();
+		observers = new CopyOnWriteArrayList<Observer>();
 	}
 	
 	public static OrdersNotification getInstance() {

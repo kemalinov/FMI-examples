@@ -8,8 +8,6 @@ public class SessionManager {
 
 	private static SessionManager manager = new SessionManager();
 
-	// why we are using ConcurrentHashMap? - synchronized hashmap - one object
-	// for every user...
 	private ConcurrentHashMap<HttpSession, String> sessions = new ConcurrentHashMap<HttpSession, String>();
 
 	public static SessionManager getInstance() {

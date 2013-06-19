@@ -53,9 +53,8 @@ public class WaitersServlet extends HttpServlet {
 		System.out.println("in waiters' servlet!... " + waiter.getName() + " , id:" + waiter.getId());
 
 		if (waiter != null) {
-			System.out.println("action: " + action);
-
 			if (action != null) {
+				System.out.println("action: " + action);	
 				if (action.equals("Add")) { // add consumer/and oreder
 					String radioAction = request.getParameter("radioAction");
 					String orderedDrinkCount = request.getParameter("orderedDrinkNumber");

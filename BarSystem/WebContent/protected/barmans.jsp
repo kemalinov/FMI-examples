@@ -41,9 +41,9 @@
  -->
 <!--[if lte IE 7]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
 
-<script type="text/javascript">
+<%-- <script type="text/javascript">
 
-<%-- function setParamAndSubmit() { // it is used to pass the accepted/done orderId to the JSP file!
+function setParamAndSubmit() { // it is used to pass the accepted/done orderId to the JSP file!
     var hidden = document.createElement('input');
     hidden.type = "hidden";
 	hidden.name = "orderId";
@@ -52,15 +52,16 @@
 	f.appendChild(hidden);
 	f.action=<%= getServletContext().getContextPath() + "/protected/barmans" %>;
 	f.submit();
-} --%>
+} 
 
-</script>
+</script>--%>
 
 <style>
 /* @import url(http://fonts.googleapis.com/css?family=Raleway:400,700); */
 
 body {
-	background: #7f9b4e url(/fmi/images/bg2.jpg) no-repeat center top;
+	/* background: #7f9b4e url(/fmi/images/bg2.jpg) no-repeat center top; */
+	background-color: #FAEBD7;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	background-size: cover;
@@ -74,6 +75,7 @@ body {
 </style>
 </head>
 <body>
+<input id="cUser" type="text" hidden="true" value=<%=session.getAttribute("username")%>>
 <!-- THE NOTIFICATION BAR STARTS-->
 	<a id="aId" style="display:none;" href="#" class="trigger info-trigger"></a>
 	<div class="info message" >
@@ -84,8 +86,7 @@ body {
 	
 	<div class="container">
 		<header>
-			<h2>
-				Welcome, barman ... <%=session.getAttribute("username")%></h2>
+			<h2>Welcome, barman ... <%=session.getAttribute("username")%></h2>
 			<div class="support-note">
 				<span class="note-ie">Sorry, only modern browsers.</span>
 			</div>

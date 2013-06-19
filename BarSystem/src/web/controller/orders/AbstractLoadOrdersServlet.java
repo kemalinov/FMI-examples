@@ -9,7 +9,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import web.management.UsersManagement;
 import web.pojos.Drink;
@@ -27,10 +26,9 @@ public abstract class AbstractLoadOrdersServlet extends HttpServlet {
 	// TODO: ASK!: why if the list is only set as an attribute and provided by the dispatcher, loads a "whole new page" in the table not only the table's content? 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		HttpSession session = req.getSession();
 		
 		UsersManagement users = (UsersManagement) getServletContext().getAttribute("usersM");
-		User user = (User) users.getLoggedUserByName((String) session.getAttribute("username"));
+		User user = (User) users.getLoggedUserByName((String) req.getParameter("currUser"));
 		
 		String selectedScreen = "";
 		List<Order> ordersList = null;
@@ -39,7 +37,7 @@ public abstract class AbstractLoadOrdersServlet extends HttpServlet {
 			ordersList = getOrdersListForUser(user);
 			req.setAttribute("orders", ordersList);
 		
-			selectedScreen = "/protected/waiters.jsp";
+			selectedScreen = gerRedirectionLink();
     	
     		if (ordersList != null) {
     			resp.setContentType("text/html");
@@ -58,6 +56,8 @@ public abstract class AbstractLoadOrdersServlet extends HttpServlet {
 	protected abstract List<Order> getOrdersListForUser(User user);
 	
 	protected abstract void writeTheRadioButtons(Order o, PrintWriter out);
+	
+	protected abstract String gerRedirectionLink();
 
 	private void createTable(User user, List<Order> ordersList, PrintWriter out) {
 		out.print("<table>");

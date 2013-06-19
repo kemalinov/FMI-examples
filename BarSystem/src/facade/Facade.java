@@ -26,21 +26,6 @@
 //@Stateless
 //public class Facade {
 //    
-//    @EJB
-//    private RolesBean roles;
-//    
-//    @EJB
-//    private UsersBean users;
-//    
-//    @EJB
-//    private DrinksBean drinks;
-//    
-//    @EJB
-//    private ConsumersBean consumers;
-//    
-//    @EJB
-//    private OrdersBean orders;
-//    
 ////    @EJB(beanName="DrinkServices")
 ////    private DrinksLocal drinkServices;
 ////
@@ -57,6 +42,27 @@
 ////    private OrdersLocal orderServices;
 //    
 //    
+//
+//    private RolesBean roles;
+//    
+//    @EJB
+//    private UsersBean users;
+//    
+//    @EJB
+//    private DrinksBean drinks;
+//    
+//    @EJB
+//    private ConsumersBean consumers;
+//    
+//    @EJB
+//    private OrdersBean orders;
+//
+//
+//
+//
+//
+//
+
 //    public Facade(){
 //    }
 //    // Role services

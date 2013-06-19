@@ -104,7 +104,7 @@ public class Waiter extends User implements Observer {
 	public void update() {
 		System.out.println("waiter id: " + super.getId() + " has been observerd for change in orders' list!");
 		loadAllActiveOrdersForMe();
-		loadAllMyActiveClients();
+//		loadAllMyActiveClients();
 	}
 
 }

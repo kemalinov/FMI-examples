@@ -35,14 +35,6 @@ public final class ApplicationStartedListener implements ServletContextListener 
 	public void contextInitialized(ServletContextEvent event) {
 		context = event.getServletContext();
 
-		// try {
-		// services = (Facade) new
-		// InitialContext().lookup("java:global/BarSystem/Facade");
-		// } catch (NamingException e) {d
-		// log.log(Level.SEVERE,
-		// "Exception on performing a JNDI lookup to the Facade: ", e);
-		// }
-
 		if (userServices != null && orderServices != null && drinkServices != null) {
 			DrinksManagement drinksM = new DrinksManagement(drinkServices, context);
 			context.setAttribute("drinksM", drinksM);
